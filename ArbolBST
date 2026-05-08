@@ -73,3 +73,101 @@ public class ArbolBST {
     }
 
     public boolean existe(int id) { return buscar(id) != null; }
+
+    // =========================================================
+    // ELIMINACION (driver publico)
+    // =========================================================
+    public boolean eliminarBST(int id) {
+        if (!existe(id)) return false;
+        raiz = eliminar(id, raiz);
+        cantidad--;
+        return true;
+    }
+
+    // =========================================================
+    // ELIMINACION (recursivo privado)
+    // Casos: hoja, 1 hijo, 2 hijos (reemplaza con minimo del subarbol derecho)
+    // =========================================================
+    private Nodo eliminar(int id, Nodo p) {
+        if (p != null) {
+            if      (id < p.est.getId())
+                p.izq = eliminar(id, p.izq);
+            else if (id > p.est.getId())
+                p.der = eliminar(id, p.der);
+            else {
+                if      (p.izq == null && p.der == null)
+                    p = null;                                    // 1) hoja
+                else if (p.izq == null)
+                    p = p.der;                                   // 2) solo hijo derecho
+                else if (p.der == null)
+                    p = p.izq;                                   // 2) solo hijo izquierdo
+                else {
+                    Nodo t = minimoNodo(p.der);                  // 3) dos hijos
+                    p.est  = t.est;                              //    copiar minimo derecho
+                    p.der  = eliminar(t.est.getId(), p.der);     //    eliminar duplicado
+                }
+            }
+        } else
+            System.out.println("Elemento no encontrado.");
+        return p;
+    }
+
+    // =========================================================
+    // ENCONTRAR MINIMO (iterativo)  — rama mas izquierda = minimo
+    // =========================================================
+    private Nodo minimoNodo(Nodo p) {
+        if (p != null)
+            while (p.izq != null)
+                p = p.izq;
+        return p;
+    }
+
+    // =========================================================
+    // RECORRIDO INORDEN (driver publico)
+    // =========================================================
+    public void recorrerBST() {
+        System.out.print("El arbol es:");
+        if (raiz != null)
+            recorrer(raiz);
+        else
+            System.out.print(" Vacio");
+        System.out.println();
+    }
+
+    // =========================================================
+    // RECORRIDO INORDEN (recursivo privado)
+    // Izquierda -> Raiz -> Derecha  =>  produce salida ordenada
+    // =========================================================
+    private void recorrer(Nodo ptr) {
+        if (ptr.izq != null) recorrer(ptr.izq);
+        System.out.print(" " + ptr.est.getId());
+        if (ptr.der != null) recorrer(ptr.der);
+    }
+
+    // =========================================================
+    // ALTURA — iterativa con pila manual para evitar StackOverflow
+    // en casos degenerados (insercion secuencial produce altura = n).
+    // =========================================================
+    public int getAltura() {
+        if (raiz == null) return 0;
+        int    maxH      = 0;
+        Nodo[] pilaNodes = new Nodo[Math.max(cantidad * 2, 16)];
+        int[]  pilaProf  = new int [Math.max(cantidad * 2, 16)];
+        int    top       = 0;
+        pilaNodes[top] = raiz;
+        pilaProf [top] = 1;
+        top++;
+        while (top > 0) {
+            top--;
+            Nodo n = pilaNodes[top];
+            int  d = pilaProf [top];
+            if (d > maxH) maxH = d;
+            if (n.izq != null) { pilaNodes[top] = n.izq; pilaProf[top] = d + 1; top++; }
+            if (n.der != null) { pilaNodes[top] = n.der; pilaProf[top] = d + 1; top++; }
+        }
+        return maxH;
+    }
+
+    public int     getCantidad() { return cantidad; }
+    public boolean estaVacio()   { return raiz == null; }
+}
