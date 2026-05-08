@@ -81,3 +81,31 @@ public class PilaHistorial {
         tamanio--;
         return r;
     }
+
+
+    // =========================================================
+    // CONSULTAS
+    // =========================================================
+    public Registro verTope()   { return tope != null ? tope.dato : null; }
+    public boolean  estaVacia() { return tope == null; }
+    public int      getTamanio(){ return tamanio; }
+
+    // =========================================================
+    // MOSTRAR historial (mas reciente primero)
+    // =========================================================
+    public void mostrar() {
+        if (estaVacia()) {
+            System.out.println("  (Historial vacio)");
+            return;
+        }
+        Nodo actual = tope;
+        int  i      = 1;
+        while (actual != null) {
+            String tipo      = String.format("%-12s", actual.dato.tipo);
+            String undoMarca = (actual.dato.datosUndo != null) ? " [*]" : "";
+            System.out.printf("  %2d. [%s] %s%s%n", i++, tipo, actual.dato.descripcion, undoMarca);
+            actual = actual.siguiente;
+        }
+        System.out.println("  [*] = eliminacion que puede deshacerse");
+    }
+}
