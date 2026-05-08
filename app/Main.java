@@ -343,5 +343,14 @@ public class Main {
         else if (op == 4)            MedidorRendimiento.ejecutarPruebas(sizes);
     }
 
-
+    // =========================================================
+    // UTILIDAD: leer entero desde consola
+    // =========================================================
+    static int leerInt() {
+        try {
+            return Integer.parseInt(sc.nextLine().trim());
+        } catch (NumberFormatException ex) {
+            return -1;
+        }
+    }
 }
