@@ -118,4 +118,22 @@ public class ArbolAVL {
         return true;
     }
 
+    // =========================================================
+    // BUSQUEDA  O(log n)
+    // =========================================================
+    public Estudiante buscar(int id) {
+        NodoAVL n = buscarRec(raiz, id);
+        return (n != null) ? n.getEstudiante() : null;
+    }
+
+    private NodoAVL buscarRec(NodoAVL nodo, int id) {
+        if (nodo == null)            return null;
+        int cur = nodo.getIdEstudiante();
+        if      (id < cur) return buscarRec(nodo.getIzquierda(), id);
+        else if (id > cur) return buscarRec(nodo.getDerecha(),   id);
+        else               return nodo;
+    }
+
+    public boolean existe(int id) { return buscar(id) != null; }
+
 }
