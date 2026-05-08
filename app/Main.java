@@ -322,4 +322,26 @@ public class Main {
                         + enCola + " en cola de espera."));
     }
 
+    // =========================================================
+    // MENU RENDIMIENTO (AVL vs BST)
+    // =========================================================
+    static void menuRendimiento() {
+        System.out.println();
+        System.out.println(Colores.titulo("╔═══════════════ PRUEBAS DE RENDIMIENTO ═══════════════╗"));
+        System.out.println("║  [1]  n = 10,000      (10^4)                          ║");
+        System.out.println("║  [2]  n = 100,000     (10^5)                          ║");
+        System.out.println("║  [3]  n = 1,000,000   (10^6)                          ║");
+        System.out.println("║  [4]  TODAS + graficas Python automaticas              ║");
+        System.out.println("║  [0]  Volver                                           ║");
+        System.out.println(Colores.titulo("╚═══════════════════════════════════════════════════════╝"));
+        System.out.print("Opcion: ");
+
+        int[] sizes = { 10_000, 100_000, 1_000_000 };
+        int op = leerInt();
+
+        if      (op >= 1 && op <= 3) MedidorRendimiento.ejecutarPruebas(new int[]{ sizes[op - 1] });
+        else if (op == 4)            MedidorRendimiento.ejecutarPruebas(sizes);
+    }
+
+
 }
