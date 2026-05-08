@@ -146,4 +146,31 @@ public class ArbolAVL {
         cantidadNodos--;
         return true;
     }
+
+    private void eliminarNodo(NodoAVL n) {
+        if (n.getIzquierda() != null && n.getDerecha() != null) {
+            // Dos hijos: copiar sucesor inorden y eliminar sucesor
+            NodoAVL sucesor = minimoNodo(n.getDerecha());
+            n.setEstudiante(sucesor.getEstudiante());
+            eliminarNodo(sucesor);
+            return;
+        }
+        // Cero o un hijo
+        NodoAVL hijo  = (n.getIzquierda() != null) ? n.getIzquierda() : n.getDerecha();
+        NodoAVL padre = n.getPadre();
+        if (hijo  != null) hijo.setPadre(padre);
+        if (padre == null) {
+            raiz = hijo;
+        } else if (n == padre.getIzquierda()) {
+            padre.setIzquierda(hijo);
+        } else {
+            padre.setDerecha(hijo);
+        }
+        rebalancear(padre);
+    }
+
+    private NodoAVL minimoNodo(NodoAVL nodo) {
+        while (nodo.getIzquierda() != null) nodo = nodo.getIzquierda();
+        return nodo;
+    }
 }
