@@ -82,4 +82,17 @@ public class ArbolAVL {
         rotarIzquierda(n);         // luego izquierda sobre n
     }
 
+    // =========================================================
+    // REBALANCEAR NODO Y PROPAGAR HACIA LA RAIZ
+    // =========================================================
+    private void rebalancear(NodoAVL n) {
+        if (n == null) return;
+        NodoAVL padre = n.getPadre();
+        if      (altura(n.getIzquierda()) > altura(n.getDerecha()) + 1)
+            rebalancearDerecha(n);          // izquierda muy alta
+        else if (altura(n.getDerecha()) > altura(n.getIzquierda()) + 1)
+            rebalancearIzquierda(n);        // derecha muy alta
+        ajustarAltura(n);
+        rebalancear(padre);                 // subir al padre
+    }
 }
