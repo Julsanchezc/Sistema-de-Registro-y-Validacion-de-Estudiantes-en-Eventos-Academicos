@@ -246,4 +246,19 @@ public class ArbolAVL {
         }
     }
 
+    // =========================================================
+    // CONTAR ASISTENCIAS
+    // =========================================================
+    public int contarAsistencias() {
+        return contarAsistenciasRec(raiz);
+    }
+
+    private int contarAsistenciasRec(NodoAVL nodo) {
+        if (nodo == null) return 0;
+        int cuenta = nodo.getEstudiante().isAsistencia() ? 1 : 0;
+        return cuenta
+                + contarAsistenciasRec(nodo.getIzquierda())
+                + contarAsistenciasRec(nodo.getDerecha());
+    }
+
 }
