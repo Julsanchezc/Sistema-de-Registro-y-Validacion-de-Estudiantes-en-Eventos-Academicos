@@ -1,5 +1,24 @@
+"""
+graficar_rendimiento.py
 
+Llamado automaticamente por MedidorRendimiento.java.
+Genera 4 graficas comparativas AVL vs BST:
+   1. grafica_tiempos.png      — tiempos AVL (insercion / busqueda / eliminacion)
+   2. grafica_comparativa.png  — AVL vs BST lado a lado para cada operacion
+   3. grafica_altura.png       — altura real AVL y BST vs log2(n) teorico
+   4. grafica_tabla.png        — grafica combinada + tabla resumen
 
+Uso:
+   python graficar_rendimiento.py <csv_path> <output_dir>
+   python graficar_rendimiento.py          (busca resultados/resultados.csv)
+"""
+
+import sys, os, csv, math
+import matplotlib
+matplotlib.use("Agg")
+import matplotlib.pyplot as plt
+import matplotlib.gridspec as gridspec
+import numpy as np
 
 # ── Argumentos ───────────────────────────────────────────────
 if len(sys.argv) >= 3:
