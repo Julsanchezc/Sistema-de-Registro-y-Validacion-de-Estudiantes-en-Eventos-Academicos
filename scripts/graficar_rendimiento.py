@@ -154,3 +154,50 @@ if has_bst:
     fig2.savefig(out2, dpi=150, bbox_inches="tight")
     print(f"Guardado: {out2}")
     plt.close(fig2)
+
+# ─────────────────────────────────────────────────────────────
+# GRAFICA 3 — Altura real vs teorica
+# ─────────────────────────────────────────────────────────────
+fig3, ax3 = plt.subplots(figsize=(10, 5.5))
+fig3.suptitle(f"Altura del arbol: Real vs Teorica O(log2 n)\n{TITULO}",
+              fontsize=13, fontweight="bold")
+
+ax3.fill_between(x_idx, h_log2, avl_h, alpha=0.12, color=C_AVL_H, label="Diferencia AVL")
+ax3.plot(x_idx, avl_h, "s-", color=C_AVL_H, linewidth=2.5, markersize=10,
+         markerfacecolor="white", markeredgewidth=2.5, label="Altura AVL real")
+if has_bst:
+    ax3.plot(x_idx, bst_h, "^-", color=C_BST_H, linewidth=2.5, markersize=10,
+             markerfacecolor="white", markeredgewidth=2.5, label="Altura BST real")
+ax3.plot(x_idx, h_log2, "^--", color=C_TEOR, linewidth=2, markersize=9,
+         label="log2(n) teorico")
+
+for xi, yr, yt in zip(x_idx, avl_h, h_log2):
+    ax3.annotate(f"AVL={int(yr)}", xy=(xi, yr), xytext=(0, 14),
+                 textcoords="offset points", ha="center",
+                 fontsize=10, fontweight="bold", color=C_AVL_H)
+    ax3.annotate(f"{yt:.1f}", xy=(xi, yt), xytext=(0, -18),
+                 textcoords="offset points", ha="center",
+                 fontsize=9, color=C_TEOR)
+if has_bst:
+    for xi, yb in zip(x_idx, bst_h):
+        ax3.annotate(f"BST={int(yb)}", xy=(xi, yb), xytext=(14, 0),
+                     textcoords="offset points", ha="left",
+                     fontsize=9, color=C_BST_H)
+
+ax3.set_xticks(x_idx); ax3.set_xticklabels(x_labels, fontsize=11)
+ax3.set_xlabel("n (estudiantes)", fontsize=11)
+ax3.set_ylabel("Altura del arbol", fontsize=11)
+ax3.set_ylim(bottom=0)
+ax3.margins(x=0.18)
+ax3.legend(fontsize=10)
+ax3.text(0.97, 0.05,
+         "AVL: h <= 1.44*log2(n) — GARANTIZADO\nBST: h aprox 2.5*log2(n) — PROMEDIO (datos aleatorios)",
+         transform=ax3.transAxes, ha="right", fontsize=8.5, style="italic", color="#555",
+         bbox=dict(boxstyle="round,pad=0.4", fc="#f9f9f9", ec="#ccc"))
+estilo_ax(ax3)
+
+plt.tight_layout()
+out3 = os.path.join(output_dir, "grafica_altura.png")
+fig3.savefig(out3, dpi=150, bbox_inches="tight")
+print(f"Guardado: {out3}")
+plt.close(fig3)
