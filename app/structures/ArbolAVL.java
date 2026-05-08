@@ -1,4 +1,17 @@
+package structures;
 
+import model.Estudiante;
+import ui.Colores;
+
+/**
+ * ArbolAVL.java
+ * Arbol Binario de Busqueda Auto-Balanceado (AVL).
+ * Clave de ordenamiento: ID del estudiante.
+ *
+ * ESTRUCTURA DE DATOS: Arbol AVL
+ * Complejidad de todas las operaciones: O(log n)
+ * Garantia de altura: h <= 1.44 * log2(n) para cualquier orden de entrada.
+ */
 public class ArbolAVL {
 
     private NodoAVL raiz;
