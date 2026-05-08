@@ -214,4 +214,42 @@ public class Main {
     }
 
 
+    // =========================================================
+    // ACCIONES DEL EVENTO
+    // =========================================================
+    static void registrar(ValidadorEventos e) {
+        System.out.print("ID institucional : "); int    id   = leerInt();
+        System.out.print("Nombre completo  : "); String nom  = sc.nextLine().trim();
+        System.out.print("Correo           : "); String cor  = sc.nextLine().trim();
+        System.out.print("Programa         : "); String prog = sc.nextLine().trim();
+        e.registrarEstudiante(id, nom, cor, prog);
+    }
+
+    static void verificar(ValidadorEventos e) {
+        System.out.print("ID a buscar: ");
+        int id = leerInt();
+        if (e.verificarEstudiante(id))
+            System.out.println(Colores.ok("✓ Encontrado:") + "\n" + e.obtenerEstudiante(id));
+        else
+            System.out.println(Colores.error("❌ No existe un estudiante con ID " + id));
+    }
+
+    static void asistencia(ValidadorEventos e) {
+        System.out.print("ID del estudiante: ");
+        e.marcarAsistencia(leerInt());
+    }
+
+    static void eliminarEstudiante(ValidadorEventos e) {
+        System.out.print("ID a eliminar: ");
+        int id = leerInt();
+        if (!e.verificarEstudiante(id)) {
+            System.out.println(Colores.error("❌ No encontrado"));
+            return;
+        }
+        System.out.print(Colores.warn("¿Confirmar eliminar ID " + id + "? (s/n): "));
+        if (sc.nextLine().trim().equalsIgnoreCase("s")) e.eliminarEstudiante(id);
+        else System.out.println("Cancelado.");
+    }
+
+
 }
