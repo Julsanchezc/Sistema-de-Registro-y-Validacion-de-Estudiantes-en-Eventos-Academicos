@@ -173,4 +173,18 @@ public class ArbolAVL {
         while (nodo.getIzquierda() != null) nodo = nodo.getIzquierda();
         return nodo;
     }
+
+    // =========================================================
+    // RECORRIDO INORDEN — imprime en orden ascendente por ID
+    // =========================================================
+    public void recorridoInorden() {
+        inordenRec(raiz);
+    }
+
+    private void inordenRec(NodoAVL nodo) {
+        if (nodo == null) return;
+        inordenRec(nodo.getIzquierda());
+        System.out.println(nodo.getEstudiante());
+        inordenRec(nodo.getDerecha());
+    }
 }
