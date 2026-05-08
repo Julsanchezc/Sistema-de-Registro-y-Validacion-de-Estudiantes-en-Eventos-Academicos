@@ -77,3 +77,39 @@ def estilo_ax(ax):
     ax.spines["top"].set_visible(False)
     ax.spines["right"].set_visible(False)
     ax.grid(axis="y", alpha=0.3, linestyle="--")
+
+# ─────────────────────────────────────────────────────────────
+# GRAFICA 1 — Tiempos AVL: 3 subplots
+# ─────────────────────────────────────────────────────────────
+fig1, axes = plt.subplots(1, 3, figsize=(16, 5.5))
+fig1.suptitle(f"Rendimiento del Arbol AVL\n{TITULO}",
+              fontsize=13, fontweight="bold", y=1.01)
+
+for ax, (nombre, datos, color) in zip(axes, [
+    ("Insercion",   avl_ins,  C_AVL_INS),
+    ("Busqueda",    avl_bus,  C_AVL_BUS),
+    ("Eliminacion", avl_elim, C_AVL_ELIM),
+]):
+    ax.bar(x_idx, datos, color=color, alpha=0.15, width=0.5, zorder=1)
+    ax.plot(x_idx, datos, "o-", color=color, linewidth=2.5, markersize=10,
+            markerfacecolor="white", markeredgewidth=2.5, zorder=3)
+    for xi, yi in zip(x_idx, datos):
+        ax.annotate(f"{int(yi):,} ms", xy=(xi, yi), xytext=(0, 14),
+                    textcoords="offset points", ha="center",
+                    fontsize=10, fontweight="bold", color=color)
+    ax.set_title(nombre, fontsize=12, fontweight="bold", pad=10)
+    ax.set_xlabel("n (estudiantes)", fontsize=10)
+    ax.set_ylabel("Tiempo (ms)", fontsize=10)
+    ax.set_xticks(x_idx); ax.set_xticklabels(x_labels, fontsize=11)
+    ax.set_ylim(bottom=0, top=max(datos) * 1.35)
+    ax.margins(x=0.25)
+    ax.text(0.97, 0.05, "O(n log n)", transform=ax.transAxes,
+            ha="right", fontsize=10, color=color,
+            bbox=dict(boxstyle="round,pad=0.3", fc="white", ec=color, alpha=0.8))
+    estilo_ax(ax)
+
+plt.tight_layout()
+out1 = os.path.join(output_dir, "grafica_tiempos.png")
+fig1.savefig(out1, dpi=150, bbox_inches="tight")
+print(f"Guardado: {out1}")
+plt.close(fig1)
