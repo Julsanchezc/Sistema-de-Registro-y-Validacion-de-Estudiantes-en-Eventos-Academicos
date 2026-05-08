@@ -261,4 +261,25 @@ public class ArbolAVL {
                 + contarAsistenciasRec(nodo.getDerecha());
     }
 
+    // =========================================================
+    // ESCRIBIR INORDEN A ARCHIVO — exportacion CSV y persistencia
+    // =========================================================
+    public void escribirInorden(java.io.PrintWriter pw, String prefijo) {
+        escribirInordenRec(raiz, pw, prefijo);
+    }
+
+    private void escribirInordenRec(NodoAVL n, java.io.PrintWriter pw, String prefijo) {
+        if (n == null) return;
+        escribirInordenRec(n.getIzquierda(), pw, prefijo);
+        Estudiante e = n.getEstudiante();
+        if (prefijo.equals("CSV")) {
+            pw.printf("%d,%s,%s,%s,%s%n",
+                    e.getId(), e.getNombre(), e.getCorreo(), e.getPrograma(), e.isAsistencia());
+        } else {
+            pw.println("ESTUDIANTE|" + e.getId() + "|" + e.getNombre()
+                    + "|" + e.getCorreo() + "|" + e.getPrograma() + "|" + e.isAsistencia());
+        }
+        escribirInordenRec(n.getDerecha(), pw, prefijo);
+    }
+
 }
