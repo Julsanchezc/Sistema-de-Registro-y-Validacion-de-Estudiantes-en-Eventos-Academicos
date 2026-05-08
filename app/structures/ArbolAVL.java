@@ -282,4 +282,10 @@ public class ArbolAVL {
         escribirInordenRec(n.getDerecha(), pw, prefijo);
     }
 
+    // =========================================================
+    // GETTERS
+    // =========================================================
+    public int     getCantidadEstudiantes() { return cantidadNodos; }
+    public int     getAltura()              { return (raiz != null) ? raiz.getAltura() : 0; }
+    public boolean estaVacio()              { return raiz == null; }
 }
