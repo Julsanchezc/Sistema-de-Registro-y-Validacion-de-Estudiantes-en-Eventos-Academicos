@@ -53,5 +53,100 @@ public class Main {
         System.out.println();
     }
 
+    // =========================================================
+    // MENU NIVEL 1: GESTOR DE EVENTOS
+    // =========================================================
+    static void menuGestor() {
+        boolean salir = false;
+        while (!salir) {
+            int total = gestor.getCantidadEventos();
+            System.out.println();
+            System.out.println(Colores.titulo("╔══════════════════ GESTOR DE EVENTOS ══════════════════╗"));
+            System.out.printf (Colores.CYAN + "║  Eventos activos: " + Colores.CYAN_B + "%-3d" + Colores.RESET + "%n", total);
+            System.out.println(Colores.titulo("╠═══════════════════════════════════════════════════════╣"));
+            System.out.println("║  [1] Crear nuevo evento                               ║");
+            System.out.println("║  [2] Acceder a un evento                              ║");
+            System.out.println("║  [3] Listar todos los eventos                         ║");
+            System.out.println("║  [4] Eliminar un evento                               ║");
+            System.out.println("║  [5] Guardar datos en archivo                         ║");
+            System.out.println("║  [6] Cargar datos desde archivo                       ║");
+            System.out.println("║  [7] Analisis de rendimiento (AVL vs BST)             ║");
+            System.out.println("║  [0] Salir                                            ║");
+            System.out.println(Colores.titulo("╚═══════════════════════════════════════════════════════╝"));
+            System.out.print("Opcion: ");
+
+            switch (leerInt()) {
+                case 1: crearEvento();     break;
+                case 2: entrarEvento();    break;
+                case 3: verEventos();      break;
+                case 4: eliminarEvento();  break;
+                case 5: guardarDatos();    break;
+                case 6: cargarDatos();     break;
+                case 7: menuRendimiento(); break;
+                case 0: salir = true;      break;
+                default: System.out.println(Colores.error("❌ Opcion invalida"));
+            }
+        }
+    }
+
+    static void crearEvento() {
+        System.out.print("Nombre del evento : ");
+        String nombre = sc.nextLine().trim();
+        if (nombre.isEmpty()) { System.out.println(Colores.error("❌ Nombre vacio")); return; }
+        System.out.print("Capacidad maxima  : ");
+        int cap = leerInt();
+        if (cap <= 0) { System.out.println(Colores.error("❌ Capacidad invalida")); return; }
+        gestor.crearEvento(nombre, cap);
+    }
+
+    static void verEventos() {
+        gestor.listarEventos();
+    }
+
+    static void entrarEvento() {
+        if (!gestor.hayEventos()) {
+            System.out.println(Colores.error("❌ No hay eventos. Crea uno primero (opcion 1)."));
+            return;
+        }
+        gestor.listarEventos();
+        System.out.print("Numero de evento: ");
+        int idx = leerInt();
+        ValidadorEventos evento = gestor.obtenerEvento(idx);
+        if (evento == null) { System.out.println(Colores.error("❌ Numero invalido")); return; }
+        menuEvento(evento);
+    }
+
+    static void eliminarEvento() {
+        if (!gestor.hayEventos()) { System.out.println(Colores.error("❌ No hay eventos")); return; }
+        gestor.listarEventos();
+        System.out.print("Numero de evento a eliminar: ");
+        int idx = leerInt();
+        ValidadorEventos ev = gestor.obtenerEvento(idx);
+        if (ev == null) { System.out.println(Colores.error("❌ Numero invalido")); return; }
+        System.out.print("¿Confirmar eliminar \"" + ev.getNombreEvento() + "\"? (s/n): ");
+        if (sc.nextLine().trim().equalsIgnoreCase("s")) {
+            gestor.eliminarEvento(idx);
+            System.out.println(Colores.ok("✓ Evento eliminado"));
+        } else {
+            System.out.println("Cancelado.");
+        }
+    }
+
+    static void guardarDatos() {
+        System.out.print("Ruta del archivo [ENTER = " + ARCHIVO_DATOS + "]: ");
+        String ruta = sc.nextLine().trim();
+        if (ruta.isEmpty()) ruta = ARCHIVO_DATOS;
+        gestor.guardarDatos(ruta);
+    }
+
+    static void cargarDatos() {
+        System.out.print("Ruta del archivo [ENTER = " + ARCHIVO_DATOS + "]: ");
+        String ruta = sc.nextLine().trim();
+        if (ruta.isEmpty()) ruta = ARCHIVO_DATOS;
+        System.out.print(Colores.warn("⚠ Cargar reemplazara los datos actuales. Continuar? (s/n): "));
+        if (!sc.nextLine().trim().equalsIgnoreCase("s")) { System.out.println("Cancelado."); return; }
+        gestor.cargarDatos(ruta);
+    }
+
 
 }
