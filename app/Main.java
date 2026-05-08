@@ -280,5 +280,46 @@ public class Main {
         }
     }
 
+    // =========================================================
+    // AGREGAR ESTUDIANTES ALEATORIOS — con barra de progreso
+    // =========================================================
+    static void agregarAleatorios(ValidadorEventos e) {
+        int disponibles = e.getCapacidad() - e.getCantidadEstudiantes();
+
+        System.out.println();
+        if (disponibles > 0) {
+            System.out.println("  Capacidad disponible : " + Colores.bold(String.valueOf(disponibles)));
+        } else {
+            System.out.println(Colores.warn("  Evento lleno. Los que no quepan iran a la cola."));
+        }
+        System.out.print("¿Cuantos estudiantes aleatorios deseas agregar?: ");
+
+        int cantidad = leerInt();
+        if (cantidad <= 0) { System.out.println(Colores.error("❌ Cantidad invalida")); return; }
+
+        int idInicio = e.getCantidadEstudiantes() + e.getTamanoColaEspera() + 1;
+        System.out.println();
+
+        int enEvento = 0;
+        int enCola   = 0;
+        int idActual = idInicio;
+
+        for (int i = 0; i < cantidad; i++) {
+            String nombre   = NOMBRES  [idActual % NOMBRES.length];
+            String programa = PROGRAMAS[idActual % PROGRAMAS.length];
+            String correo   = "est" + String.format("%04d", idActual) + "@unal.edu.co";
+
+            int resultado = e.registrarBulk(idActual, nombre, correo, programa);
+            if      (resultado == 1) enEvento++;
+            else if (resultado == 0) enCola++;
+            idActual++;
+
+            Consola.progresoBulkAdd(i + 1, cantidad, enEvento, enCola);
+        }
+
+        System.out.println(Colores.ok(
+                "\n✅ Listo: " + enEvento + " registrado(s) en el evento, "
+                        + enCola + " en cola de espera."));
+    }
 
 }
