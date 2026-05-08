@@ -30,3 +30,46 @@ public class ArbolBST {
 
     private Nodo raiz;
     private int  cantidad;
+
+
+    // =========================================================
+    // INSERCION (driver publico)
+    // =========================================================
+    public boolean insertarBST(Estudiante e) {
+        if (existe(e.getId())) return false;
+        raiz = insertar(e, raiz);
+        cantidad++;
+        return true;
+    }
+
+    // =========================================================
+    // INSERCION (recursivo privado)
+    // =========================================================
+    private Nodo insertar(Estudiante e, Nodo p) {
+        if (p == null)
+            p = new Nodo(e);
+        else if (e.getId() < p.est.getId())
+            p.izq = insertar(e, p.izq);       // ir a la izquierda
+        else if (e.getId() > p.est.getId())
+            p.der = insertar(e, p.der);       // ir a la derecha
+        else
+            System.out.println("Elemento ya existe, no insertado.");
+        return p;
+    }
+
+    // =========================================================
+    // BUSQUEDA  O(h)
+    // =========================================================
+    public Estudiante buscar(int id) {
+        Nodo n = buscarRec(raiz, id);
+        return (n != null) ? n.est : null;
+    }
+
+    private Nodo buscarRec(Nodo p, int id) {
+        if (p == null)          return null;
+        if (id < p.est.getId()) return buscarRec(p.izq, id);
+        if (id > p.est.getId()) return buscarRec(p.der, id);
+        return p;
+    }
+
+    public boolean existe(int id) { return buscar(id) != null; }
