@@ -136,4 +136,14 @@ public class ArbolAVL {
 
     public boolean existe(int id) { return buscar(id) != null; }
 
+    // =========================================================
+    // ELIMINACION  O(log n)
+    // =========================================================
+    public boolean eliminar(int id) {
+        NodoAVL n = buscarRec(raiz, id);
+        if (n == null) return false;
+        eliminarNodo(n);
+        cantidadNodos--;
+        return true;
+    }
 }
