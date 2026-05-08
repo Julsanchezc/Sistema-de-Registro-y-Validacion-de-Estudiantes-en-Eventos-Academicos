@@ -33,6 +33,25 @@ public class Main {
         sc.close();
     }
 
+    // =========================================================
+    // CABECERA
+    // =========================================================
+    static void cabecera() {
+        System.out.println();
+        System.out.println(Colores.titulo("╔══════════════════════════════════════════════════════╗"));
+        System.out.println(Colores.titulo("║  SISTEMA DE REGISTRO Y VALIDACION DE ESTUDIANTES     ║"));
+        System.out.println(Colores.titulo("║       EN EVENTOS ACADEMICOS — ARBOL AVL              ║"));
+        System.out.println(Colores.titulo("║       Estructuras de Datos 2016699 · UNAL 2026       ║"));
+        System.out.println(Colores.titulo("╚══════════════════════════════════════════════════════╝"));
+        System.out.println();
+        System.out.println("  Estructuras activas: "
+                + Colores.bold("AVL") + "  "
+                + Colores.bold("Lista enlazada") + "  "
+                + Colores.bold("Cola") + "  "
+                + Colores.bold("Pila") + "  "
+                + Colores.bold("BST"));
+        System.out.println();
+    }
 
 
 }
