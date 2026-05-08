@@ -43,6 +43,24 @@ public class ArbolAVL {
         return m;
     }
 
+    // =========================================================
+    // ROTACION SIMPLE IZQUIERDA
+    // Caso: subarbol derecho demasiado alto y su hijo der. es mas alto
+    // =========================================================
+    private NodoAVL rotarIzquierda(NodoAVL n) {
+        NodoAVL m = n.getDerecha();
+        if (m.getIzquierda() != null) m.getIzquierda().setPadre(n);
+        m.setPadre(n.getPadre());
+        if      (n.getPadre() == null)                          raiz = m;
+        else if (n == n.getPadre().getIzquierda()) n.getPadre().setIzquierda(m);
+        else                                        n.getPadre().setDerecha(m);
+        n.setDerecha(m.getIzquierda());
+        m.setIzquierda(n);
+        n.setPadre(m);
+        ajustarAltura(n);
+        ajustarAltura(m);
+        return m;
+    }
 
 
 
