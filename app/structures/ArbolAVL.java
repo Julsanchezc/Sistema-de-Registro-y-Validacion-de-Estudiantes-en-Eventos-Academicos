@@ -62,6 +62,15 @@ public class ArbolAVL {
         return m;
     }
 
+    // =========================================================
+    // REBALANCEAR HACIA LA DERECHA (subarbol izquierdo muy alto)
+    // =========================================================
+    private void rebalancearDerecha(NodoAVL n) {
+        NodoAVL m = n.getIzquierda();
+        if (altura(m.getDerecha()) > altura(m.getIzquierda()))
+            rotarIzquierda(m);     // rotacion doble: primero izq. sobre m
+        rotarDerecha(n);           // luego derecha sobre n
+    }
 
 
 }
