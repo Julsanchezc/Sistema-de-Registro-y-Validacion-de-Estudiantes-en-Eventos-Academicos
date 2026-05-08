@@ -201,3 +201,86 @@ out3 = os.path.join(output_dir, "grafica_altura.png")
 fig3.savefig(out3, dpi=150, bbox_inches="tight")
 print(f"Guardado: {out3}")
 plt.close(fig3)
+
+# ─────────────────────────────────────────────────────────────
+# GRAFICA 4 — Resumen completo + tabla
+# ─────────────────────────────────────────────────────────────
+fig4 = plt.figure(figsize=(15, 10))
+fig4.suptitle(f"Resumen Comparativo AVL vs BST — {TITULO}",
+              fontsize=14, fontweight="bold", y=0.98)
+
+gs = gridspec.GridSpec(2, 1, figure=fig4, hspace=0.6, height_ratios=[1.2, 1])
+ax_combo = fig4.add_subplot(gs[0])
+ax_tabla = fig4.add_subplot(gs[1])
+
+for datos, color, label in [
+    (avl_ins,  C_AVL_INS,  "AVL Insercion"),
+    (avl_bus,  C_AVL_BUS,  "AVL Busqueda"),
+    (avl_elim, C_AVL_ELIM, "AVL Eliminacion"),
+]:
+    ax_combo.plot(x_idx, datos, "o-", color=color, linewidth=2.3, markersize=9,
+                  markerfacecolor="white", markeredgewidth=2, label=label, zorder=3)
+    for xi, yi in zip(x_idx, datos):
+        ax_combo.annotate(f"{int(yi):,}", xy=(xi, yi), xytext=(0, 9),
+                          textcoords="offset points", ha="center", fontsize=8.5, color=color)
+
+if has_bst:
+    for datos, color, label in [
+        (bst_ins,  C_BST_INS,  "BST Insercion"),
+        (bst_bus,  C_BST_BUS,  "BST Busqueda"),
+        (bst_elim, C_BST_ELIM, "BST Eliminacion"),
+    ]:
+        ax_combo.plot(x_idx, datos, "s--", color=color, linewidth=1.8, markersize=8,
+                      markerfacecolor="white", markeredgewidth=1.5, label=label, zorder=2)
+
+ax_combo.set_title("Comparacion de operaciones", fontsize=11, fontweight="bold")
+ax_combo.set_xticks(x_idx); ax_combo.set_xticklabels(x_labels, fontsize=11)
+ax_combo.set_xlabel("n", fontsize=10)
+ax_combo.set_ylabel("Tiempo (ms)", fontsize=10)
+ax_combo.set_ylim(bottom=0)
+ax_combo.margins(x=0.12)
+ax_combo.legend(fontsize=8.5, ncol=2)
+estilo_ax(ax_combo)
+
+# Tabla
+ax_tabla.axis("off")
+if has_bst:
+    cabecera_t = ["n", "AVL Ins\n(ms)", "AVL Bus\n(ms)", "AVL Elm\n(ms)", "Alt\nAVL",
+                  "BST Ins\n(ms)", "BST Bus\n(ms)", "BST Elm\n(ms)", "Alt\nBST", "log2(n)"]
+    filas_t = [
+        [label_n(n),
+         f"{int(ai):,}", f"{int(ab):,}", f"{int(ae):,}", f"{int(ah)}",
+         f"{int(bi):,}", f"{int(bb):,}", f"{int(be):,}", f"{int(bh)}",
+         f"{lg:.2f}"]
+        for n, ai, ab, ae, ah, bi, bb, be, bh, lg
+        in zip(n_vals, avl_ins, avl_bus, avl_elim, avl_h,
+               bst_ins, bst_bus, bst_elim, bst_h, h_log2)
+    ]
+else:
+    cabecera_t = ["n", "Insercion\n(ms)", "Busqueda\n(ms)", "Eliminacion\n(ms)",
+                  "Altura\nreal", "log2(n)\nteorico"]
+    filas_t = [
+        [label_n(n), f"{int(i):,}", f"{int(b):,}", f"{int(e):,}", f"{int(hr)}", f"{hl:.2f}"]
+        for n, i, b, e, hr, hl in zip(n_vals, avl_ins, avl_bus, avl_elim, avl_h, h_log2)
+    ]
+
+tbl = ax_tabla.table(cellText=filas_t, colLabels=cabecera_t, cellLoc="center", loc="center")
+tbl.auto_set_font_size(False)
+tbl.set_fontsize(10)
+tbl.scale(1.05, 2.1)
+
+for (row, col), cell in tbl.get_celld().items():
+    cell.set_edgecolor("#cccccc")
+    if row == 0:
+        cell.set_facecolor(C_AVL_INS)
+        cell.set_text_props(color="white", fontweight="bold")
+    else:
+        cell.set_facecolor("#eef2ff" if row % 2 == 0 else "white")
+
+out4 = os.path.join(output_dir, "grafica_tabla.png")
+fig4.savefig(out4, dpi=150, bbox_inches="tight")
+print(f"Guardado: {out4}")
+plt.close(fig4)
+
+print(f"\nTodas las graficas generadas en: {os.path.abspath(output_dir)}")
+
