@@ -148,5 +148,70 @@ public class Main {
         gestor.cargarDatos(ruta);
     }
 
+    // =========================================================
+    // MENU NIVEL 2: DENTRO DE UN EVENTO
+    // =========================================================
+    static void menuEvento(ValidadorEventos evento) {
+        boolean salir = false;
+        while (!salir) {
+            int ins  = evento.getCantidadEstudiantes();
+            int cap  = evento.getCapacidad();
+            int cola = evento.getTamanoColaEspera();
+            int hist = evento.getTamanoHistorial();
+            int asst = evento.getCantidadAsistencias();
+
+            System.out.println();
+            System.out.println(Colores.titulo("╔══════════════════════════════════════════════════════════╗"));
+            System.out.println(Colores.CYAN + Colores.NEGRITA
+                    + "║  EVENTO: " + evento.getNombreEvento() + Colores.RESET);
+
+            // Barra de ocupacion visual
+            System.out.print("║  ");
+            System.out.println(Consola.barraProgreso(ins, cap, 32)
+                    + "  " + Colores.CYAN_B + ins + "/" + cap + " inscritos" + Colores.RESET);
+
+            System.out.printf(Colores.CYAN
+                            + "║  Asistencia: " + Colores.AMARILLO_B + "%d"
+                            + Colores.CYAN + "  │  Cola: " + Colores.MAGENTA + "%d"
+                            + Colores.CYAN + "  │  Historial: %d ops" + Colores.RESET + "%n",
+                    asst, cola, hist);
+            System.out.println(Colores.titulo("╠══════════════════════════════════════════════════════════╣"));
+            System.out.println("║  [1]  Registrar estudiante                               ║");
+            System.out.println("║  [2]  Consultar por ID                                   ║");
+            System.out.println("║  [3]  Marcar asistencia                                  ║");
+            System.out.println("║  [4]  Eliminar estudiante                                ║");
+            System.out.println("║  [5]  Deshacer ultima eliminacion                        ║");
+            System.out.println("║  [6]  Listar estudiantes (tabla)                         ║");
+            System.out.println("║  [7]  Ver cola de espera                                 ║");
+            System.out.println("║  [8]  Historial de operaciones                           ║");
+            System.out.println("║  [9]  Estado del evento                                  ║");
+            System.out.println("║  [10] Visualizar arbol AVL                               ║");
+            System.out.println("║  [11] Agregar estudiantes aleatorios                     ║");
+            System.out.println("║  [12] Exportar lista a CSV                               ║");
+            System.out.println("║  [13] BORRAR LISTA COMPLETA                              ║");
+            System.out.println("║  [0]  Volver al gestor                                   ║");
+            System.out.println(Colores.titulo("╚══════════════════════════════════════════════════════════╝"));
+            System.out.print("Opcion: ");
+
+            switch (leerInt()) {
+                case 1:  registrar(evento);                        break;
+                case 2:  verificar(evento);                        break;
+                case 3:  asistencia(evento);                       break;
+                case 4:  eliminarEstudiante(evento);               break;
+                case 5:  evento.deshacerUltimaEliminacion();       break;
+                case 6:  evento.listarEstudiantes();               break;
+                case 7:  evento.mostrarColaEspera();               break;
+                case 8:  evento.mostrarHistorial();                break;
+                case 9:  evento.imprimirEstado();                  break;
+                case 10: evento.visualizarArbol();                 break;
+                case 11: agregarAleatorios(evento);                break;
+                case 12: exportarCSV(evento);                      break;
+                case 13: borrarLista(evento);                      break;
+                case 0:  salir = true;                             break;
+                default: System.out.println(Colores.error("❌ Opcion invalida"));
+            }
+        }
+    }
+
 
 }
