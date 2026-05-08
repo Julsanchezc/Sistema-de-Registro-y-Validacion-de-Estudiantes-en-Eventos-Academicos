@@ -251,5 +251,17 @@ public class Main {
         else System.out.println("Cancelado.");
     }
 
+    // =========================================================
+    // EXPORTAR CSV
+    // =========================================================
+    static void exportarCSV(ValidadorEventos e) {
+        String nombre = e.getNombreEvento().replaceAll("[^a-zA-Z0-9_-]", "_");
+        String path   = "results/events/" + nombre + ".csv";
+        System.out.print("Ruta de exportacion [ENTER = " + path + "]: ");
+        String entrada = sc.nextLine().trim();
+        if (!entrada.isEmpty()) path = entrada;
+        e.exportarCSV(path);
+    }
+
 
 }
