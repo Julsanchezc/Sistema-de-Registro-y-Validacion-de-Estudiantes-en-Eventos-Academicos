@@ -95,4 +95,27 @@ public class ArbolAVL {
         ajustarAltura(n);
         rebalancear(padre);                 // subir al padre
     }
+
+    // =========================================================
+    // INSERCION  O(log n)
+    // Iterativa: recorre hasta la posicion correcta, luego rebalancea
+    // =========================================================
+    public boolean insertar(Estudiante est) {
+        if (existe(est.getId())) return false;
+        NodoAVL nuevo = new NodoAVL(est);
+        if (raiz == null) { raiz = nuevo; cantidadNodos++; return true; }
+        NodoAVL cur = raiz, padre = null;
+        while (cur != null) {
+            padre = cur;
+            cur = (est.getId() < cur.getIdEstudiante())
+                    ? cur.getIzquierda() : cur.getDerecha();
+        }
+        nuevo.setPadre(padre);
+        if (est.getId() < padre.getIdEstudiante()) padre.setIzquierda(nuevo);
+        else                                        padre.setDerecha(nuevo);
+        rebalancear(padre);    // restaurar propiedad AVL
+        cantidadNodos++;
+        return true;
+    }
+
 }
