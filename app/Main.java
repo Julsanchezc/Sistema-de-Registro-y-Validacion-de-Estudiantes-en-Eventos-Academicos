@@ -263,5 +263,22 @@ public class Main {
         e.exportarCSV(path);
     }
 
+    // =========================================================
+    // BORRAR LISTA COMPLETA
+    // =========================================================
+    static void borrarLista(ValidadorEventos e) {
+        if (e.estaVacio()) { System.out.println("La lista ya esta vacia."); return; }
+        System.out.println(Colores.warn(
+                "\n⚠  ATENCION: Esta accion eliminara " + e.getCantidadEstudiantes()
+                        + " estudiantes de \"" + e.getNombreEvento() + "\"."));
+        System.out.println(Colores.warn("   La cola de espera tambien se limpiara."));
+        System.out.print("Escribe " + Colores.bold("CONFIRMAR") + " para continuar: ");
+        if (sc.nextLine().trim().equals("CONFIRMAR")) {
+            e.borrarLista();
+        } else {
+            System.out.println("Cancelado. La lista no fue modificada.");
+        }
+    }
+
 
 }
