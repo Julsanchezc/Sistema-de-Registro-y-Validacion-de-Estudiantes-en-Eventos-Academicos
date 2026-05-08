@@ -1,0 +1,32 @@
+package structures;
+
+import model.Estudiante;
+
+/**
+ * ArbolBST.java
+ * Arbol Binario de Busqueda (BST) SIN auto-balanceo.
+ * ESTRUCTURA DE DATOS: Arbol BST
+ * Uso en el sistema: comparativa de rendimiento frente al Arbol AVL.
+ *
+ * A diferencia del AVL:
+ *   - No realiza rotaciones, por lo que es mas rapido en inserciones aisladas.
+ *   - Con datos en orden secuencial degenera a una lista enlazada (altura = n).
+ *   - Con datos aleatorios la altura esperada es ~2.5 * log2(n).
+ *   - El AVL garantiza h <= 1.44 * log2(n) para CUALQUIER orden de entrada.
+ */
+public class ArbolBST {
+
+    // =========================================================
+    // CLASE INTERNA: NODO
+    // =========================================================
+    private class Nodo {
+        Nodo       izq;
+        Estudiante est;
+        Nodo       der;
+
+        Nodo()             { this(null); }
+        Nodo(Estudiante e) { izq = null; est = e; der = null; }
+    }
+
+    private Nodo raiz;
+    private int  cantidad;
