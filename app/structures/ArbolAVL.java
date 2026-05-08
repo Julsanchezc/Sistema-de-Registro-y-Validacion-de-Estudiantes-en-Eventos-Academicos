@@ -187,4 +187,22 @@ public class ArbolAVL {
         System.out.println(nodo.getEstudiante());
         inordenRec(nodo.getDerecha());
     }
+
+    // =========================================================
+    // COLECTAR INORDEN — retorna array de estudiantes ordenados
+    // =========================================================
+    public Estudiante[] coleccionarInorden() {
+        Estudiante[] arr = new Estudiante[cantidadNodos];
+        int[]        idx = { 0 };
+        coleccionarRec(raiz, arr, idx);
+        return arr;
+    }
+
+    private void coleccionarRec(NodoAVL nodo, Estudiante[] arr, int[] idx) {
+        if (nodo == null) return;
+        coleccionarRec(nodo.getIzquierda(), arr, idx);
+        arr[idx[0]++] = nodo.getEstudiante();
+        coleccionarRec(nodo.getDerecha(),   arr, idx);
+    }
+
 }
