@@ -205,4 +205,45 @@ public class ArbolAVL {
         coleccionarRec(nodo.getDerecha(),   arr, idx);
     }
 
+    // =========================================================
+    // VISUALIZACION — imprime el arbol con colores ANSI
+    // =========================================================
+    public void visualizar() {
+        System.out.println(Colores.titulo(
+                "\n╔══════ ESTRUCTURA ARBOL AVL ════════════════════════════╗"));
+        System.out.printf(
+                Colores.CYAN    + "║  Nodos: "  + Colores.CYAN_B    + "%d"
+                        + Colores.CYAN  + "  │  Altura: " + Colores.CYAN_B  + "%d"
+                        + Colores.CYAN  + "  │  fb "
+                        + Colores.VERDE_B    + " 0"  + Colores.CYAN + ":balance  "
+                        + Colores.AMARILLO_B + "±1" + Colores.CYAN + ":OK"
+                        + Colores.RESET + "%n",
+                cantidadNodos, getAltura());
+        System.out.println(Colores.titulo(
+                "╚════════════════════════════════════════════════════════╝"));
+        if (estaVacio()) System.out.println(Colores.warn("  (Arbol vacio)"));
+        else             visualizarRec(raiz, "", true);
+        System.out.println();
+    }
+
+    private void visualizarRec(NodoAVL nodo, String pref, boolean esUltimo) {
+        if (nodo == null) return;
+        int    fb      = nodo.getFactorBalance();
+        String colorFb = (fb == 0)           ? Colores.VERDE_B
+                : (Math.abs(fb) == 1) ? Colores.AMARILLO_B
+                  :                       Colores.ROJO_B;
+        System.out.print(pref);
+        System.out.print(Colores.CYAN + (esUltimo ? "└── " : "├── ") + Colores.RESET);
+        System.out.println(
+                Colores.CYAN  + "ID:" + Colores.CYAN_B + nodo.getIdEstudiante() + Colores.RESET
+                        + "  " + Colores.CYAN + "h=" + Colores.RESET + nodo.getAltura()
+                        + "  fb=" + colorFb + String.format("%+d", fb) + Colores.RESET
+                        + "  " + Colores.AMARILLO + nodo.getEstudiante().getNombre() + Colores.RESET);
+        String nuevoPref = pref + (esUltimo ? "    " : "│   ");
+        if (nodo.getIzquierda() != null || nodo.getDerecha() != null) {
+            visualizarRec(nodo.getIzquierda(), nuevoPref, nodo.getDerecha() == null);
+            visualizarRec(nodo.getDerecha(),   nuevoPref, true);
+        }
+    }
+
 }
