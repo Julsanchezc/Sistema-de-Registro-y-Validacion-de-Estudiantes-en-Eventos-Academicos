@@ -52,3 +52,27 @@ public class Cola<T> {
         return dato;
     }
 
+
+    // =========================================================
+    // CONSULTAS
+    // =========================================================
+    public T       verFrente()  { return frente != null ? frente.dato : null; }
+    public boolean estaVacia()  { return frente == null; }
+    public int     getTamanio() { return tamanio; }
+
+    // =========================================================
+    // CONTENIDO — devuelve copia como Object[]  O(n)
+    // Retorna Object[] para evitar ClassCastException con genericos en Java
+    // (type erasure: (T[]) new Object[n] sigue siendo Object[] en runtime).
+    // El caller hace el cast individual de cada elemento.
+    // =========================================================
+    public Object[] contenido() {
+        Object[] arr    = new Object[tamanio];
+        Nodo     actual = frente;
+        for (int i = 0; i < tamanio; i++) {
+            arr[i] = actual.dato;
+            actual = actual.siguiente;
+        }
+        return arr;
+    }
+}
