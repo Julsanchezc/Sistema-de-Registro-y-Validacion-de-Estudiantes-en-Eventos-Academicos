@@ -1,6 +1,25 @@
+import system.GestorEventos;
+import system.ValidadorEventos;
+import performance.MedidorRendimiento;
+import ui.Colores;
+import ui.Consola;
 
+import java.util.Scanner;
 
-
+/**
+ * Main.java
+ * Punto de entrada del sistema.
+ *
+ * Estructuras de datos integradas:
+ *   - ArbolAVL      : almacenamiento de estudiantes por evento       O(log n)
+ *   - Lista enlazada: gestion de multiples eventos (GestorEventos)   O(n)
+ *   - Cola<T>       : lista de espera por aforo completo              FIFO
+ *   - PilaHistorial : auditoria de operaciones + deshacer            LIFO
+ *   - ArbolBST      : comparativa en pruebas de rendimiento
+ *
+ * Menu nivel 1 — Gestor : crear/acceder/eliminar eventos, guardar/cargar, rendimiento
+ * Menu nivel 2 — Evento : CRUD estudiantes, cola, historial, deshacer, exportar
+ */
 public class Main {
 
     private static GestorEventos gestor = new GestorEventos();
