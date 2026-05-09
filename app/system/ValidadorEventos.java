@@ -101,6 +101,20 @@ public class ValidadorEventos {
     }
 
     // =========================================================
+    // CARGA DIRECTA (restauracion desde archivo)
+    // =========================================================
+    public void cargarEstudiante(int id, String nombre, String correo,
+                                 String programa, boolean asistencia) {
+        Estudiante e = new Estudiante(id, nombre, correo, programa);
+        e.setAsistencia(asistencia);
+        arbolEstudiantes.insertar(e);
+    }
+
+    public void cargarEnCola(int id, String nombre, String correo, String programa) {
+        colaEspera.encolar(new Estudiante(id, nombre, correo, programa));
+    }
+
+    // =========================================================
     // CONSULTAS
     // =========================================================
     public boolean    verificarEstudiante(int id) { return arbolEstudiantes.existe(id); }
