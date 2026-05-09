@@ -1,0 +1,4 @@
+n,avl_ins_ms,avl_bus_ms,avl_elim_ms,avl_altura,bst_ins_ms,bst_bus_ms,bst_elim_ms,bst_altura,log2n
+10000,7,2,2,16,6,2,3,30,13.2877
+100000,54,34,35,20,38,31,46,44,16.6096
+1000000,1251,809,988,24,1149,843,968,47,19.9316
