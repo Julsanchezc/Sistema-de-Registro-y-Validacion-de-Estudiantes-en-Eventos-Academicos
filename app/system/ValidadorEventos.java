@@ -337,6 +337,10 @@ public class ValidadorEventos {
     public int     getCapacidad()           { return capacidadMaxima; }
     public boolean estaVacio()              { return arbolEstudiantes.estaVacio(); }
 
+    public double getPorcentajeOcupacion() {
+        return (double) getCantidadEstudiantes() / capacidadMaxima * 100;
+    }
+
     // =========================================================
     // VALIDACION INTERNA
     // =========================================================
@@ -355,5 +359,19 @@ public class ValidadorEventos {
             if (((Estudiante) obj).getId() == id) return true;
         }
         return false;
+    }
+
+    @Override
+    public String toString() {
+        int    ins  = getCantidadEstudiantes();
+        int    cola = colaEspera.getTamanio();
+        double pct  = getPorcentajeOcupacion();
+        String colaStr = cola > 0
+                ? "  " + Colores.MAGENTA + "cola:" + cola + Colores.RESET : "";
+        return String.format(
+                Colores.CYAN_B + "%-35s" + Colores.RESET
+                + " " + Colores.VERDE_B + "%3d" + Colores.RESET
+                + "/%d  (%.0f%%)" + "%s",
+                nombreEvento, ins, capacidadMaxima, pct, colaStr);
     }
 }
