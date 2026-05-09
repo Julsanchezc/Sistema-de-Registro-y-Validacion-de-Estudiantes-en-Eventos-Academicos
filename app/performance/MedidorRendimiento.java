@@ -80,7 +80,7 @@ public class MedidorRendimiento {
 
         File   carpeta = crearCarpeta();
         String csvPath = exportarCSV(tamanios, tabla, carpeta);
-        if (csvPath != null) System.out.println("  CSV listo: " + csvPath);
+        if (csvPath != null) llamarPython(csvPath, carpeta);
     }
 
     // =========================================================
@@ -202,6 +202,109 @@ public class MedidorRendimiento {
             System.out.println(Colores.error("  Error al guardar CSV: " + e.getMessage()));
             return null;
         }
+    }
+
+    // =========================================================
+    // LLAMAR PYTHON
+    // =========================================================
+    private static void llamarPython(String csvAbsPath, File carpetaResultados) {
+        System.out.println("\n  Generando graficas con Python...");
+        File script = buscarScript(carpetaResultados);
+        if (script == null) {
+            System.out.println(Colores.warn(
+                    "  AVISO: No se encontro graficar_rendimiento.py"));
+            System.out.println("  Coloca el script en la raiz del proyecto o en scripts/");
+            return;
+        }
+        System.out.println("  Script: " + script.getAbsolutePath());
+
+        String python = buscarEjecutablePython();
+        if (python == null) {
+            System.out.println(Colores.warn("  AVISO: No se encontro Python instalado."));
+            imprimirComandoManual(script, csvAbsPath, carpetaResultados);
+            return;
+        }
+        System.out.println("  Python: " + python);
+
+        try {
+            Process check = new ProcessBuilder(python, "-c", "import matplotlib")
+                    .redirectErrorStream(true).start();
+            check.waitFor();
+            if (check.exitValue() != 0) {
+                System.out.println("  Instalando matplotlib...");
+                new ProcessBuilder(python, "-m", "pip", "install", "matplotlib", "--quiet")
+                        .inheritIO().start().waitFor();
+            }
+        } catch (IOException | InterruptedException e) {
+            System.out.println("  Advertencia matplotlib: " + e.getMessage());
+        }
+
+        try {
+            ProcessBuilder pb = new ProcessBuilder(
+                    python, script.getAbsolutePath(),
+                    csvAbsPath, carpetaResultados.getAbsolutePath());
+            pb.inheritIO();
+            int exit = pb.start().waitFor();
+            if (exit == 0) {
+                System.out.println(Colores.ok(
+                        "\n  Graficas generadas en: " + carpetaResultados.getAbsolutePath()));
+                System.out.println("  grafica_tiempos.png  |  grafica_comparativa.png"
+                                 + "  |  grafica_altura.png  |  grafica_tabla.png");
+            } else {
+                System.out.println(Colores.error(
+                        "  Python termino con error (codigo " + exit + ")."));
+                imprimirComandoManual(script, csvAbsPath, carpetaResultados);
+            }
+        } catch (IOException | InterruptedException e) {
+            System.out.println(Colores.error("  Error al ejecutar Python: " + e.getMessage()));
+            imprimirComandoManual(script, csvAbsPath, carpetaResultados);
+        }
+    }
+
+    // =========================================================
+    // BUSCAR SCRIPT PYTHON
+    // =========================================================
+    private static File buscarScript(File carpetaResultados) {
+        String nombre = "graficar_rendimiento.py";
+        File[] inicios = {
+            carpetaResultados.getAbsoluteFile().getParentFile(),
+            new File(System.getProperty("user.dir")).getAbsoluteFile()
+        };
+        for (File inicio : inicios) {
+            File dir = inicio;
+            for (int nivel = 0; nivel < 6; nivel++) {
+                if (dir == null) break;
+                if (new File(dir, nombre).exists()) return new File(dir, nombre);
+                File[] subs = dir.listFiles(File::isDirectory);
+                if (subs != null) {
+                    for (File sub : subs)
+                        if (new File(sub, nombre).exists()) return new File(sub, nombre);
+                }
+                dir = dir.getParentFile();
+            }
+        }
+        return null;
+    }
+
+    private static void imprimirComandoManual(File script, String csvPath, File carpeta) {
+        System.out.println("  Ejecuta manualmente:");
+        System.out.println("  python \"" + script.getAbsolutePath() + "\""
+                + " \"" + csvPath + "\" \"" + carpeta.getAbsolutePath() + "\"");
+    }
+
+    // =========================================================
+    // BUSCAR EJECUTABLE PYTHON (stub – se completa en siguiente commit)
+    // =========================================================
+    private static String buscarEjecutablePython() {
+        for (String cmd : new String[]{ "python3", "python" }) {
+            try {
+                Process p = new ProcessBuilder(cmd, "--version")
+                        .redirectErrorStream(true).start();
+                p.waitFor();
+                if (p.exitValue() == 0) return cmd;
+            } catch (IOException | InterruptedException ignored) {}
+        }
+        return null;
     }
 
     // =========================================================
