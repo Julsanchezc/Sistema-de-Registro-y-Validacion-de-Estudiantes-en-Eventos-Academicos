@@ -20,6 +20,9 @@ import java.util.*;
  *   - Cronometro de alta precision (System.nanoTime).
  *   - Se miden insercion, busqueda y eliminacion por separado.
  *   - Altura real del arbol comparada con log2(n) teorico.
+ *
+ * Exporta resultados/results.csv e invoca automaticamente el script
+ * Python para generar graficas comparativas.
  */
 public class MedidorRendimiento {
 
@@ -72,6 +75,12 @@ public class MedidorRendimiento {
                 "  AVL garantiza h <= 1.44*log2(n) para CUALQUIER orden de entrada."));
         System.out.println(Colores.info(
                 "  BST garantiza O(log n) esperado solo con datos aleatorios."));
+
+        demostracionCasoDegenerado();
+
+        File   carpeta = crearCarpeta();
+        String csvPath = exportarCSV(tamanios, tabla, carpeta);
+        if (csvPath != null) System.out.println("  CSV listo: " + csvPath);
     }
 
     // =========================================================
@@ -82,7 +91,6 @@ public class MedidorRendimiento {
     private static long[] medir(int n) {
         Estudiante[] datos = generarDatosAleatorios(n);
 
-        // — AVL ————————————————————————————————————————————
         ValidadorEventos avl1 = new ValidadorEventos("avl_ins",  n + 1);
         ValidadorEventos avl2 = new ValidadorEventos("avl_bus",  n + 1);
         ValidadorEventos avl3 = new ValidadorEventos("avl_elim", n + 1);
@@ -103,7 +111,6 @@ public class MedidorRendimiento {
 
         int altAVL = avl2.obtenerAltura();
 
-        // — BST ————————————————————————————————————————————
         ArbolBST bst1 = new ArbolBST();
         ArbolBST bst2 = new ArbolBST();
         ArbolBST bst3 = new ArbolBST();
@@ -125,6 +132,76 @@ public class MedidorRendimiento {
         int altBST = bst2.getAltura();
 
         return new long[]{ avlIns, avlBus, avlElim, altAVL, bstIns, bstBus, bstElim, altBST };
+    }
+
+    // =========================================================
+    // DEMOSTRACION CASO DEGENERADO (n=2000, insercion secuencial)
+    // =========================================================
+    private static void demostracionCasoDegenerado() {
+        int n = 2_000;
+        System.out.println(Colores.warn(
+                "\n─── CASO DEGENERADO: insercion secuencial 1,2,...," + n + " ───────────"));
+
+        ValidadorEventos avlSeq = new ValidadorEventos("avl_seq", n + 1);
+        ArbolBST         bstSeq = new ArbolBST();
+
+        for (int i = 1; i <= n; i++) {
+            Estudiante e = new Estudiante(i, "Est" + i, "e" + i + "@test.co", "Prog");
+            avlSeq.registrarSilencioso(e);
+            bstSeq.insertarBST(e);
+        }
+
+        double log2n = Math.log(n) / Math.log(2);
+        System.out.printf(Colores.VERDE_B
+                + "  AVL altura : %-5d  (log2(%d)=%.1f  limite 1.44*log2=%.1f)%n" + Colores.RESET,
+                avlSeq.obtenerAltura(), n, log2n, 1.44 * log2n);
+        System.out.printf(Colores.ROJO_B
+                + "  BST altura : %-5d  (degenerado – equivale a lista enlazada)%n" + Colores.RESET,
+                bstSeq.getAltura());
+        System.out.println(Colores.info(
+                "  Con insercion secuencial el BST degenera a O(n)."));
+        System.out.println(Colores.info(
+                "  El AVL mantiene O(log n) garantizado sin importar el orden."));
+        System.out.println(Colores.warn(
+                "────────────────────────────────────────────────────────────"));
+
+        System.out.println();
+        Consola.imprimirBarraOcupacion("AVL h=" + avlSeq.obtenerAltura(),
+                avlSeq.obtenerAltura(), n, 25);
+        Consola.imprimirBarraOcupacion("BST h=" + bstSeq.getAltura(),
+                bstSeq.getAltura(), n, 25);
+        System.out.println();
+    }
+
+    // =========================================================
+    // CARPETA Y CSV
+    // =========================================================
+    private static File crearCarpeta() {
+        File carpeta = new File(CARPETA);
+        if (!carpeta.exists()) carpeta.mkdirs();
+        System.out.println("  Carpeta resultados: " + carpeta.getAbsolutePath());
+        return carpeta;
+    }
+
+    private static String exportarCSV(int[] tamanios, long[][] tabla, File carpeta) {
+        File csv = new File(carpeta, "results.csv");
+        try (PrintWriter pw = new PrintWriter(new FileWriter(csv))) {
+            pw.println("n,avl_ins_ms,avl_bus_ms,avl_elim_ms,avl_altura,"
+                     + "bst_ins_ms,bst_bus_ms,bst_elim_ms,bst_altura,log2n");
+            for (int i = 0; i < tamanios.length; i++) {
+                double log2n = Math.log(tamanios[i]) / Math.log(2);
+                pw.printf("%d,%d,%d,%d,%d,%d,%d,%d,%d,%.4f%n",
+                        tamanios[i],
+                        tabla[i][0], tabla[i][1], tabla[i][2], tabla[i][3],
+                        tabla[i][4], tabla[i][5], tabla[i][6], tabla[i][7],
+                        log2n);
+            }
+            System.out.println(Colores.ok("  CSV guardado: " + csv.getAbsolutePath()));
+            return csv.getAbsolutePath();
+        } catch (IOException e) {
+            System.out.println(Colores.error("  Error al guardar CSV: " + e.getMessage()));
+            return null;
+        }
     }
 
     // =========================================================
