@@ -25,7 +25,7 @@ public class Main {
     private static GestorEventos gestor = new GestorEventos();
     private static final Scanner sc     = new Scanner(System.in);
 
-    private static final String ARCHIVO_DATOS = "datos_eventos.txt";
+    private static final String ARCHIVO_DATOS = "data/datos_eventos.txt";
 
     private static final String[] NOMBRES = {
             "Ana Garcia",      "Carlos Lopez",    "Diana Perez",     "Eduardo Gomez",   "Francisca Ruiz",
@@ -152,6 +152,8 @@ public class Main {
     }
 
     static void guardarDatos() {
+        new java.io.File("data").mkdirs();
+
         System.out.print("Ruta del archivo [ENTER = " + ARCHIVO_DATOS + "]: ");
         String ruta = sc.nextLine().trim();
         if (ruta.isEmpty()) ruta = ARCHIVO_DATOS;
