@@ -68,6 +68,39 @@ public class ValidadorEventos {
     }
 
     // =========================================================
+    // REGISTRO BULK – silencioso, con soporte de cola
+    // Retorna: 1=registrado en evento, 0=en cola de espera, -1=error/duplicado
+    // =========================================================
+    public int registrarBulk(int id, String nombre, String correo, String programa) {
+        if (!validarDatos(id, nombre, correo)) return -1;
+        if (arbolEstudiantes.existe(id))       return -1;
+
+        if (arbolEstudiantes.getCantidadEstudiantes() >= capacidadMaxima) {
+            if (existeEnCola(id)) return -1;
+            colaEspera.encolar(new Estudiante(id, nombre, correo, programa));
+            historial.registrar("COLA",
+                    "ID:" + id + " - " + nombre + " (bulk pos." + colaEspera.getTamanio() + ")");
+            return 0;
+        }
+
+        Estudiante nuevo = new Estudiante(id, nombre, correo, programa);
+        if (arbolEstudiantes.insertar(nuevo)) {
+            historial.registrar("REGISTRO", "ID:" + id + " - " + nombre + " (bulk)");
+            return 1;
+        }
+        return -1;
+    }
+
+    // =========================================================
+    // REGISTRO SILENCIOSO – solo para pruebas de rendimiento
+    // Sin prints, sin historial, sin cola
+    // =========================================================
+    public boolean registrarSilencioso(Estudiante est) {
+        if (arbolEstudiantes.getCantidadEstudiantes() >= capacidadMaxima) return false;
+        return arbolEstudiantes.insertar(est);
+    }
+
+    // =========================================================
     // CONSULTAS
     // =========================================================
     public boolean    verificarEstudiante(int id) { return arbolEstudiantes.existe(id); }
@@ -117,6 +150,41 @@ public class ValidadorEventos {
         System.out.println(Colores.info(
                 "  ► Promovido desde cola: " + promovido.getNombre()
                 + " (ID: " + promovido.getId() + ")"));
+    }
+
+    // =========================================================
+    // DESHACER ULTIMA ELIMINACION
+    // =========================================================
+    public void deshacerUltimaEliminacion() {
+        PilaHistorial.Registro r = historial.verTope();
+        if (r == null) {
+            System.out.println(Colores.error("✘ No hay operaciones que deshacer"));
+            return;
+        }
+        if (!r.tipo.equals("ELIMINACION") || r.datosUndo == null) {
+            System.out.println(Colores.warn(
+                    "⚠  La ultima operacion [" + r.tipo + "] no es una eliminacion."));
+            return;
+        }
+        historial.desapilar();
+        Estudiante est = r.datosUndo;
+        if (arbolEstudiantes.getCantidadEstudiantes() >= capacidadMaxima) {
+            System.out.println(Colores.warn(
+                    "⚠  No hay espacio para restaurar. " + est.getNombre() + " va a la cola."));
+            colaEspera.encolar(est);
+            historial.registrar("COLA",
+                    "ID:" + est.getId() + " - " + est.getNombre() + " (undo->cola)");
+            return;
+        }
+        if (arbolEstudiantes.insertar(est)) {
+            historial.registrar("DESHACER",
+                    "Restaurado ID:" + est.getId() + " - " + est.getNombre());
+            System.out.println(Colores.ok(
+                    "✔ Deshecho: " + est.getNombre() + " (ID: " + est.getId() + ") restaurado."));
+        } else {
+            System.out.println(Colores.error(
+                    "✘ No se pudo restaurar (ID " + est.getId() + " ya existe)."));
+        }
     }
 
     // =========================================================
