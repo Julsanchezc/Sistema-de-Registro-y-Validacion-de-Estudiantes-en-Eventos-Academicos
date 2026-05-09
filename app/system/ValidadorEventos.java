@@ -34,6 +34,26 @@ public class ValidadorEventos {
     }
 
     // =========================================================
+    // REGISTRO CON MENSAJES (uso interactivo)
+    // =========================================================
+    public boolean registrarEstudiante(int id, String nombre, String correo, String programa) {
+        if (!validarDatos(id, nombre, correo)) return false;
+
+        if (arbolEstudiantes.existe(id)) {
+            System.out.println(Colores.error("Ya existe un estudiante con ID " + id));
+            return false;
+        }
+
+        Estudiante nuevo    = new Estudiante(id, nombre, correo, programa);
+        boolean   insertado = arbolEstudiantes.insertar(nuevo);
+        if (insertado) {
+            historial.registrar("REGISTRO", "ID:" + id + " - " + nombre);
+            System.out.println(Colores.ok("Registrado: " + nombre + " (ID: " + id + ")"));
+        }
+        return insertado;
+    }
+
+    // =========================================================
     // GETTERS
     // =========================================================
     public String  getNombreEvento()        { return nombreEvento; }
