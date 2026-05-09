@@ -129,4 +129,64 @@ public class GestorEventos {
             System.out.println(Colores.error("❌ Error al guardar: " + e.getMessage()));
         }
     }
+    // =========================================================
+    // PERSISTENCIA — CARGAR (limpia el estado actual)
+    // =========================================================
+    public void cargarDatos(String path) {
+        java.io.File archivo = new java.io.File(path);
+        if (!archivo.exists()) {
+            System.out.println(Colores.error("❌ Archivo no encontrado: " + path));
+            return;
+        }
+
+        cabeza          = null;
+        cantidadEventos = 0;
+
+        try (java.io.BufferedReader br =
+                     new java.io.BufferedReader(new java.io.FileReader(archivo))) {
+            String           linea;
+            ValidadorEventos eventoActual = null;
+            int              eventosLeidos = 0;
+
+            while ((linea = br.readLine()) != null) {
+                linea = linea.trim();
+                if (linea.isEmpty()) continue;
+                String[] p = linea.split("\\|", -1);
+                switch (p[0]) {
+                    case "EVENTO":
+                        if (p.length >= 3) {
+                            eventoActual = new ValidadorEventos(p[1], Integer.parseInt(p[2]));
+                            agregarEvento(eventoActual);
+                            eventosLeidos++;
+                        }
+                        break;
+                    case "ESTUDIANTE":
+                        if (eventoActual != null && p.length >= 6)
+                            eventoActual.cargarEstudiante(
+                                    Integer.parseInt(p[1]), p[2], p[3], p[4],
+                                    Boolean.parseBoolean(p[5]));
+                        break;
+                    case "COLA":
+                        if (eventoActual != null && p.length >= 5)
+                            eventoActual.cargarEnCola(
+                                    Integer.parseInt(p[1]), p[2], p[3], p[4]);
+                        break;
+                    default:
+                        break;
+                }
+            }
+            System.out.println(Colores.ok("✓ Datos cargados (" + eventosLeidos
+                    + " evento(s)) desde: " + archivo.getAbsolutePath()));
+        } catch (java.io.IOException e) {
+            System.out.println(Colores.error("❌ Error al cargar: " + e.getMessage()));
+        } catch (NumberFormatException e) {
+            System.out.println(Colores.error("❌ Formato de archivo invalido: " + e.getMessage()));
+        }
+    }
+
+    // =========================================================
+    // GETTERS
+    // =========================================================
+    public int     getCantidadEventos() { return cantidadEventos; }
+    public boolean hayEventos()         { return cabeza != null; }
 }
