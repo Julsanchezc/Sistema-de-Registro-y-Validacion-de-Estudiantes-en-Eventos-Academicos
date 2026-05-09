@@ -241,12 +241,53 @@ public class ValidadorEventos {
     }
 
     // =========================================================
+    // REPORTES
+    // =========================================================
+    public void imprimirEstado() {
+        int inscritos  = getCantidadEstudiantes();
+        int asistieron = arbolEstudiantes.contarAsistencias();
+
+        System.out.println(Colores.titulo(
+                "\n╔══════ ESTADO DEL EVENTO ═══════════════════════════╗"));
+        System.out.printf(Colores.CYAN + "║  Evento    : " + Colores.CYAN_B + "%-37s"
+                + Colores.RESET + "%n", nombreEvento);
+        System.out.printf(Colores.CYAN + "║  Capacidad : " + Colores.RESET + "%-37d%n",
+                capacidadMaxima);
+        System.out.printf(Colores.CYAN + "║  Altura AVL: " + Colores.RESET + "%-37d%n",
+                obtenerAltura());
+        System.out.printf(Colores.CYAN + "║  Cola esp. : " + Colores.RESET + "%-37d%n",
+                colaEspera.getTamanio());
+        System.out.printf(Colores.CYAN + "║  Historial : " + Colores.RESET + "%d ops%n",
+                historial.getTamanio());
+        System.out.println(Colores.titulo(
+                "╠════════════════════════════════════════════════════╣"));
+        Consola.imprimirBarraOcupacion("Inscritos", inscritos, capacidadMaxima, 22);
+        Consola.imprimirBarraOcupacion("Con asistencia", asistieron, inscritos, 22);
+        System.out.println(Colores.titulo(
+                "╚════════════════════════════════════════════════════╝\n"));
+    }
+
+    public void listarEstudiantes() {
+        if (arbolEstudiantes.estaVacio()) {
+            System.out.println(Colores.warn("  Sin estudiantes registrados"));
+            return;
+        }
+        System.out.println(Colores.titulo(
+                "\n  LISTA DE ESTUDIANTES – orden ascendente por ID"));
+        Consola.imprimirTablaEstudiantes(arbolEstudiantes.coleccionarInorden());
+    }
+
+    public void visualizarArbol() { arbolEstudiantes.visualizar(); }
+
+    // =========================================================
     // GETTERS
     // =========================================================
     public String  getNombreEvento()        { return nombreEvento; }
     public int     getCantidadEstudiantes() { return arbolEstudiantes.getCantidadEstudiantes(); }
+    public int     getCantidadAsistencias() { return arbolEstudiantes.contarAsistencias(); }
     public int     getTamanoColaEspera()    { return colaEspera.getTamanio(); }
     public int     getTamanoHistorial()     { return historial.getTamanio(); }
+    public int     obtenerAltura()          { return arbolEstudiantes.getAltura(); }
     public int     getCapacidad()           { return capacidadMaxima; }
     public boolean estaVacio()              { return arbolEstudiantes.estaVacio(); }
 
