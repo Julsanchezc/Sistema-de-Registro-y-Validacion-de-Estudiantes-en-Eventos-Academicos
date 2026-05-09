@@ -86,6 +86,40 @@ public class ValidadorEventos {
     }
 
     // =========================================================
+    // ELIMINACION
+    // =========================================================
+    public boolean eliminarEstudiante(int id) {
+        Estudiante est = arbolEstudiantes.buscar(id);
+        boolean    ok  = arbolEstudiantes.eliminar(id);
+        if (ok) {
+            historial.registrar("ELIMINACION", "ID:" + id + " - " + est.getNombre(), est);
+            System.out.println(Colores.ok("✔ Eliminado (ID: " + id + ")"));
+            promoverDeCola();
+        } else {
+            System.out.println(Colores.error("✘ No encontrado"));
+        }
+        return ok;
+    }
+
+    public boolean eliminarSilencioso(int id) {
+        return arbolEstudiantes.eliminar(id);
+    }
+
+    // =========================================================
+    // PROMOCION AUTOMATICA DESDE COLA
+    // =========================================================
+    private void promoverDeCola() {
+        if (colaEspera.estaVacia()) return;
+        Estudiante promovido = colaEspera.desencolar();
+        arbolEstudiantes.insertar(promovido);
+        historial.registrar("PROMOCION",
+                "ID:" + promovido.getId() + " - " + promovido.getNombre() + " (promovido)");
+        System.out.println(Colores.info(
+                "  ► Promovido desde cola: " + promovido.getNombre()
+                + " (ID: " + promovido.getId() + ")"));
+    }
+
+    // =========================================================
     // COLA DE ESPERA
     // =========================================================
     public void mostrarColaEspera() {
