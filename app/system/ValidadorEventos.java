@@ -241,6 +241,52 @@ public class ValidadorEventos {
     }
 
     // =========================================================
+    // BORRAR LISTA COMPLETA
+    // =========================================================
+    public void borrarLista() {
+        int n = arbolEstudiantes.getCantidadEstudiantes();
+        arbolEstudiantes = new ArbolAVL();
+        colaEspera       = new Cola<>();
+        historial.registrar("BORRADO", "Se eliminaron " + n + " estudiantes y se limpio la cola");
+        System.out.println(Colores.ok("✔ Lista borrada. Se eliminaron " + n + " estudiantes."));
+    }
+
+    // =========================================================
+    // EXPORTAR LISTA A CSV
+    // =========================================================
+    public void exportarCSV(String path) {
+        if (arbolEstudiantes.estaVacio()) {
+            System.out.println(Colores.warn("⚠  No hay estudiantes para exportar."));
+            return;
+        }
+        java.io.File archivo = new java.io.File(path);
+        if (archivo.getParentFile() != null) archivo.getParentFile().mkdirs();
+        try (java.io.PrintWriter pw =
+                     new java.io.PrintWriter(new java.io.FileWriter(archivo))) {
+            pw.println("id,nombre,correo,programa,asistencia");
+            arbolEstudiantes.escribirInorden(pw, "CSV");
+            historial.registrar("EXPORTACION", "CSV -> " + archivo.getName());
+            System.out.println(Colores.ok("✔ Exportado (" + getCantidadEstudiantes()
+                    + " estudiantes): " + archivo.getAbsolutePath()));
+        } catch (java.io.IOException e) {
+            System.out.println(Colores.error("✘ Error al exportar: " + e.getMessage()));
+        }
+    }
+
+    // =========================================================
+    // ESCRIBIR PARA PERSISTENCIA (llamado por GestorEventos)
+    // =========================================================
+    public void escribirEnArchivo(java.io.PrintWriter pw) {
+        pw.println("EVENTO|" + nombreEvento + "|" + capacidadMaxima);
+        arbolEstudiantes.escribirInorden(pw, "PERSIST");
+        for (Object obj : colaEspera.contenido()) {
+            Estudiante e = (Estudiante) obj;
+            pw.println("COLA|" + e.getId() + "|" + e.getNombre()
+                    + "|" + e.getCorreo() + "|" + e.getPrograma());
+        }
+    }
+
+    // =========================================================
     // REPORTES
     // =========================================================
     public void imprimirEstado() {
