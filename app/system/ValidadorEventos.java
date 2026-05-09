@@ -68,6 +68,24 @@ public class ValidadorEventos {
     }
 
     // =========================================================
+    // CONSULTAS
+    // =========================================================
+    public boolean    verificarEstudiante(int id) { return arbolEstudiantes.existe(id); }
+    public Estudiante obtenerEstudiante(int id)   { return arbolEstudiantes.buscar(id); }
+
+    public boolean marcarAsistencia(int id) {
+        Estudiante est = arbolEstudiantes.buscar(id);
+        if (est != null) {
+            est.setAsistencia(true);
+            historial.registrar("ASISTENCIA", "ID:" + id + " - " + est.getNombre());
+            System.out.println(Colores.ok("✔ Asistencia marcada: " + est.getNombre()));
+            return true;
+        }
+        System.out.println(Colores.error("✘ ID " + id + " no encontrado"));
+        return false;
+    }
+
+    // =========================================================
     // COLA DE ESPERA
     // =========================================================
     public void mostrarColaEspera() {
