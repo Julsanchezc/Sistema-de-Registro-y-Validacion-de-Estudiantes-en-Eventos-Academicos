@@ -13,14 +13,20 @@ public class Consola {
     // BARRA DE PROGRESO – retorna String coloreado
     // Color dinamico: verde < 70 %, amarillo < 90 %, rojo >= 90 %
     // =========================================================
+
+    // Construye una barra de progreso ANSI del ancho indicado.
+    // El color cambia segun el nivel de ocupacion para dar una señal visual
+    // inmediata: verde=holgura, amarillo=casi lleno, rojo=critico.
+    // Si total <= 0 retorna una barra vacia al 0% para evitar division por cero.
     public static String barraProgreso(int actual, int total, int ancho) {
         if (total <= 0)
             return Colores.CYAN + "[" + rep("░", ancho) + "]  0.0%" + Colores.RESET;
 
-        double pct    = Math.min((double) actual / total, 1.0);
+        double pct    = Math.min((double) actual / total, 1.0); // se acota a 1.0 para no desbordar
         int    llenas = (int) (pct * ancho);
         int    vacias = ancho - llenas;
 
+        // Umbrales de color: 70% y 90% elegidos como referencia visual intuitiva.
         String colorBarra;
         if      (pct >= 0.90) colorBarra = Colores.ROJO_B;
         else if (pct >= 0.70) colorBarra = Colores.AMARILLO_B;
@@ -36,6 +42,9 @@ public class Consola {
     // =========================================================
     // LINEA DE OCUPACION – etiqueta + barra + fraccion
     // =========================================================
+
+    // Imprime una linea completa con etiqueta, barra de progreso coloreada
+    // y la fraccion numerica (actual/total) para mayor precision visual.
     public static void imprimirBarraOcupacion(String etiqueta, int actual, int total, int ancho) {
         System.out.printf("  %-17s %s  (%d/%d)%n",
                 etiqueta + ":", barraProgreso(actual, total, ancho), actual, total);
@@ -45,6 +54,11 @@ public class Consola {
     // PROGRESO EN LINEA – sobreescribe la misma linea con \r
     // Llama con actual == total para emitir el salto de linea final
     // =========================================================
+
+    // Muestra el progreso de una carga masiva actualizando la misma linea
+    // en consola con '\r'. Incluye contadores separados de inscritos y en cola
+    // para que el operador vea en tiempo real como se distribuyen los registros.
+    // La llamada final (actual == total) emite '\n' para cerrar correctamente la linea.
     public static void progresoBulkAdd(int actual, int total, int enEvento, int enCola) {
         int    ancho = 28;
         double pct   = total > 0 ? Math.min((double) actual / total, 1.0) : 0;
@@ -66,12 +80,17 @@ public class Consola {
     // TABLA DE ESTUDIANTES CON BORDES
     // Columnas: ID | Nombre | Correo | Programa | Asistencia
     // =========================================================
+
+    // Anchos fijos de cada columna en caracteres, ajustados para caber en
+    // una terminal de 100 columnas sin que las lineas se partan.
     private static final int W_ID   = 8;
     private static final int W_NOM  = 26;
     private static final int W_COR  = 30;
     private static final int W_PROG = 21;
     private static final int W_AST  = 9;
 
+    // Imprime la lista de estudiantes en una tabla con bordes Unicode.
+    // Los campos largos se truncan con '…' para mantener el alineado de columnas.
     public static void imprimirTablaEstudiantes(Estudiante[] lista) {
         if (lista == null || lista.length == 0) {
             System.out.println(Colores.warn("  (Sin estudiantes registrados)"));
@@ -117,12 +136,17 @@ public class Consola {
     // =========================================================
     // UTILIDADES INTERNAS
     // =========================================================
+
+    // Repite la cadena s exactamente n veces. Equivalente a s.repeat(n)
+    // de Java 11+, pero compatible con versiones anteriores del proyecto.
     private static String rep(String s, int n) {
         StringBuilder sb = new StringBuilder(n * s.length());
         for (int i = 0; i < n; i++) sb.append(s);
         return sb.toString();
     }
 
+    // Acorta un texto al maximo indicado, reemplazando el ultimo caracter
+    // con '…' cuando se trunca, para indicar visualmente que hay contenido omitido.
     private static String truncar(String s, int max) {
         if (s == null) return "";
         return s.length() <= max ? s : s.substring(0, max - 1) + "…";

@@ -26,13 +26,19 @@ import java.util.*;
  */
 public class MedidorRendimiento {
 
+    // Subcarpeta relativa donde se guardan results.csv y las graficas PNG.
     private static final String CARPETA = "results";
 
+    // Punto de entrada. Ejecuta las pruebas con los tres tamanios canonicos
+    // (10 000, 100 000 y 1 000 000) elegidos para ilustrar la escala logaritmica.
     public static void main(String[] args) {
         int[] tamanios = { 10_000, 100_000, 1_000_000 };
         ejecutarPruebas(tamanios);
     }
 
+    // Orquesta el flujo completo: imprime la cabecera, mide cada n, muestra la
+    // altura real vs. log2(n), ejecuta el caso degenerado, exporta el CSV
+    // e invoca el script Python para generar las graficas comparativas.
     public static void ejecutarPruebas(int[] tamanios) {
         System.out.println(Colores.titulo(
                 "\n╔═══════════════════════════════════════════════════════════════════════════════╗"));
@@ -88,43 +94,63 @@ public class MedidorRendimiento {
     // Retorna: [avlIns, avlBus, avlElim, avlAltura,
     //           bstIns, bstBus, bstElim, bstAltura]
     // =========================================================
+
+    // Mide insercion, busqueda y eliminacion para AVL y BST con los mismos datos.
+    // Se crean tres arboles separados por operacion (avl1/bst1=insercion,
+    // avl2/bst2=busqueda, avl3/bst3=eliminacion) para que el estado residual
+    // de una operacion no afecte la siguiente.
+    // Retorna un arreglo de 8 posiciones:
+    //   [0]=avlIns_ms  [1]=avlBus_ms  [2]=avlElim_ms  [3]=altAVL
+    //   [4]=bstIns_ms  [5]=bstBus_ms  [6]=bstElim_ms  [7]=altBST
     private static long[] medir(int n) {
         Estudiante[] datos = generarDatosAleatorios(n);
 
+        // Tres instancias AVL independientes para que cada operacion
+        // se mida sobre un arbol limpio sin interferencia de estado previo.
         ValidadorEventos avl1 = new ValidadorEventos("avl_ins",  n + 1);
         ValidadorEventos avl2 = new ValidadorEventos("avl_bus",  n + 1);
         ValidadorEventos avl3 = new ValidadorEventos("avl_elim", n + 1);
 
+        // -- AVL: insercion --------------------------------------------------
         long t0 = System.nanoTime();
         for (Estudiante e : datos) avl1.registrarSilencioso(e);
-        long avlIns = (System.nanoTime() - t0) / 1_000_000;
+        long avlIns = (System.nanoTime() - t0) / 1_000_000; // nanoTime -> ms
 
+        // Prellenar avl2 y avl3 antes de medir busqueda y eliminacion
         for (Estudiante e : datos) { avl2.registrarSilencioso(e); avl3.registrarSilencioso(e); }
 
+        // -- AVL: busqueda --------------------------------------------------
         long t1 = System.nanoTime();
         for (Estudiante e : datos) avl2.verificarEstudiante(e.getId());
         long avlBus = (System.nanoTime() - t1) / 1_000_000;
 
+        // -- AVL: eliminacion -----------------------------------------------
         long t2 = System.nanoTime();
         for (Estudiante e : datos) avl3.eliminarSilencioso(e.getId());
         long avlElim = (System.nanoTime() - t2) / 1_000_000;
 
+        // Altura real del AVL tras insertar n elementos (avl2 no ha sido modificado desde la carga)
         int altAVL = avl2.obtenerAltura();
 
+        // Tres instancias BST independientes, por la misma razon que los AVL.
         ArbolBST bst1 = new ArbolBST();
         ArbolBST bst2 = new ArbolBST();
         ArbolBST bst3 = new ArbolBST();
 
+        // -- BST: insercion --------------------------------------------------
         long t3 = System.nanoTime();
         for (Estudiante e : datos) bst1.insertarBST(e);
         long bstIns = (System.nanoTime() - t3) / 1_000_000;
 
+        // Prellenar bst2 y bst3 con los mismos datos para busqueda y eliminacion
         for (Estudiante e : datos) { bst2.insertarBST(e); bst3.insertarBST(e); }
 
+        // -- BST: busqueda --------------------------------------------------
         long t4 = System.nanoTime();
         for (Estudiante e : datos) bst2.existe(e.getId());
         long bstBus = (System.nanoTime() - t4) / 1_000_000;
 
+        // -- BST: eliminacion -----------------------------------------------
         long t5 = System.nanoTime();
         for (Estudiante e : datos) bst3.eliminarBST(e.getId());
         long bstElim = (System.nanoTime() - t5) / 1_000_000;
@@ -137,6 +163,12 @@ public class MedidorRendimiento {
     // =========================================================
     // DEMOSTRACION CASO DEGENERADO (n=2000, insercion secuencial)
     // =========================================================
+
+    // Ilustra el peor caso del BST: insertar IDs en orden secuencial 1,2,...,n
+    // hace que cada nodo quede como hijo derecho del anterior, convirtiendo el
+    // arbol en una lista enlazada de altura n con O(n) por operacion.
+    // El AVL evita esto con rotaciones automaticas: su altura nunca supera
+    // 1.44 * log2(n) sin importar el orden de insercion (teorema AVL, 1962).
     private static void demostracionCasoDegenerado() {
         int n = 2_000;
         System.out.println(Colores.warn(
@@ -176,6 +208,8 @@ public class MedidorRendimiento {
     // =========================================================
     // CARPETA Y CSV
     // =========================================================
+
+    // Crea la carpeta "results" en el directorio de trabajo si aun no existe.
     private static File crearCarpeta() {
         File carpeta = new File(CARPETA);
         if (!carpeta.exists()) carpeta.mkdirs();
@@ -183,6 +217,10 @@ public class MedidorRendimiento {
         return carpeta;
     }
 
+    // Escribe los resultados en results/results.csv.
+    // Incluye una columna log2n pre-calculada para que el script Python
+    // pueda graficar directamente sin calculos adicionales.
+    // Retorna la ruta absoluta del CSV, o null si hubo un error de escritura.
     private static String exportarCSV(int[] tamanios, long[][] tabla, File carpeta) {
         File csv = new File(carpeta, "results.csv");
         try (PrintWriter pw = new PrintWriter(new FileWriter(csv))) {
@@ -207,6 +245,12 @@ public class MedidorRendimiento {
     // =========================================================
     // LLAMAR PYTHON
     // =========================================================
+
+    // Invoca graficar_rendimiento.py como subproceso para generar los PNG.
+    // Flujo: buscar el script -> localizar Python -> verificar matplotlib
+    //        -> ejecutar con el CSV como argumento.
+    // Si algun paso falla, imprime el comando manual en lugar de lanzar
+    // una excepcion para no cortar la ejecucion del benchmark.
     private static void llamarPython(String csvAbsPath, File carpetaResultados) {
         System.out.println("\n  Generando graficas con Python...");
         File script = buscarScript(carpetaResultados);
@@ -264,11 +308,22 @@ public class MedidorRendimiento {
     // =========================================================
     // BUSCAR EJECUTABLE PYTHON (Windows + Unix)
     // =========================================================
+
+    // Localiza el ejecutable de Python segun el sistema operativo.
+    // En Windows prueba rutas estaticas conocidas (python.org + Conda),
+    // luego escanea dinaminamente %LOCALAPPDATA%\Programs\Python para
+    // detectar versiones recien instaladas, y como ultimo recurso usa
+    // el lanzador py.exe del instalador oficial.
+    // En Unix/macOS prueba python3 y python en el PATH del proceso.
+    // Retorna la ruta del ejecutable encontrado, o null si no hay Python.
     private static String buscarEjecutablePython() {
         boolean esWindows = System.getProperty("os.name").toLowerCase().contains("win");
 
         if (esWindows) {
             String userHome = System.getProperty("user.home");
+
+            // Rutas estaticas: versiones estandar de python.org y entornos Conda.
+            // Ordenadas de mayor a menor version para preferir la mas reciente.
             String[] rutasWin = {
                 userHome + "\\AppData\\Local\\Programs\\Python\\Python313\\python.exe",
                 userHome + "\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
@@ -288,7 +343,8 @@ public class MedidorRendimiento {
                 File f = new File(ruta);
                 if (f.exists() && f.canExecute()) return f.getAbsolutePath();
             }
-            // Busqueda dinamica en carpeta de versiones instaladas
+            // Escaneo dinamico: cubre versiones no listadas arriba (ej. Python 3.14+).
+            // Lista los subdirectorios de la carpeta de instalaciones y prueba cada uno.
             File pythonDir = new File(
                     userHome + "\\AppData\\Local\\Programs\\Python");
             if (pythonDir.isDirectory()) {
@@ -300,12 +356,16 @@ public class MedidorRendimiento {
                     }
                 }
             }
+            // Ultimo recurso: lanzador py.exe del instalador oficial de Windows.
+            // Funciona incluso si python.exe no esta en el PATH del usuario.
             if (new File("C:\\Windows\\py.exe").exists())
                 return "C:\\Windows\\py.exe";
             if (new File("C:\\Windows\\System32\\py.exe").exists())
                 return "C:\\Windows\\System32\\py.exe";
             return null;
         } else {
+            // Se prefiere python3 sobre python para evitar invocar Python 2
+            // en sistemas que aun lo tengan instalado.
             for (String cmd : new String[]{ "python3", "python" }) {
                 try {
                     Process p = new ProcessBuilder(cmd, "--version")
@@ -321,6 +381,11 @@ public class MedidorRendimiento {
     // =========================================================
     // BUSCAR SCRIPT PYTHON
     // =========================================================
+
+    // Busca graficar_rendimiento.py subiendo hasta 6 niveles desde la carpeta
+    // de resultados y desde el directorio de trabajo. En cada nivel revisa
+    // tambien los subdirectorios directos (scripts/, tools/, etc.).
+    // Retorna el File del script encontrado, o null si no existe.
     private static File buscarScript(File carpetaResultados) {
         String nombre = "graficar_rendimiento.py";
         File[] inicios = {
@@ -343,6 +408,8 @@ public class MedidorRendimiento {
         return null;
     }
 
+    // Muestra en consola el comando equivalente para que el usuario pueda
+    // ejecutar el script Python manualmente si la invocacion automatica fallo.
     private static void imprimirComandoManual(File script, String csvPath, File carpeta) {
         System.out.println("  Ejecuta manualmente:");
         System.out.println("  python \"" + script.getAbsolutePath() + "\""
@@ -352,11 +419,18 @@ public class MedidorRendimiento {
     // =========================================================
     // GENERACION DE DATOS ALEATORIOS (Fisher-Yates, semilla 42)
     // =========================================================
+
+    // Genera n estudiantes con IDs 1..n y los mezcla con el algoritmo Fisher-Yates.
+    // La semilla fija (42) garantiza reproducibilidad entre ejecuciones: siempre
+    // el mismo orden aleatorio, lo que hace los resultados comparables en el tiempo.
+    // Se usa la misma secuencia para AVL y BST, asegurando una medicion justa.
     private static Estudiante[] generarDatosAleatorios(int n) {
         Estudiante[] datos = new Estudiante[n];
         for (int i = 0; i < n; i++)
             datos[i] = new Estudiante(i + 1, "Est" + i, "e" + i + "@test.co", "Prog");
         Random rnd = new Random(42);
+        // Recorre el arreglo de atras hacia adelante intercambiando cada elemento
+        // con uno elegido al azar entre los que quedan sin procesar.
         for (int i = n - 1; i > 0; i--) {
             int j = rnd.nextInt(i + 1);
             Estudiante tmp = datos[i]; datos[i] = datos[j]; datos[j] = tmp;

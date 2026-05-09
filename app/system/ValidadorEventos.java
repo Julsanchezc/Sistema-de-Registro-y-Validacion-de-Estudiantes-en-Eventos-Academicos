@@ -19,12 +19,15 @@ import ui.Consola;
  */
 public class ValidadorEventos {
 
-    private ArbolAVL              arbolEstudiantes;
+    private ArbolAVL              arbolEstudiantes; // almacenamiento principal O(log n)
     private String                nombreEvento;
     private int                   capacidadMaxima;
-    private Cola<Estudiante>      colaEspera;
-    private PilaHistorial         historial;
+    private Cola<Estudiante>      colaEspera;       // lista de espera FIFO cuando el aforo esta lleno
+    private PilaHistorial         historial;        // registro de operaciones LIFO (soporta deshacer)
 
+    // Inicializa el evento con su nombre y capacidad maxima de inscritos.
+    // Crea las tres estructuras internas: AVL para inscritos, Cola de espera
+    // e historial de operaciones.
     public ValidadorEventos(String nombreEvento, int capacidadMaxima) {
         this.arbolEstudiantes = new ArbolAVL();
         this.nombreEvento     = nombreEvento;
@@ -36,6 +39,10 @@ public class ValidadorEventos {
     // =========================================================
     // REGISTRO CON MENSAJES (uso interactivo)
     // =========================================================
+
+    // Registra un estudiante con validacion completa y mensajes en consola.
+    // Si el aforo esta lleno lo encola automaticamente en lugar de rechazarlo.
+    // Retorna true si fue insertado en el evento, false en cualquier otro caso.
     public boolean registrarEstudiante(int id, String nombre, String correo, String programa) {
         if (!validarDatos(id, nombre, correo)) return false;
 
@@ -71,6 +78,11 @@ public class ValidadorEventos {
     // REGISTRO BULK – silencioso, con soporte de cola
     // Retorna: 1=registrado en evento, 0=en cola de espera, -1=error/duplicado
     // =========================================================
+
+    // Version silenciosa de registrarEstudiante para carga masiva desde archivos.
+    // No imprime mensajes en consola para no saturar la salida durante un bulk-add.
+    // Los codigos de retorno permiten al llamador contabilizar cuantos fueron al
+    // evento, cuantos a la cola y cuantos fallaron, sin parsear mensajes de texto.
     public int registrarBulk(int id, String nombre, String correo, String programa) {
         if (!validarDatos(id, nombre, correo)) return -1;
         if (arbolEstudiantes.existe(id))       return -1;
@@ -95,6 +107,10 @@ public class ValidadorEventos {
     // REGISTRO SILENCIOSO – solo para pruebas de rendimiento
     // Sin prints, sin historial, sin cola
     // =========================================================
+
+    // Inserta directamente en el AVL sin tocar el historial ni la cola.
+    // Diseñado para MedidorRendimiento: eliminar el overhead de prints y
+    // estructuras auxiliares garantiza que solo se mide el AVL puro.
     public boolean registrarSilencioso(Estudiante est) {
         if (arbolEstudiantes.getCantidadEstudiantes() >= capacidadMaxima) return false;
         return arbolEstudiantes.insertar(est);
@@ -103,6 +119,11 @@ public class ValidadorEventos {
     // =========================================================
     // CARGA DIRECTA (restauracion desde archivo)
     // =========================================================
+
+    // Restaura un estudiante desde el archivo de persistencia, conservando
+    // su estado de asistencia original. No valida duplicados ni verifica
+    // capacidad porque GestorEventos garantiza que los datos del archivo son
+    // consistentes antes de llamar este metodo.
     public void cargarEstudiante(int id, String nombre, String correo,
                                  String programa, boolean asistencia) {
         Estudiante e = new Estudiante(id, nombre, correo, programa);
@@ -110,6 +131,7 @@ public class ValidadorEventos {
         arbolEstudiantes.insertar(e);
     }
 
+    // Restaura un estudiante en la cola de espera al cargar el archivo guardado.
     public void cargarEnCola(int id, String nombre, String correo, String programa) {
         colaEspera.encolar(new Estudiante(id, nombre, correo, programa));
     }
@@ -117,7 +139,10 @@ public class ValidadorEventos {
     // =========================================================
     // CONSULTAS
     // =========================================================
+
+    // Verifica si un ID esta inscrito en el evento (O(log n) sobre el AVL).
     public boolean    verificarEstudiante(int id) { return arbolEstudiantes.existe(id); }
+    // Retorna el objeto Estudiante completo, o null si el ID no existe.
     public Estudiante obtenerEstudiante(int id)   { return arbolEstudiantes.buscar(id); }
 
     public boolean marcarAsistencia(int id) {
@@ -135,6 +160,9 @@ public class ValidadorEventos {
     // =========================================================
     // ELIMINACION
     // =========================================================
+
+    // Elimina el estudiante del AVL, guarda su objeto en el historial para
+    // permitir deshacer, y dispara la promocion automatica desde la cola.
     public boolean eliminarEstudiante(int id) {
         Estudiante est = arbolEstudiantes.buscar(id);
         boolean    ok  = arbolEstudiantes.eliminar(id);
@@ -148,6 +176,8 @@ public class ValidadorEventos {
         return ok;
     }
 
+    // Version sin efectos secundarios para pruebas de rendimiento.
+    // No actualiza historial ni cola; solo mide la velocidad del AVL.
     public boolean eliminarSilencioso(int id) {
         return arbolEstudiantes.eliminar(id);
     }
@@ -155,6 +185,10 @@ public class ValidadorEventos {
     // =========================================================
     // PROMOCION AUTOMATICA DESDE COLA
     // =========================================================
+
+    // Saca al primero en la cola FIFO y lo inscribe en el evento cada vez
+    // que se libera un cupo (tras eliminarEstudiante o deshacerUltimaEliminacion).
+    // Garantiza que nadie en espera se salte injustamente el orden de llegada.
     private void promoverDeCola() {
         if (colaEspera.estaVacia()) return;
         Estudiante promovido = colaEspera.desencolar();
@@ -169,6 +203,12 @@ public class ValidadorEventos {
     // =========================================================
     // DESHACER ULTIMA ELIMINACION
     // =========================================================
+
+    // Restaura el ultimo estudiante eliminado usando el objeto guardado en el historial.
+    // Casos especiales:
+    //   - Si el tope del historial no es una ELIMINACION, avisa y no hace nada.
+    //   - Si el evento esta lleno al restaurar, el estudiante va a la cola en lugar
+    //     de ser rechazado, para no perder el dato del deshacer.
     public void deshacerUltimaEliminacion() {
         PilaHistorial.Registro r = historial.verTope();
         if (r == null) {
@@ -243,6 +283,9 @@ public class ValidadorEventos {
     // =========================================================
     // BORRAR LISTA COMPLETA
     // =========================================================
+
+    // Descarta el AVL y la cola de espera creando nuevas instancias vacias.
+    // El historial se mantiene para que quede registro del borrado masivo.
     public void borrarLista() {
         int n = arbolEstudiantes.getCantidadEstudiantes();
         arbolEstudiantes = new ArbolAVL();
@@ -276,6 +319,12 @@ public class ValidadorEventos {
     // =========================================================
     // ESCRIBIR PARA PERSISTENCIA (llamado por GestorEventos)
     // =========================================================
+
+    // Serializa el evento al formato de texto propio del sistema:
+    //   EVENTO|nombre|capacidad
+    //   ESTUDIANTE|id|nombre|correo|programa|asistencia   (inorden del AVL)
+    //   COLA|id|nombre|correo|programa                    (en orden FIFO)
+    // GestorEventos llama este metodo para cada evento al guardar el archivo.
     public void escribirEnArchivo(java.io.PrintWriter pw) {
         pw.println("EVENTO|" + nombreEvento + "|" + capacidadMaxima);
         arbolEstudiantes.escribirInorden(pw, "PERSIST");
@@ -289,6 +338,9 @@ public class ValidadorEventos {
     // =========================================================
     // REPORTES
     // =========================================================
+
+    // Muestra el resumen del evento con barras de ocupacion para inscritos
+    // y asistencia. Util como vista rapida antes de iniciar la sesion.
     public void imprimirEstado() {
         int inscritos  = getCantidadEstudiantes();
         int asistieron = arbolEstudiantes.contarAsistencias();
@@ -313,6 +365,7 @@ public class ValidadorEventos {
                 "╚════════════════════════════════════════════════════╝\n"));
     }
 
+    // Lista todos los inscritos en orden ascendente por ID (recorrido inorden del AVL).
     public void listarEstudiantes() {
         if (arbolEstudiantes.estaVacio()) {
             System.out.println(Colores.warn("  Sin estudiantes registrados"));
@@ -344,6 +397,11 @@ public class ValidadorEventos {
     // =========================================================
     // VALIDACION INTERNA
     // =========================================================
+
+    // Valida los campos minimos antes de cualquier insercion:
+    //   id > 0, nombre no vacio, correo contiene '@'.
+    // Centralizar aqui evita duplicar las mismas reglas en registrarEstudiante
+    // y registrarBulk.
     private boolean validarDatos(int id, String nombre, String correo) {
         if (id <= 0)
             { System.out.println(Colores.error("✘ ID invalido"));     return false; }
@@ -354,6 +412,9 @@ public class ValidadorEventos {
         return true;
     }
 
+    // Busqueda lineal O(n) sobre la cola para evitar duplicados en espera.
+    // La cola raramente supera unos pocos cientos de elementos, por lo que
+    // el costo es despreciable comparado con la insercion en el AVL.
     private boolean existeEnCola(int id) {
         for (Object obj : colaEspera.contenido()) {
             if (((Estudiante) obj).getId() == id) return true;
