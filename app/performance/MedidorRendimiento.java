@@ -262,6 +262,63 @@ public class MedidorRendimiento {
     }
 
     // =========================================================
+    // BUSCAR EJECUTABLE PYTHON (Windows + Unix)
+    // =========================================================
+    private static String buscarEjecutablePython() {
+        boolean esWindows = System.getProperty("os.name").toLowerCase().contains("win");
+
+        if (esWindows) {
+            String userHome = System.getProperty("user.home");
+            String[] rutasWin = {
+                userHome + "\\AppData\\Local\\Programs\\Python\\Python313\\python.exe",
+                userHome + "\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+                userHome + "\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+                userHome + "\\AppData\\Local\\Programs\\Python\\Python310\\python.exe",
+                userHome + "\\AppData\\Local\\Programs\\Python\\Python39\\python.exe",
+                "C:\\Python313\\python.exe", "C:\\Python312\\python.exe",
+                "C:\\Python311\\python.exe", "C:\\Python310\\python.exe",
+                userHome + "\\miniconda3\\python.exe",
+                userHome + "\\anaconda3\\python.exe",
+                userHome + "\\AppData\\Local\\miniconda3\\python.exe",
+                userHome + "\\AppData\\Local\\anaconda3\\python.exe",
+                "C:\\ProgramData\\miniconda3\\python.exe",
+                "C:\\ProgramData\\anaconda3\\python.exe",
+            };
+            for (String ruta : rutasWin) {
+                File f = new File(ruta);
+                if (f.exists() && f.canExecute()) return f.getAbsolutePath();
+            }
+            // Busqueda dinamica en carpeta de versiones instaladas
+            File pythonDir = new File(
+                    userHome + "\\AppData\\Local\\Programs\\Python");
+            if (pythonDir.isDirectory()) {
+                File[] versiones = pythonDir.listFiles(File::isDirectory);
+                if (versiones != null) {
+                    for (File v : versiones) {
+                        File exe = new File(v, "python.exe");
+                        if (exe.exists() && exe.canExecute()) return exe.getAbsolutePath();
+                    }
+                }
+            }
+            if (new File("C:\\Windows\\py.exe").exists())
+                return "C:\\Windows\\py.exe";
+            if (new File("C:\\Windows\\System32\\py.exe").exists())
+                return "C:\\Windows\\System32\\py.exe";
+            return null;
+        } else {
+            for (String cmd : new String[]{ "python3", "python" }) {
+                try {
+                    Process p = new ProcessBuilder(cmd, "--version")
+                            .redirectErrorStream(true).start();
+                    p.waitFor();
+                    if (p.exitValue() == 0) return cmd;
+                } catch (IOException | InterruptedException ignored) {}
+            }
+            return null;
+        }
+    }
+
+    // =========================================================
     // BUSCAR SCRIPT PYTHON
     // =========================================================
     private static File buscarScript(File carpetaResultados) {
@@ -290,21 +347,6 @@ public class MedidorRendimiento {
         System.out.println("  Ejecuta manualmente:");
         System.out.println("  python \"" + script.getAbsolutePath() + "\""
                 + " \"" + csvPath + "\" \"" + carpeta.getAbsolutePath() + "\"");
-    }
-
-    // =========================================================
-    // BUSCAR EJECUTABLE PYTHON (stub – se completa en siguiente commit)
-    // =========================================================
-    private static String buscarEjecutablePython() {
-        for (String cmd : new String[]{ "python3", "python" }) {
-            try {
-                Process p = new ProcessBuilder(cmd, "--version")
-                        .redirectErrorStream(true).start();
-                p.waitFor();
-                if (p.exitValue() == 0) return cmd;
-            } catch (IOException | InterruptedException ignored) {}
-        }
-        return null;
     }
 
     // =========================================================
