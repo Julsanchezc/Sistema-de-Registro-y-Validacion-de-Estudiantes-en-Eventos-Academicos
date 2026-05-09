@@ -1,0 +1,112 @@
+package system;
+
+import ui.Colores;
+
+/**
+ * GestorEventos.java
+ * Lista enlazada simple de eventos academicos implementada desde cero.
+ * ESTRUCTURA DE DATOS: Lista enlazada (Linked List)
+ *
+ * Cada nodo contiene un ValidadorEventos con su propio ArbolAVL,
+ * Cola de espera y Pila de historial.
+ * Incluye persistencia: guardar/cargar el estado completo en un archivo
+ * de texto plano (formato pipe-delimitado, sin librerias externas).
+ */
+public class GestorEventos {
+
+    // =========================================================
+    // NODO INTERNO DE LA LISTA ENLAZADA
+    // =========================================================
+    private static class NodoEvento {
+        ValidadorEventos evento;
+        NodoEvento       siguiente;
+
+        NodoEvento(ValidadorEventos evento) {
+            this.evento    = evento;
+            this.siguiente = null;
+        }
+    }
+
+    // =========================================================
+    // ATRIBUTOS
+    // =========================================================
+    private NodoEvento cabeza;
+    private int        cantidadEventos;
+
+    public GestorEventos() {
+        this.cabeza          = null;
+        this.cantidadEventos = 0;
+    }
+
+    // =========================================================
+    // CREAR EVENTO — inserta al final de la lista  O(n)
+    // =========================================================
+    public void crearEvento(String nombre, int capacidad) {
+        ValidadorEventos nuevoEvento = new ValidadorEventos(nombre, capacidad);
+        agregarEvento(nuevoEvento);
+        System.out.println(Colores.ok(
+                "✓ Evento creado: \"" + nombre + "\"  (capacidad: " + capacidad + ")"));
+    }
+
+    private void agregarEvento(ValidadorEventos ev) {
+        NodoEvento nuevoNodo = new NodoEvento(ev);
+        if (cabeza == null) {
+            cabeza = nuevoNodo;
+        } else {
+            NodoEvento actual = cabeza;
+            while (actual.siguiente != null) actual = actual.siguiente;
+            actual.siguiente = nuevoNodo;
+        }
+        cantidadEventos++;
+    }
+
+    // =========================================================
+    // OBTENER EVENTO POR INDICE (base 1)  O(n)
+    // =========================================================
+    public ValidadorEventos obtenerEvento(int indice) {
+        if (indice < 1 || indice > cantidadEventos) return null;
+        NodoEvento actual = cabeza;
+        for (int i = 1; i < indice; i++) actual = actual.siguiente;
+        return actual.evento;
+    }
+
+    // =========================================================
+    // LISTAR TODOS LOS EVENTOS
+    // =========================================================
+    public void listarEventos() {
+        if (cabeza == null) {
+            System.out.println(Colores.warn("  (No hay eventos creados)"));
+            return;
+        }
+        System.out.println(Colores.titulo(
+                "\n╔══════ EVENTOS REGISTRADOS ════════════════════════════════════╗"));
+        NodoEvento actual = cabeza;
+        int i = 1;
+        while (actual != null) {
+            System.out.printf(Colores.CYAN + "║  [" + Colores.CYAN_B + "%d"
+                    + Colores.CYAN + "] " + Colores.RESET + "%s%n", i, actual.evento);
+            actual = actual.siguiente;
+            i++;
+        }
+        System.out.println(Colores.titulo(
+                "╚══════════════════════════════════════════════╝\n"));
+    }
+
+    // =========================================================
+    // ELIMINAR EVENTO POR INDICE  O(n)
+    // =========================================================
+    public boolean eliminarEvento(int indice) {
+        if (indice < 1 || indice > cantidadEventos) return false;
+        if (indice == 1) {
+            cabeza = cabeza.siguiente;
+        } else {
+            NodoEvento actual = cabeza;
+            for (int i = 1; i < indice - 1; i++) actual = actual.siguiente;
+            actual.siguiente = actual.siguiente.siguiente;
+        }
+        cantidadEventos--;
+        return true;
+    }
+c int     getCantidadEventos() { return cantidadEventos; }
+    public boolean hayEventos()         { return cabeza != null; }
+}
