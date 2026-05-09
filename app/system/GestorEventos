@@ -107,6 +107,26 @@ public class GestorEventos {
         cantidadEventos--;
         return true;
     }
-c int     getCantidadEventos() { return cantidadEventos; }
-    public boolean hayEventos()         { return cabeza != null; }
+    // =========================================================
+    // PERSISTENCIA — GUARDAR
+    // Formato: EVENTO|nombre|capacidad
+    //          ESTUDIANTE|id|nombre|correo|programa|asistencia
+    //          COLA|id|nombre|correo|programa
+    // =========================================================
+    public void guardarDatos(String path) {
+        java.io.File archivo = new java.io.File(path);
+        if (archivo.getParentFile() != null) archivo.getParentFile().mkdirs();
+        try (java.io.PrintWriter pw =
+                     new java.io.PrintWriter(new java.io.FileWriter(archivo))) {
+            NodoEvento actual = cabeza;
+            while (actual != null) {
+                actual.evento.escribirEnArchivo(pw);
+                actual = actual.siguiente;
+            }
+            System.out.println(Colores.ok(
+                    "✓ Datos guardados en: " + archivo.getAbsolutePath()));
+        } catch (java.io.IOException e) {
+            System.out.println(Colores.error("❌ Error al guardar: " + e.getMessage()));
+        }
+    }
 }
