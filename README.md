@@ -1,6 +1,6 @@
 # Sistema de Registro y Validación de Estudiantes en Eventos Académicos
 
-Sistema de gestión de asistencia a eventos académicos implementado en Java, usando un **Árbol AVL** como estructura principal de almacenamiento y múltiples estructuras adicionales. Desarrollado para la asignatura **Estructuras de Datos (2016699) — UNAL 2026**.
+Sistema de gestión de asistencia a eventos académicos implementado en Java, usando un **Árbol AVL** como estructura principal de almacenamiento. Desarrollado para la asignatura **Estructuras de Datos (2016699) — UNAL 2026**.
 
 ---
 
@@ -9,100 +9,135 @@ Sistema de gestión de asistencia a eventos académicos implementado en Java, us
 | Nombre completo | Correo institucional |
 |---|---|
 | Edison Stiven Quintero Motta | edquinterom@unal.edu.co |
-| Juan Diego Sánchez Peña | Juasanchezpe@unal.edu.co |
+| Juan Diego Sánchez Peña | juasanchezpe@unal.edu.co |
 | Juan Pablo Gómez Cristancho | jugomezcr@unal.edu.co |
 | Julian Santiago Sanchez Castro *(Líder)* | julsanchezc@unal.edu.co |
 | Rafael Ramírez León | rramirezl@unal.edu.co |
 
 ---
 
-## Descripción del proyecto
+## Descripción
 
-El sistema permite gestionar el registro y la asistencia de estudiantes en múltiples eventos académicos. Cada evento tiene su propio árbol AVL que almacena y organiza a los estudiantes por ID institucional, garantizando búsquedas, inserciones y eliminaciones en tiempo **O(log n)**.
+El sistema permite crear y gestionar múltiples eventos académicos. Cada evento mantiene su propio árbol AVL con los estudiantes inscritos, una cola de espera FIFO para cuando el aforo se llena, y una pila LIFO para deshacer la última eliminación.
 
-Todas las estructuras de datos se implementan manualmente desde cero, sin librerías externas de colecciones:
-
-| Estructura | Clase | Uso |
-|---|---|---|
-| Árbol AVL | `ArbolAVL` + `NodoAVL` | Almacenamiento principal de estudiantes por evento — O(log n) |
-| Árbol BST | `ArbolBST` | Comparativa de rendimiento frente al AVL |
-| Cola FIFO | `Cola<T>` | Lista de espera automática cuando el aforo está completo |
-| Pila LIFO | `PilaHistorial` | Historial de operaciones + deshacer última eliminación |
-| Lista enlazada | `GestorEventos` | Gestión de múltiples eventos + persistencia en archivo |
+Todas las estructuras de datos están implementadas manualmente desde cero, sin librerías de colecciones.
 
 ---
 
-## Estructura del proyecto
+## Arquitectura
+
+El proyecto sigue una arquitectura en capas con dos raíces de código fuente:
 
 ```
-app/
-├── Main.java                        # Punto de entrada — menús interactivos
-├── model/
-│   └── Estudiante.java              # Modelo de datos: id, nombre, correo, programa, asistencia
-├── ui/
-│   ├── Colores.java                 # Constantes ANSI y helpers de color
-│   └── Consola.java                 # Barras de progreso, tablas con bordes Unicode
-├── structures/
-│   ├── NodoAVL.java                 # Nodo AVL: estudiante + altura + punteros (incl. padre)
-│   ├── ArbolAVL.java                # Árbol AVL auto-balanceado — O(log n)
-│   ├── ArbolBST.java                # BST sin balanceo — comparativa de rendimiento
-│   ├── Cola.java                    # Cola genérica FIFO — lista de espera
-│   └── PilaHistorial.java           # Pila LIFO — historial de ops + undo
-├── system/
-│   ├── ValidadorEventos.java        # Lógica de un evento (AVL + Cola + Pila)
-│   └── GestorEventos.java           # Lista enlazada de eventos + persistencia
-└── performance/
-    └── MedidorRendimiento.java      # Pruebas AVL vs BST — 10⁴, 10⁵, 10⁶
+src/core/           → infraestructura transversal (rutas, logs, config, excepciones)
+app/eventos/
+  model/            → Student — modelo de dominio
+  structures/       → AvlTree, AvlNode, BstTree, Queue, HistoryStack
+  service/          → EventService, EventManager, PerformanceService, enums
+  repository/       → EventRepository — única clase con acceso al archivo JSON
+  ui/console/       → ConsoleApp, Colors, Terminal — toda la UI por consola
+  ui/gui/           → MainWindow (stub listo para Swing)
+```
 
-scripts/
-└── graficar_rendimiento.py          # Genera 4 gráficas PNG comparativas desde el CSV
+**Flujo de bootstrap** (orden de inicialización en `Main.java`):
 
-results/
-├── results.csv                      # Resultados de rendimiento (generado automáticamente)
-├── grafica_tiempos.png              # Tiempos AVL por operación
-├── grafica_comparativa.png         # Comparativa AVL vs BST
-├── grafica_altura.png               # Altura real vs log₂(n)
-└── grafica_tabla.png                # Resumen completo con tabla
+```
+AppPaths.ensureDirs() → AppSettings.isLoaded() → new ConsoleApp().run()
+```
 
-data/
-└── datos_eventos.txt                # Persistencia del estado (generado al guardar)
+---
+
+## Estructura de archivos
+
+```
+├── src/
+│   └── core/
+│       ├── AppPaths.java           # Rutas estáticas: data/, logs/, results/
+│       ├── AppLogger.java          # Wrapper de SLF4J
+│       ├── AppSettings.java        # Carga config.properties del classpath
+│       └── exceptions/
+│           ├── AppException.java
+│           └── PersistenceException.java
+│
+├── app/
+│   └── eventos/
+│       ├── Main.java
+│       ├── model/
+│       │   └── Student.java        # id, name, email, program, attended
+│       ├── structures/
+│       │   ├── AvlNode.java        # Nodo AVL con puntero padre
+│       │   ├── AvlTree.java        # AVL auto-balanceado — O(log n)
+│       │   ├── BstTree.java        # BST sin balanceo — solo para benchmarks
+│       │   ├── Queue.java          # Cola genérica FIFO
+│       │   └── HistoryStack.java   # Pila LIFO con soporte undo
+│       ├── service/
+│       │   ├── EventService.java   # Lógica de un evento (AVL + Cola + Pila)
+│       │   ├── EventManager.java   # Lista enlazada de eventos
+│       │   ├── PerformanceService.java  # Benchmarks AVL vs BST
+│       │   ├── RegisterResult.java # Enum resultado de registro
+│       │   └── UndoResult.java     # Enum resultado de deshacer
+│       ├── repository/
+│       │   └── EventRepository.java  # Guardar/cargar JSON con Jackson
+│       └── ui/
+│           ├── console/
+│           │   ├── ConsoleApp.java # Toda la interacción por consola
+│           │   ├── Colors.java     # Constantes y helpers ANSI
+│           │   └── Terminal.java   # Tablas, barras de progreso
+│           └── gui/
+│               └── MainWindow.java # Stub para futura GUI Swing
+│
+├── resources/
+│   ├── config.properties           # Configuración de la aplicación
+│   └── logback.xml                 # Configuración de logs (JSON a logs/app.log)
+│
+├── data/                           # Generado en ejecución (.gitignored)
+│   └── events.json                 # Estado persistido de todos los eventos
+│
+├── logs/                           # Generado en ejecución (.gitignored)
+│   └── app.log                     # Logs estructurados en formato NDJSON
+│
+├── results/                        # Generado al correr benchmarks
+│   └── results.csv
+│
+├── build.gradle
+├── settings.gradle
+├── gradle.properties               # Apunta al JDK 21 (requerido)
+└── gradlew.bat
 ```
 
 ---
 
 ## Requisitos
 
-| Herramienta | Versión mínima |
+| Herramienta | Versión |
 |---|---|
-| Java JDK | 11 |
-| Python | 3.8 (opcional, para gráficas) |
-| matplotlib | cualquiera (se instala automáticamente si falta) |
+| Java JDK | **21** (ver nota abajo) |
+| Gradle | incluido via `gradlew.bat` — no requiere instalación |
+| Python + matplotlib | opcional, para generar gráficas del benchmark |
+
+> **Nota JDK:** El proyecto usa Gradle 8.14, que soporta hasta Java 24. Si tienes Java 26 instalado, el archivo `gradle.properties` ya apunta al JDK 21 ubicado en `C:\Program Files\Java\jdk-21`. Si tu JDK 21 está en otra ruta, edita esa línea:
+> ```properties
+> org.gradle.java.home=C:\\Program Files\\Java\\jdk-21
+> ```
 
 ---
 
 ## Compilar y ejecutar
 
-### PowerShell (Windows)
+Todos los comandos se corren desde la raíz del proyecto en PowerShell:
 
 ```powershell
 # Compilar
-javac -d app\out -sourcepath app (Get-ChildItem app -Recurse -Filter "*.java" | Select-Object -ExpandProperty FullName)
+.\gradlew.bat build
 
 # Ejecutar
-java -cp app\out Main
+.\gradlew.bat run
+
+# Compilar y ejecutar en un paso
+.\gradlew.bat run --console=plain
 ```
 
-### Linux / macOS / Git Bash
-
-```bash
-# Compilar
-javac -d app/out -sourcepath app $(find app -name "*.java")
-
-# Ejecutar
-java -cp app/out Main
-```
-
-> Ejecutar siempre desde la raíz del proyecto para que las rutas `data/` y `results/` funcionen correctamente.
+> `--console=plain` evita que Gradle sobreescriba las líneas de la interfaz con su barra de progreso.
 
 ---
 
@@ -147,51 +182,84 @@ java -cp app/out Main
 ╚══════════════════════════════════════════════════════════╝
 ```
 
-**Funcionalidades destacadas:**
+**Comportamientos importantes:**
 
-- **Cola de espera automática** — cuando el evento alcanza su aforo, los nuevos estudiantes se encolan automáticamente. Al eliminar un inscrito, el primero de la cola es promovido.
-- **Deshacer eliminación** — la opción `[5]` restaura el último estudiante eliminado gracias a la pila de historial.
-- **Barra de progreso animada** — la opción `[11]` popula el evento con una barra animada en tiempo real.
-- **Tabla de estudiantes** — la opción `[6]` muestra una tabla con bordes Unicode y celdas coloreadas (verde ✓ / rojo ✗).
-- **Visualización del árbol** — la opción `[10]` imprime el árbol AVL con altura y factor de balance coloreado (verde=0, amarillo=±1).
-- **Persistencia** — guardar/cargar el estado completo de todos los eventos en `data/datos_eventos.txt`.
-- **Estado con dos porcentajes** — la opción `[9]` muestra % de inscritos sobre capacidad y % de asistencia sobre inscritos.
+- **Cola de espera automática** — cuando el evento alcanza su aforo, nuevos registros van a la cola. Al eliminar un inscrito, el primero de la cola es promovido automáticamente.
+- **Deshacer eliminación** — `[5]` restaura el último estudiante eliminado. Si el evento está lleno, lo mueve a la cola en vez de reinsertarlo.
+- **Historial** — `[8]` muestra las últimas 50 operaciones (LIFO). Las entradas con `[*]` son eliminaciones que pueden deshacerse.
+- **Barra animada** — `[11]` agrega N estudiantes aleatorios mostrando progreso en tiempo real.
+
+---
+
+## Estructuras de datos
+
+| Estructura | Clase | Uso en el sistema |
+|---|---|---|
+| Árbol AVL | `AvlTree` + `AvlNode` | Almacenamiento principal por evento — O(log n) |
+| Cola FIFO | `Queue<T>` | Lista de espera cuando el aforo está completo |
+| Pila LIFO | `HistoryStack` | Historial de operaciones + deshacer última eliminación |
+| Lista enlazada | `EventManager` (nodos internos) | Gestión de múltiples eventos |
+| Árbol BST | `BstTree` | Solo para comparativa de rendimiento |
+
+---
+
+## Persistencia
+
+El estado completo se guarda en `data/events.json` usando **Jackson Databind**. El archivo incluye todos los eventos con sus estudiantes inscritos y cola de espera.
+
+```json
+{
+  "events": [
+    {
+      "name": "Conferencia UNAL",
+      "maxCapacity": 30,
+      "students": [
+        { "id": 1, "name": "Ana Garcia", "email": "...", "program": "...", "attended": false }
+      ],
+      "queue": []
+    }
+  ]
+}
+```
+
+Las opciones `[5] Guardar` y `[6] Cargar` del gestor permiten especificar una ruta personalizada. Si se presiona Enter sin escribir nada, se usa `data/events.json` por defecto.
+
+---
+
+## Logs
+
+La aplicación escribe logs estructurados en `logs/app.log` en formato **NDJSON** (una línea JSON por entrada). La consola solo muestra mensajes de nivel `WARN` o superior.
+
+```json
+{"@timestamp":"2026-06-08T...","level":"INFO","message":"Student registered: id=1 name='Ana Garcia'"}
+```
 
 ---
 
 ## Análisis de rendimiento (opción 7)
 
-Ejecuta inserción, búsqueda y eliminación comparando **AVL vs BST** con datos aleatorios (Fisher-Yates, semilla 42) para n = 10.000, 100.000 y 1.000.000. Los resultados se exportan a `results/results.csv` y Python genera las gráficas automáticamente.
+Compara **AVL vs BST** con datos aleatorios (Fisher-Yates, semilla 42) para n = 10.000, 100.000 y 1.000.000. Los resultados se exportan a `results/results.csv` y Python genera las gráficas automáticamente si está instalado.
 
 ### Resultados obtenidos
 
-| n | AVL Ins (ms) | AVL Bus (ms) | AVL Elm (ms) | Alt AVL | BST Ins (ms) | BST Bus (ms) | BST Elm (ms) | Alt BST | log₂(n) |
+| n | AVL ins | AVL find | AVL del | Alt AVL | BST ins | BST find | BST del | Alt BST | log₂(n) |
 |---|---|---|---|---|---|---|---|---|---|
-| 10.000 | 7 | 2 | 2 | 16 | 6 | 2 | 3 | 30 | 13.29 |
-| 100.000 | 54 | 34 | 35 | 20 | 38 | 31 | 46 | 44 | 16.61 |
-| 1.000.000 | 1.251 | 809 | 988 | 24 | 1.149 | 843 | 968 | 47 | 19.93 |
+| 10.000 | 7 ms | 2 ms | 2 ms | 16 | 6 ms | 2 ms | 3 ms | 30 | 13.29 |
+| 100.000 | 54 ms | 34 ms | 35 ms | 20 | 38 ms | 31 ms | 46 ms | 44 | 16.61 |
+| 1.000.000 | 1.251 ms | 809 ms | 988 ms | 24 | 1.149 ms | 843 ms | 968 ms | 47 | 19.93 |
 
-**Caso degenerado** con n=2.000 inserción secuencial:
-- AVL altura: **11** (log₂(2000)=10.97 — límite 1.44×log₂=15.8)
-- BST altura: **2.000** (degenerado — equivale a lista enlazada)
-
-### Gráficas generadas
-
-| Gráfica | Contenido |
-|---|---|
-| `grafica_tiempos.png` | Tiempos AVL por operación para cada n |
-| `grafica_comparativa.png` | Comparativa AVL vs BST en barras |
-| `grafica_altura.png` | Altura real AVL y BST vs log₂(n) teórico |
-| `grafica_tabla.png` | Resumen comparativo completo con tabla |
+**Caso degenerado** — inserción secuencial 1, 2, …, 2000:
+- AVL altura: **11** (log₂(2000) = 10.97, límite 1.44× = 15.8)
+- BST altura: **2000** (degenerado — equivale a lista enlazada)
 
 > Si Python no corre automáticamente:
 > ```bash
-> python scripts/graficar_rendimiento.py results/results.csv results/
+> python results/graficar_rendimiento.py results/results.csv results/
 > ```
 
 ---
 
-## Complejidad de las operaciones
+## Complejidad
 
 | Operación | AVL | BST (aleatorio) | BST (secuencial) |
 |---|---|---|---|
@@ -199,15 +267,19 @@ Ejecuta inserción, búsqueda y eliminación comparando **AVL vs BST** con datos
 | Búsqueda | O(log n) | O(log n) esperado | O(n) |
 | Eliminación | O(log n) | O(log n) esperado | O(n) |
 | Altura garantizada | h ≤ 1.44·log₂(n) | ~2.5·log₂(n) promedio | h = n |
-| Cola: encolar/desencolar | O(1) | — | — |
+| Cola: enqueue/dequeue | O(1) | — | — |
 | Pila: push/pop | O(1) | — | — |
 
 ---
 
-## Lenguajes y herramientas
+## Dependencias (Gradle)
 
-- **Java** — lógica principal, estructuras de datos, interfaz CLI con colores ANSI
-- **Python / matplotlib** — generación de gráficas comparativas de rendimiento
+| Librería | Uso |
+|---|---|
+| `slf4j-api` + `logback-classic` | Logging |
+| `logstash-logback-encoder` | Formato JSON en los logs |
+| `jackson-databind` | Serialización JSON para persistencia |
+| `junit-jupiter` | Tests unitarios |
 
 ---
 

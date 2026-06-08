@@ -37,3 +37,11 @@ bin/
 *.class
 *.log
 /out/
+
+### Gradle ###
+.gradle/
+build/
+
+### Runtime directories (auto-creados, no versionar) ###
+data/
+logs/
