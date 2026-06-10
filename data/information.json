@@ -1,165 +1,3299 @@
 {
-  "events" : [ {
-    "name" : "Conferencia IA y Machine Learning",
-    "maxCapacity" : 10,
-    "students" : [ {
-      "id" : 1,
-      "name" : "Ana Garcia",
-      "email" : "ana.garcia@unal.edu.co",
-      "program" : "Ing. Sistemas",
-      "attended" : true,
-      "attendanceCount" : 3
-    }, {
-      "id" : 2,
-      "name" : "Carlos Lopez",
-      "email" : "carlos.lopez@unal.edu.co",
-      "program" : "Matematicas",
-      "attended" : true,
-      "attendanceCount" : 2
-    }, {
-      "id" : 3,
-      "name" : "Diana Perez",
-      "email" : "diana.perez@unal.edu.co",
-      "program" : "Ing. Industrial",
-      "attended" : true,
-      "attendanceCount" : 1
-    }, {
-      "id" : 4,
-      "name" : "Eduardo Gomez",
-      "email" : "eduardo.gomez@unal.edu.co",
-      "program" : "Fisica",
-      "attended" : false,
-      "attendanceCount" : 0
-    }, {
-      "id" : 5,
-      "name" : "Francisca Ruiz",
-      "email" : "francisca.ruiz@unal.edu.co",
-      "program" : "Estadistica",
-      "attended" : true,
-      "attendanceCount" : 2
-    }, {
-      "id" : 6,
-      "name" : "Gabriel Torres",
-      "email" : "gabriel.torres@unal.edu.co",
-      "program" : "Economia",
-      "attended" : false,
-      "attendanceCount" : 0
-    }, {
-      "id" : 7,
-      "name" : "Helena Morales",
-      "email" : "helena.morales@unal.edu.co",
-      "program" : "Ing. Sistemas",
-      "attended" : true,
-      "attendanceCount" : 1
-    }, {
-      "id" : 8,
-      "name" : "Ivan Castro",
-      "email" : "ivan.castro@unal.edu.co",
-      "program" : "Matematicas",
-      "attended" : false,
-      "attendanceCount" : 0
-    } ],
-    "queue" : [ {
-      "id" : 11,
-      "name" : "Laura Mendoza",
-      "email" : "laura.mendoza@unal.edu.co",
-      "program" : "Derecho",
-      "attended" : false,
-      "attendanceCount" : 0
-    }, {
-      "id" : 12,
-      "name" : "Miguel Herrera",
-      "email" : "miguel.herrera@unal.edu.co",
-      "program" : "Administracion",
-      "attended" : false,
-      "attendanceCount" : 0
-    } ]
-  }, {
-    "name" : "Taller de Estructuras de Datos",
-    "maxCapacity" : 8,
-    "students" : [ {
-      "id" : 1,
-      "name" : "Ana Garcia",
-      "email" : "ana.garcia@unal.edu.co",
-      "program" : "Ing. Sistemas",
-      "attended" : true,
-      "attendanceCount" : 2
-    }, {
-      "id" : 2,
-      "name" : "Carlos Lopez",
-      "email" : "carlos.lopez@unal.edu.co",
-      "program" : "Matematicas",
-      "attended" : false,
-      "attendanceCount" : 0
-    }, {
-      "id" : 3,
-      "name" : "Diana Perez",
-      "email" : "diana.perez@unal.edu.co",
-      "program" : "Ing. Industrial",
-      "attended" : true,
-      "attendanceCount" : 1
-    }, {
-      "id" : 9,
-      "name" : "Julia Vargas",
-      "email" : "julia.vargas@unal.edu.co",
-      "program" : "Ing. Sistemas",
-      "attended" : true,
-      "attendanceCount" : 3
-    }, {
-      "id" : 10,
-      "name" : "Kevin Reyes",
-      "email" : "kevin.reyes@unal.edu.co",
-      "program" : "Quimica",
-      "attended" : true,
-      "attendanceCount" : 2
-    } ],
-    "queue" : [ ]
-  }, {
-    "name" : "Semana de Ingenieria UNAL 2026",
-    "maxCapacity" : 15,
-    "students" : [ {
-      "id" : 1,
-      "name" : "Ana Garcia",
-      "email" : "ana.garcia@unal.edu.co",
-      "program" : "Ing. Sistemas",
-      "attended" : true,
-      "attendanceCount" : 1
-    }, {
-      "id" : 5,
-      "name" : "Francisca Ruiz",
-      "email" : "francisca.ruiz@unal.edu.co",
-      "program" : "Estadistica",
-      "attended" : true,
-      "attendanceCount" : 1
-    }, {
-      "id" : 9,
-      "name" : "Julia Vargas",
-      "email" : "julia.vargas@unal.edu.co",
-      "program" : "Ing. Sistemas",
-      "attended" : true,
-      "attendanceCount" : 1
-    }, {
-      "id" : 13,
-      "name" : "Natalia Flores",
-      "email" : "natalia.flores@unal.edu.co",
-      "program" : "Biologia",
-      "attended" : false,
-      "attendanceCount" : 0
-    }, {
-      "id" : 14,
-      "name" : "Oscar Romero",
-      "email" : "oscar.romero@unal.edu.co",
-      "program" : "Arquitectura",
-      "attended" : false,
-      "attendanceCount" : 0
-    } ],
-    "queue" : [ {
-      "id" : 15,
-      "name" : "Paula Diaz",
-      "email" : "paula.diaz@unal.edu.co",
-      "program" : "Psicologia",
-      "attended" : false,
-      "attendanceCount" : 0
-    } ]
-  } ]
+  "events": [
+    {
+      "name": "Congreso Nacional de Inteligencia Artificial",
+      "maxCapacity": 100,
+      "students": [
+        {
+          "id": 1,
+          "name": "Isabella Vargas",
+          "email": "isabella.vargas1@unal.edu.co",
+          "program": "Biologia",
+          "attended": false,
+          "attendanceCount": 0
+        },
+        {
+          "id": 2,
+          "name": "Karen Sanchez",
+          "email": "karen.sanchez2@unal.edu.co",
+          "program": "Medicina",
+          "attended": false,
+          "attendanceCount": 0
+        },
+        {
+          "id": 3,
+          "name": "Maria Castro",
+          "email": "maria.castro3@unal.edu.co",
+          "program": "Fisica",
+          "attended": false,
+          "attendanceCount": 0
+        },
+        {
+          "id": 4,
+          "name": "Lina Rios",
+          "email": "lina.rios4@unal.edu.co",
+          "program": "Derecho",
+          "attended": true,
+          "attendanceCount": 1
+        },
+        {
+          "id": 5,
+          "name": "Maria Perez",
+          "email": "maria.perez5@unal.edu.co",
+          "program": "Ing. Industrial",
+          "attended": true,
+          "attendanceCount": 1
+        },
+        {
+          "id": 6,
+          "name": "Pablo Garcia",
+          "email": "pablo.garcia6@unal.edu.co",
+          "program": "Psicologia",
+          "attended": true,
+          "attendanceCount": 3
+        },
+        {
+          "id": 7,
+          "name": "Laura Herrera",
+          "email": "laura.herrera7@unal.edu.co",
+          "program": "Ing. Civil",
+          "attended": true,
+          "attendanceCount": 3
+        },
+        {
+          "id": 8,
+          "name": "Viviana Romero",
+          "email": "viviana.romero8@unal.edu.co",
+          "program": "Administracion de Empresas",
+          "attended": true,
+          "attendanceCount": 1
+        },
+        {
+          "id": 9,
+          "name": "Rafael Castillo",
+          "email": "rafael.castillo9@unal.edu.co",
+          "program": "Ing. Industrial",
+          "attended": true,
+          "attendanceCount": 3
+        },
+        {
+          "id": 10,
+          "name": "Felipe Munoz",
+          "email": "felipe.munoz10@unal.edu.co",
+          "program": "Economia",
+          "attended": false,
+          "attendanceCount": 0
+        },
+        {
+          "id": 11,
+          "name": "Adriana Acosta",
+          "email": "adriana.acosta11@unal.edu.co",
+          "program": "Ing. Civil",
+          "attended": true,
+          "attendanceCount": 6
+        },
+        {
+          "id": 12,
+          "name": "Monica Moreno",
+          "email": "monica.moreno12@unal.edu.co",
+          "program": "Quimica",
+          "attended": true,
+          "attendanceCount": 4
+        },
+        {
+          "id": 13,
+          "name": "Angela Castro",
+          "email": "angela.castro13@unal.edu.co",
+          "program": "Quimica",
+          "attended": false,
+          "attendanceCount": 0
+        },
+        {
+          "id": 14,
+          "name": "Carolina Suarez",
+          "email": "carolina.suarez14@unal.edu.co",
+          "program": "Derecho",
+          "attended": false,
+          "attendanceCount": 0
+        },
+        {
+          "id": 15,
+          "name": "Diana Mendoza",
+          "email": "diana.mendoza15@unal.edu.co",
+          "program": "Ing. Civil",
+          "attended": false,
+          "attendanceCount": 0
+        },
+        {
+          "id": 16,
+          "name": "Fernando Rojas",
+          "email": "fernando.rojas16@unal.edu.co",
+          "program": "Biologia",
+          "attended": true,
+          "attendanceCount": 1
+        },
+        {
+          "id": 17,
+          "name": "Fernando Reyes",
+          "email": "fernando.reyes17@unal.edu.co",
+          "program": "Economia",
+          "attended": false,
+          "attendanceCount": 0
+        },
+        {
+          "id": 18,
+          "name": "Adriana Mendoza",
+          "email": "adriana.mendoza18@unal.edu.co",
+          "program": "Psicologia",
+          "attended": true,
+          "attendanceCount": 5
+        },
+        {
+          "id": 19,
+          "name": "Carolina Rojas",
+          "email": "carolina.rojas19@unal.edu.co",
+          "program": "Economia",
+          "attended": true,
+          "attendanceCount": 2
+        },
+        {
+          "id": 20,
+          "name": "Isabella Ospina",
+          "email": "isabella.ospina20@unal.edu.co",
+          "program": "Administracion de Empresas",
+          "attended": true,
+          "attendanceCount": 4
+        },
+        {
+          "id": 21,
+          "name": "Adriana Silva",
+          "email": "adriana.silva21@unal.edu.co",
+          "program": "Ing. Civil",
+          "attended": true,
+          "attendanceCount": 6
+        },
+        {
+          "id": 22,
+          "name": "Andrea Castro",
+          "email": "andrea.castro22@unal.edu.co",
+          "program": "Psicologia",
+          "attended": true,
+          "attendanceCount": 4
+        },
+        {
+          "id": 23,
+          "name": "Viviana Herrera",
+          "email": "viviana.herrera23@unal.edu.co",
+          "program": "Fisica",
+          "attended": true,
+          "attendanceCount": 3
+        },
+        {
+          "id": 24,
+          "name": "Santiago Martinez",
+          "email": "santiago.martinez24@unal.edu.co",
+          "program": "Economia",
+          "attended": true,
+          "attendanceCount": 5
+        },
+        {
+          "id": 25,
+          "name": "Juliana Mendoza",
+          "email": "juliana.mendoza25@unal.edu.co",
+          "program": "Quimica",
+          "attended": true,
+          "attendanceCount": 2
+        },
+        {
+          "id": 26,
+          "name": "Miguel Rios",
+          "email": "miguel.rios26@unal.edu.co",
+          "program": "Quimica",
+          "attended": true,
+          "attendanceCount": 4
+        },
+        {
+          "id": 27,
+          "name": "Viviana Aguilar",
+          "email": "viviana.aguilar27@unal.edu.co",
+          "program": "Biologia",
+          "attended": true,
+          "attendanceCount": 1
+        },
+        {
+          "id": 28,
+          "name": "Beatriz Chavez",
+          "email": "beatriz.chavez28@unal.edu.co",
+          "program": "Matematicas",
+          "attended": true,
+          "attendanceCount": 1
+        },
+        {
+          "id": 29,
+          "name": "Pablo Suarez",
+          "email": "pablo.suarez29@unal.edu.co",
+          "program": "Ing. Civil",
+          "attended": true,
+          "attendanceCount": 2
+        },
+        {
+          "id": 30,
+          "name": "Carolina Rojas",
+          "email": "carolina.rojas30@unal.edu.co",
+          "program": "Ing. Industrial",
+          "attended": true,
+          "attendanceCount": 4
+        },
+        {
+          "id": 31,
+          "name": "Monica Sanchez",
+          "email": "monica.sanchez31@unal.edu.co",
+          "program": "Medicina",
+          "attended": true,
+          "attendanceCount": 4
+        },
+        {
+          "id": 32,
+          "name": "Mariana Guzman",
+          "email": "mariana.guzman32@unal.edu.co",
+          "program": "Ing. de Sistemas",
+          "attended": true,
+          "attendanceCount": 4
+        },
+        {
+          "id": 33,
+          "name": "Angela Silva",
+          "email": "angela.silva33@unal.edu.co",
+          "program": "Ing. Industrial",
+          "attended": true,
+          "attendanceCount": 2
+        },
+        {
+          "id": 34,
+          "name": "Natalia Ramirez",
+          "email": "natalia.ramirez34@unal.edu.co",
+          "program": "Derecho",
+          "attended": true,
+          "attendanceCount": 5
+        },
+        {
+          "id": 35,
+          "name": "Paula Ospina",
+          "email": "paula.ospina35@unal.edu.co",
+          "program": "Matematicas",
+          "attended": true,
+          "attendanceCount": 3
+        },
+        {
+          "id": 36,
+          "name": "Oscar Pena",
+          "email": "oscar.pena36@unal.edu.co",
+          "program": "Derecho",
+          "attended": false,
+          "attendanceCount": 0
+        },
+        {
+          "id": 37,
+          "name": "Patricia Torres",
+          "email": "patricia.torres37@unal.edu.co",
+          "program": "Biologia",
+          "attended": true,
+          "attendanceCount": 5
+        },
+        {
+          "id": 38,
+          "name": "David Vega",
+          "email": "david.vega38@unal.edu.co",
+          "program": "Administracion de Empresas",
+          "attended": true,
+          "attendanceCount": 1
+        },
+        {
+          "id": 39,
+          "name": "Ricardo Rivera",
+          "email": "ricardo.rivera39@unal.edu.co",
+          "program": "Economia",
+          "attended": false,
+          "attendanceCount": 0
+        },
+        {
+          "id": 40,
+          "name": "Angela Ramos",
+          "email": "angela.ramos40@unal.edu.co",
+          "program": "Biologia",
+          "attended": true,
+          "attendanceCount": 2
+        },
+        {
+          "id": 41,
+          "name": "Gabriela Diaz",
+          "email": "gabriela.diaz41@unal.edu.co",
+          "program": "Fisica",
+          "attended": true,
+          "attendanceCount": 1
+        },
+        {
+          "id": 42,
+          "name": "Luis Gonzalez",
+          "email": "luis.gonzalez42@unal.edu.co",
+          "program": "Ing. de Sistemas",
+          "attended": false,
+          "attendanceCount": 0
+        },
+        {
+          "id": 43,
+          "name": "Karen Jimenez",
+          "email": "karen.jimenez43@unal.edu.co",
+          "program": "Ing. de Sistemas",
+          "attended": true,
+          "attendanceCount": 4
+        },
+        {
+          "id": 44,
+          "name": "Alejandro Ramos",
+          "email": "alejandro.ramos44@unal.edu.co",
+          "program": "Quimica",
+          "attended": true,
+          "attendanceCount": 1
+        },
+        {
+          "id": 45,
+          "name": "Patricia Munoz",
+          "email": "patricia.munoz45@unal.edu.co",
+          "program": "Derecho",
+          "attended": true,
+          "attendanceCount": 2
+        },
+        {
+          "id": 46,
+          "name": "Mariana Pena",
+          "email": "mariana.pena46@unal.edu.co",
+          "program": "Biologia",
+          "attended": true,
+          "attendanceCount": 5
+        },
+        {
+          "id": 47,
+          "name": "Catalina Munoz",
+          "email": "catalina.munoz47@unal.edu.co",
+          "program": "Derecho",
+          "attended": true,
+          "attendanceCount": 6
+        },
+        {
+          "id": 48,
+          "name": "Mateo Castro",
+          "email": "mateo.castro48@unal.edu.co",
+          "program": "Fisica",
+          "attended": true,
+          "attendanceCount": 6
+        },
+        {
+          "id": 49,
+          "name": "Sofia Martinez",
+          "email": "sofia.martinez49@unal.edu.co",
+          "program": "Psicologia",
+          "attended": true,
+          "attendanceCount": 1
+        },
+        {
+          "id": 50,
+          "name": "Pablo Cardenas",
+          "email": "pablo.cardenas50@unal.edu.co",
+          "program": "Medicina",
+          "attended": true,
+          "attendanceCount": 6
+        },
+        {
+          "id": 51,
+          "name": "Valentina Torres",
+          "email": "valentina.torres51@unal.edu.co",
+          "program": "Psicologia",
+          "attended": true,
+          "attendanceCount": 5
+        },
+        {
+          "id": 52,
+          "name": "David Rivera",
+          "email": "david.rivera52@unal.edu.co",
+          "program": "Psicologia",
+          "attended": false,
+          "attendanceCount": 0
+        },
+        {
+          "id": 53,
+          "name": "Luis Ortiz",
+          "email": "luis.ortiz53@unal.edu.co",
+          "program": "Fisica",
+          "attended": true,
+          "attendanceCount": 1
+        },
+        {
+          "id": 54,
+          "name": "Luis Ramos",
+          "email": "luis.ramos54@unal.edu.co",
+          "program": "Economia",
+          "attended": true,
+          "attendanceCount": 3
+        },
+        {
+          "id": 55,
+          "name": "Juliana Rios",
+          "email": "juliana.rios55@unal.edu.co",
+          "program": "Fisica",
+          "attended": true,
+          "attendanceCount": 2
+        },
+        {
+          "id": 56,
+          "name": "Alejandro Mendoza",
+          "email": "alejandro.mendoza56@unal.edu.co",
+          "program": "Quimica",
+          "attended": true,
+          "attendanceCount": 5
+        },
+        {
+          "id": 57,
+          "name": "Tomas Mendoza",
+          "email": "tomas.mendoza57@unal.edu.co",
+          "program": "Ing. Civil",
+          "attended": false,
+          "attendanceCount": 0
+        },
+        {
+          "id": 58,
+          "name": "Laura Reyes",
+          "email": "laura.reyes58@unal.edu.co",
+          "program": "Ing. de Sistemas",
+          "attended": false,
+          "attendanceCount": 0
+        },
+        {
+          "id": 59,
+          "name": "Juliana Cardenas",
+          "email": "juliana.cardenas59@unal.edu.co",
+          "program": "Matematicas",
+          "attended": true,
+          "attendanceCount": 6
+        },
+        {
+          "id": 60,
+          "name": "Sofia Rodriguez",
+          "email": "sofia.rodriguez60@unal.edu.co",
+          "program": "Matematicas",
+          "attended": false,
+          "attendanceCount": 0
+        },
+        {
+          "id": 61,
+          "name": "Jorge Castro",
+          "email": "jorge.castro61@unal.edu.co",
+          "program": "Psicologia",
+          "attended": true,
+          "attendanceCount": 5
+        },
+        {
+          "id": 62,
+          "name": "Laura Ramirez",
+          "email": "laura.ramirez62@unal.edu.co",
+          "program": "Derecho",
+          "attended": true,
+          "attendanceCount": 5
+        },
+        {
+          "id": 63,
+          "name": "Hector Acosta",
+          "email": "hector.acosta63@unal.edu.co",
+          "program": "Administracion de Empresas",
+          "attended": true,
+          "attendanceCount": 3
+        },
+        {
+          "id": 64,
+          "name": "Fernando Ortiz",
+          "email": "fernando.ortiz64@unal.edu.co",
+          "program": "Psicologia",
+          "attended": true,
+          "attendanceCount": 1
+        },
+        {
+          "id": 65,
+          "name": "Tomas Gutierrez",
+          "email": "tomas.gutierrez65@unal.edu.co",
+          "program": "Ing. Industrial",
+          "attended": false,
+          "attendanceCount": 0
+        },
+        {
+          "id": 66,
+          "name": "Juan Sanchez",
+          "email": "juan.sanchez66@unal.edu.co",
+          "program": "Psicologia",
+          "attended": true,
+          "attendanceCount": 3
+        },
+        {
+          "id": 67,
+          "name": "Rafael Gomez",
+          "email": "rafael.gomez67@unal.edu.co",
+          "program": "Psicologia",
+          "attended": true,
+          "attendanceCount": 5
+        },
+        {
+          "id": 68,
+          "name": "Alejandro Ortiz",
+          "email": "alejandro.ortiz68@unal.edu.co",
+          "program": "Derecho",
+          "attended": false,
+          "attendanceCount": 0
+        },
+        {
+          "id": 69,
+          "name": "Felipe Vargas",
+          "email": "felipe.vargas69@unal.edu.co",
+          "program": "Economia",
+          "attended": true,
+          "attendanceCount": 1
+        },
+        {
+          "id": 70,
+          "name": "Santiago Medina",
+          "email": "santiago.medina70@unal.edu.co",
+          "program": "Ing. Civil",
+          "attended": true,
+          "attendanceCount": 1
+        },
+        {
+          "id": 71,
+          "name": "Daniela Sanchez",
+          "email": "daniela.sanchez71@unal.edu.co",
+          "program": "Medicina",
+          "attended": true,
+          "attendanceCount": 1
+        },
+        {
+          "id": 72,
+          "name": "Nicolas Castro",
+          "email": "nicolas.castro72@unal.edu.co",
+          "program": "Derecho",
+          "attended": false,
+          "attendanceCount": 0
+        },
+        {
+          "id": 73,
+          "name": "Jorge Vargas",
+          "email": "jorge.vargas73@unal.edu.co",
+          "program": "Quimica",
+          "attended": true,
+          "attendanceCount": 6
+        },
+        {
+          "id": 74,
+          "name": "Adriana Cardona",
+          "email": "adriana.cardona74@unal.edu.co",
+          "program": "Ing. de Sistemas",
+          "attended": false,
+          "attendanceCount": 0
+        },
+        {
+          "id": 75,
+          "name": "Alejandro Vega",
+          "email": "alejandro.vega75@unal.edu.co",
+          "program": "Medicina",
+          "attended": true,
+          "attendanceCount": 4
+        },
+        {
+          "id": 76,
+          "name": "Paola Ramirez",
+          "email": "paola.ramirez76@unal.edu.co",
+          "program": "Psicologia",
+          "attended": true,
+          "attendanceCount": 5
+        },
+        {
+          "id": 77,
+          "name": "Paola Gutierrez",
+          "email": "paola.gutierrez77@unal.edu.co",
+          "program": "Fisica",
+          "attended": true,
+          "attendanceCount": 3
+        },
+        {
+          "id": 78,
+          "name": "Daniela Aguilar",
+          "email": "daniela.aguilar78@unal.edu.co",
+          "program": "Ing. de Sistemas",
+          "attended": true,
+          "attendanceCount": 3
+        },
+        {
+          "id": 79,
+          "name": "Felipe Ramirez",
+          "email": "felipe.ramirez79@unal.edu.co",
+          "program": "Ing. Civil",
+          "attended": false,
+          "attendanceCount": 0
+        },
+        {
+          "id": 80,
+          "name": "Alejandro Pena",
+          "email": "alejandro.pena80@unal.edu.co",
+          "program": "Ing. de Sistemas",
+          "attended": true,
+          "attendanceCount": 3
+        },
+        {
+          "id": 81,
+          "name": "Andres Castro",
+          "email": "andres.castro81@unal.edu.co",
+          "program": "Ing. de Sistemas",
+          "attended": true,
+          "attendanceCount": 1
+        },
+        {
+          "id": 82,
+          "name": "Juan Cardona",
+          "email": "juan.cardona82@unal.edu.co",
+          "program": "Ing. Industrial",
+          "attended": true,
+          "attendanceCount": 2
+        }
+      ],
+      "queue": [
+        {
+          "id": 83,
+          "name": "Gabriela Jimenez",
+          "email": "gabriela.jimenez83@unal.edu.co",
+          "program": "Derecho",
+          "attended": false,
+          "attendanceCount": 0
+        },
+        {
+          "id": 84,
+          "name": "Karen Cardenas",
+          "email": "karen.cardenas84@unal.edu.co",
+          "program": "Ing. Civil",
+          "attended": false,
+          "attendanceCount": 0
+        },
+        {
+          "id": 85,
+          "name": "Valentina Aguilar",
+          "email": "valentina.aguilar85@unal.edu.co",
+          "program": "Derecho",
+          "attended": false,
+          "attendanceCount": 0
+        },
+        {
+          "id": 86,
+          "name": "David Jimenez",
+          "email": "david.jimenez86@unal.edu.co",
+          "program": "Fisica",
+          "attended": false,
+          "attendanceCount": 0
+        },
+        {
+          "id": 87,
+          "name": "Luis Romero",
+          "email": "luis.romero87@unal.edu.co",
+          "program": "Medicina",
+          "attended": false,
+          "attendanceCount": 0
+        },
+        {
+          "id": 88,
+          "name": "Claudia Medina",
+          "email": "claudia.medina88@unal.edu.co",
+          "program": "Psicologia",
+          "attended": false,
+          "attendanceCount": 0
+        }
+      ]
+    },
+    {
+      "name": "Seminario de Redes y Sistemas Distribuidos",
+      "maxCapacity": 50,
+      "students": [
+        {
+          "id": 89,
+          "name": "Carlos Torres",
+          "email": "carlos.torres89@unal.edu.co",
+          "program": "Economia",
+          "attended": true,
+          "attendanceCount": 6
+        },
+        {
+          "id": 90,
+          "name": "Adriana Silva",
+          "email": "adriana.silva90@unal.edu.co",
+          "program": "Psicologia",
+          "attended": true,
+          "attendanceCount": 3
+        },
+        {
+          "id": 91,
+          "name": "Tomas Flores",
+          "email": "tomas.flores91@unal.edu.co",
+          "program": "Medicina",
+          "attended": true,
+          "attendanceCount": 3
+        },
+        {
+          "id": 92,
+          "name": "Mauricio Rojas",
+          "email": "mauricio.rojas92@unal.edu.co",
+          "program": "Fisica",
+          "attended": true,
+          "attendanceCount": 3
+        },
+        {
+          "id": 93,
+          "name": "David Ospina",
+          "email": "david.ospina93@unal.edu.co",
+          "program": "Derecho",
+          "attended": true,
+          "attendanceCount": 2
+        },
+        {
+          "id": 94,
+          "name": "Lina Martinez",
+          "email": "lina.martinez94@unal.edu.co",
+          "program": "Psicologia",
+          "attended": false,
+          "attendanceCount": 0
+        },
+        {
+          "id": 95,
+          "name": "Camilo Suarez",
+          "email": "camilo.suarez95@unal.edu.co",
+          "program": "Ing. Civil",
+          "attended": true,
+          "attendanceCount": 5
+        },
+        {
+          "id": 96,
+          "name": "Hector Vargas",
+          "email": "hector.vargas96@unal.edu.co",
+          "program": "Ing. de Sistemas",
+          "attended": false,
+          "attendanceCount": 0
+        },
+        {
+          "id": 97,
+          "name": "Santiago Ospina",
+          "email": "santiago.ospina97@unal.edu.co",
+          "program": "Medicina",
+          "attended": true,
+          "attendanceCount": 2
+        },
+        {
+          "id": 98,
+          "name": "Paola Suarez",
+          "email": "paola.suarez98@unal.edu.co",
+          "program": "Economia",
+          "attended": false,
+          "attendanceCount": 0
+        },
+        {
+          "id": 99,
+          "name": "Diana Moreno",
+          "email": "diana.moreno99@unal.edu.co",
+          "program": "Medicina",
+          "attended": true,
+          "attendanceCount": 3
+        },
+        {
+          "id": 100,
+          "name": "Catalina Diaz",
+          "email": "catalina.diaz100@unal.edu.co",
+          "program": "Matematicas",
+          "attended": true,
+          "attendanceCount": 6
+        },
+        {
+          "id": 101,
+          "name": "Juliana Castro",
+          "email": "juliana.castro101@unal.edu.co",
+          "program": "Quimica",
+          "attended": false,
+          "attendanceCount": 0
+        },
+        {
+          "id": 102,
+          "name": "Paola Pena",
+          "email": "paola.pena102@unal.edu.co",
+          "program": "Ing. Civil",
+          "attended": true,
+          "attendanceCount": 6
+        },
+        {
+          "id": 103,
+          "name": "Ricardo Flores",
+          "email": "ricardo.flores103@unal.edu.co",
+          "program": "Quimica",
+          "attended": false,
+          "attendanceCount": 0
+        },
+        {
+          "id": 104,
+          "name": "Jorge Mendoza",
+          "email": "jorge.mendoza104@unal.edu.co",
+          "program": "Administracion de Empresas",
+          "attended": true,
+          "attendanceCount": 1
+        },
+        {
+          "id": 105,
+          "name": "Jhon Gomez",
+          "email": "jhon.gomez105@unal.edu.co",
+          "program": "Ing. Industrial",
+          "attended": true,
+          "attendanceCount": 5
+        },
+        {
+          "id": 106,
+          "name": "Rafael Gutierrez",
+          "email": "rafael.gutierrez106@unal.edu.co",
+          "program": "Economia",
+          "attended": false,
+          "attendanceCount": 0
+        },
+        {
+          "id": 107,
+          "name": "Nicolas Rodriguez",
+          "email": "nicolas.rodriguez107@unal.edu.co",
+          "program": "Biologia",
+          "attended": true,
+          "attendanceCount": 6
+        },
+        {
+          "id": 108,
+          "name": "Angela Ramos",
+          "email": "angela.ramos108@unal.edu.co",
+          "program": "Derecho",
+          "attended": true,
+          "attendanceCount": 4
+        },
+        {
+          "id": 109,
+          "name": "Luis Silva",
+          "email": "luis.silva109@unal.edu.co",
+          "program": "Biologia",
+          "attended": false,
+          "attendanceCount": 0
+        },
+        {
+          "id": 110,
+          "name": "Oscar Rivera",
+          "email": "oscar.rivera110@unal.edu.co",
+          "program": "Biologia",
+          "attended": true,
+          "attendanceCount": 2
+        },
+        {
+          "id": 111,
+          "name": "Rafael Romero",
+          "email": "rafael.romero111@unal.edu.co",
+          "program": "Matematicas",
+          "attended": true,
+          "attendanceCount": 3
+        },
+        {
+          "id": 112,
+          "name": "Sebastian Pena",
+          "email": "sebastian.pena112@unal.edu.co",
+          "program": "Psicologia",
+          "attended": false,
+          "attendanceCount": 0
+        },
+        {
+          "id": 113,
+          "name": "Juan Chavez",
+          "email": "juan.chavez113@unal.edu.co",
+          "program": "Ing. Civil",
+          "attended": true,
+          "attendanceCount": 3
+        },
+        {
+          "id": 114,
+          "name": "David Romero",
+          "email": "david.romero114@unal.edu.co",
+          "program": "Medicina",
+          "attended": false,
+          "attendanceCount": 0
+        },
+        {
+          "id": 115,
+          "name": "Jhon Garcia",
+          "email": "jhon.garcia115@unal.edu.co",
+          "program": "Derecho",
+          "attended": false,
+          "attendanceCount": 0
+        },
+        {
+          "id": 116,
+          "name": "Carolina Jimenez",
+          "email": "carolina.jimenez116@unal.edu.co",
+          "program": "Biologia",
+          "attended": true,
+          "attendanceCount": 5
+        },
+        {
+          "id": 117,
+          "name": "Valentina Gomez",
+          "email": "valentina.gomez117@unal.edu.co",
+          "program": "Matematicas",
+          "attended": true,
+          "attendanceCount": 2
+        },
+        {
+          "id": 118,
+          "name": "Valentina Ramirez",
+          "email": "valentina.ramirez118@unal.edu.co",
+          "program": "Biologia",
+          "attended": false,
+          "attendanceCount": 0
+        },
+        {
+          "id": 119,
+          "name": "Adriana Cardenas",
+          "email": "adriana.cardenas119@unal.edu.co",
+          "program": "Ing. de Sistemas",
+          "attended": false,
+          "attendanceCount": 0
+        },
+        {
+          "id": 120,
+          "name": "Mateo Moreno",
+          "email": "mateo.moreno120@unal.edu.co",
+          "program": "Ing. Civil",
+          "attended": true,
+          "attendanceCount": 2
+        },
+        {
+          "id": 121,
+          "name": "Daniel Cardona",
+          "email": "daniel.cardona121@unal.edu.co",
+          "program": "Medicina",
+          "attended": true,
+          "attendanceCount": 3
+        },
+        {
+          "id": 122,
+          "name": "Patricia Sanchez",
+          "email": "patricia.sanchez122@unal.edu.co",
+          "program": "Administracion de Empresas",
+          "attended": true,
+          "attendanceCount": 3
+        },
+        {
+          "id": 123,
+          "name": "Maria Ramos",
+          "email": "maria.ramos123@unal.edu.co",
+          "program": "Psicologia",
+          "attended": true,
+          "attendanceCount": 4
+        },
+        {
+          "id": 124,
+          "name": "Patricia Ramirez",
+          "email": "patricia.ramirez124@unal.edu.co",
+          "program": "Biologia",
+          "attended": true,
+          "attendanceCount": 3
+        },
+        {
+          "id": 125,
+          "name": "Paola Munoz",
+          "email": "paola.munoz125@unal.edu.co",
+          "program": "Derecho",
+          "attended": true,
+          "attendanceCount": 1
+        },
+        {
+          "id": 126,
+          "name": "Claudia Perez",
+          "email": "claudia.perez126@unal.edu.co",
+          "program": "Quimica",
+          "attended": false,
+          "attendanceCount": 0
+        },
+        {
+          "id": 127,
+          "name": "Miguel Reyes",
+          "email": "miguel.reyes127@unal.edu.co",
+          "program": "Economia",
+          "attended": true,
+          "attendanceCount": 5
+        },
+        {
+          "id": 128,
+          "name": "Lina Castillo",
+          "email": "lina.castillo128@unal.edu.co",
+          "program": "Matematicas",
+          "attended": false,
+          "attendanceCount": 0
+        },
+        {
+          "id": 129,
+          "name": "Rafael Rios",
+          "email": "rafael.rios129@unal.edu.co",
+          "program": "Fisica",
+          "attended": true,
+          "attendanceCount": 2
+        },
+        {
+          "id": 130,
+          "name": "Viviana Munoz",
+          "email": "viviana.munoz130@unal.edu.co",
+          "program": "Medicina",
+          "attended": false,
+          "attendanceCount": 0
+        },
+        {
+          "id": 131,
+          "name": "Jorge Jimenez",
+          "email": "jorge.jimenez131@unal.edu.co",
+          "program": "Fisica",
+          "attended": false,
+          "attendanceCount": 0
+        },
+        {
+          "id": 132,
+          "name": "Angela Romero",
+          "email": "angela.romero132@unal.edu.co",
+          "program": "Medicina",
+          "attended": true,
+          "attendanceCount": 6
+        },
+        {
+          "id": 133,
+          "name": "Fernando Torres",
+          "email": "fernando.torres133@unal.edu.co",
+          "program": "Fisica",
+          "attended": true,
+          "attendanceCount": 1
+        },
+        {
+          "id": 134,
+          "name": "Alejandro Ortiz",
+          "email": "alejandro.ortiz134@unal.edu.co",
+          "program": "Quimica",
+          "attended": true,
+          "attendanceCount": 5
+        },
+        {
+          "id": 135,
+          "name": "Jhon Ortiz",
+          "email": "jhon.ortiz135@unal.edu.co",
+          "program": "Medicina",
+          "attended": true,
+          "attendanceCount": 2
+        }
+      ],
+      "queue": [
+        {
+          "id": 136,
+          "name": "Lina Ramirez",
+          "email": "lina.ramirez136@unal.edu.co",
+          "program": "Ing. Civil",
+          "attended": false,
+          "attendanceCount": 0
+        },
+        {
+          "id": 137,
+          "name": "Felipe Acosta",
+          "email": "felipe.acosta137@unal.edu.co",
+          "program": "Quimica",
+          "attended": false,
+          "attendanceCount": 0
+        },
+        {
+          "id": 138,
+          "name": "Jhon Herrera",
+          "email": "jhon.herrera138@unal.edu.co",
+          "program": "Fisica",
+          "attended": false,
+          "attendanceCount": 0
+        },
+        {
+          "id": 139,
+          "name": "Valentina Castro",
+          "email": "valentina.castro139@unal.edu.co",
+          "program": "Administracion de Empresas",
+          "attended": false,
+          "attendanceCount": 0
+        },
+        {
+          "id": 140,
+          "name": "Catalina Medina",
+          "email": "catalina.medina140@unal.edu.co",
+          "program": "Matematicas",
+          "attended": false,
+          "attendanceCount": 0
+        },
+        {
+          "id": 141,
+          "name": "Nicolas Rios",
+          "email": "nicolas.rios141@unal.edu.co",
+          "program": "Psicologia",
+          "attended": false,
+          "attendanceCount": 0
+        },
+        {
+          "id": 142,
+          "name": "Jhon Silva",
+          "email": "jhon.silva142@unal.edu.co",
+          "program": "Biologia",
+          "attended": false,
+          "attendanceCount": 0
+        },
+        {
+          "id": 143,
+          "name": "Laura Aguilar",
+          "email": "laura.aguilar143@unal.edu.co",
+          "program": "Matematicas",
+          "attended": false,
+          "attendanceCount": 0
+        },
+        {
+          "id": 144,
+          "name": "Karen Castillo",
+          "email": "karen.castillo144@unal.edu.co",
+          "program": "Ing. de Sistemas",
+          "attended": false,
+          "attendanceCount": 0
+        }
+      ]
+    },
+    {
+      "name": "Hackathon UNAL 2026 - Innovacion Tecnologica",
+      "maxCapacity": 200,
+      "students": [
+        {
+          "id": 145,
+          "name": "Diana Gomez",
+          "email": "diana.gomez145@unal.edu.co",
+          "program": "Ing. de Sistemas",
+          "attended": true,
+          "attendanceCount": 6
+        },
+        {
+          "id": 146,
+          "name": "Miguel Torres",
+          "email": "miguel.torres146@unal.edu.co",
+          "program": "Matematicas",
+          "attended": true,
+          "attendanceCount": 5
+        },
+        {
+          "id": 147,
+          "name": "Ricardo Rojas",
+          "email": "ricardo.rojas147@unal.edu.co",
+          "program": "Quimica",
+          "attended": true,
+          "attendanceCount": 1
+        },
+        {
+          "id": 148,
+          "name": "Hector Reyes",
+          "email": "hector.reyes148@unal.edu.co",
+          "program": "Psicologia",
+          "attended": true,
+          "attendanceCount": 3
+        },
+        {
+          "id": 149,
+          "name": "Alejandro Rodriguez",
+          "email": "alejandro.rodriguez149@unal.edu.co",
+          "program": "Medicina",
+          "attended": false,
+          "attendanceCount": 0
+        },
+        {
+          "id": 150,
+          "name": "Esteban Ortiz",
+          "email": "esteban.ortiz150@unal.edu.co",
+          "program": "Derecho",
+          "attended": false,
+          "attendanceCount": 0
+        },
+        {
+          "id": 151,
+          "name": "Camila Castro",
+          "email": "camila.castro151@unal.edu.co",
+          "program": "Administracion de Empresas",
+          "attended": true,
+          "attendanceCount": 1
+        },
+        {
+          "id": 152,
+          "name": "Nicolas Flores",
+          "email": "nicolas.flores152@unal.edu.co",
+          "program": "Matematicas",
+          "attended": false,
+          "attendanceCount": 0
+        },
+        {
+          "id": 153,
+          "name": "Juliana Cruz",
+          "email": "juliana.cruz153@unal.edu.co",
+          "program": "Derecho",
+          "attended": false,
+          "attendanceCount": 0
+        },
+        {
+          "id": 154,
+          "name": "Adriana Ramos",
+          "email": "adriana.ramos154@unal.edu.co",
+          "program": "Ing. Industrial",
+          "attended": true,
+          "attendanceCount": 6
+        },
+        {
+          "id": 155,
+          "name": "Gabriela Pena",
+          "email": "gabriela.pena155@unal.edu.co",
+          "program": "Biologia",
+          "attended": true,
+          "attendanceCount": 1
+        },
+        {
+          "id": 156,
+          "name": "Paula Medina",
+          "email": "paula.medina156@unal.edu.co",
+          "program": "Ing. de Sistemas",
+          "attended": true,
+          "attendanceCount": 6
+        },
+        {
+          "id": 157,
+          "name": "Esteban Reyes",
+          "email": "esteban.reyes157@unal.edu.co",
+          "program": "Quimica",
+          "attended": false,
+          "attendanceCount": 0
+        },
+        {
+          "id": 158,
+          "name": "Catalina Castillo",
+          "email": "catalina.castillo158@unal.edu.co",
+          "program": "Matematicas",
+          "attended": true,
+          "attendanceCount": 4
+        },
+        {
+          "id": 159,
+          "name": "Miguel Rios",
+          "email": "miguel.rios159@unal.edu.co",
+          "program": "Matematicas",
+          "attended": false,
+          "attendanceCount": 0
+        },
+        {
+          "id": 160,
+          "name": "Sebastian Cardenas",
+          "email": "sebastian.cardenas160@unal.edu.co",
+          "program": "Quimica",
+          "attended": true,
+          "attendanceCount": 4
+        },
+        {
+          "id": 161,
+          "name": "Viviana Moreno",
+          "email": "viviana.moreno161@unal.edu.co",
+          "program": "Ing. Civil",
+          "attended": false,
+          "attendanceCount": 0
+        },
+        {
+          "id": 162,
+          "name": "Juliana Diaz",
+          "email": "juliana.diaz162@unal.edu.co",
+          "program": "Matematicas",
+          "attended": true,
+          "attendanceCount": 6
+        },
+        {
+          "id": 163,
+          "name": "Diana Ramos",
+          "email": "diana.ramos163@unal.edu.co",
+          "program": "Medicina",
+          "attended": false,
+          "attendanceCount": 0
+        },
+        {
+          "id": 164,
+          "name": "Camilo Medina",
+          "email": "camilo.medina164@unal.edu.co",
+          "program": "Ing. Industrial",
+          "attended": false,
+          "attendanceCount": 0
+        },
+        {
+          "id": 165,
+          "name": "Karen Suarez",
+          "email": "karen.suarez165@unal.edu.co",
+          "program": "Psicologia",
+          "attended": true,
+          "attendanceCount": 3
+        },
+        {
+          "id": 166,
+          "name": "Sergio Cardona",
+          "email": "sergio.cardona166@unal.edu.co",
+          "program": "Ing. Industrial",
+          "attended": false,
+          "attendanceCount": 0
+        },
+        {
+          "id": 167,
+          "name": "Gabriela Vega",
+          "email": "gabriela.vega167@unal.edu.co",
+          "program": "Matematicas",
+          "attended": true,
+          "attendanceCount": 6
+        },
+        {
+          "id": 168,
+          "name": "Catalina Moreno",
+          "email": "catalina.moreno168@unal.edu.co",
+          "program": "Economia",
+          "attended": true,
+          "attendanceCount": 5
+        },
+        {
+          "id": 169,
+          "name": "Viviana Gomez",
+          "email": "viviana.gomez169@unal.edu.co",
+          "program": "Ing. Civil",
+          "attended": false,
+          "attendanceCount": 0
+        },
+        {
+          "id": 170,
+          "name": "Gabriela Mendoza",
+          "email": "gabriela.mendoza170@unal.edu.co",
+          "program": "Fisica",
+          "attended": false,
+          "attendanceCount": 0
+        },
+        {
+          "id": 171,
+          "name": "Daniel Cruz",
+          "email": "daniel.cruz171@unal.edu.co",
+          "program": "Ing. de Sistemas",
+          "attended": true,
+          "attendanceCount": 2
+        },
+        {
+          "id": 172,
+          "name": "Carolina Suarez",
+          "email": "carolina.suarez172@unal.edu.co",
+          "program": "Biologia",
+          "attended": true,
+          "attendanceCount": 2
+        },
+        {
+          "id": 173,
+          "name": "Tomas Ortiz",
+          "email": "tomas.ortiz173@unal.edu.co",
+          "program": "Administracion de Empresas",
+          "attended": true,
+          "attendanceCount": 5
+        },
+        {
+          "id": 174,
+          "name": "Paola Vargas",
+          "email": "paola.vargas174@unal.edu.co",
+          "program": "Matematicas",
+          "attended": false,
+          "attendanceCount": 0
+        },
+        {
+          "id": 175,
+          "name": "Diana Silva",
+          "email": "diana.silva175@unal.edu.co",
+          "program": "Derecho",
+          "attended": false,
+          "attendanceCount": 0
+        },
+        {
+          "id": 176,
+          "name": "Andres Flores",
+          "email": "andres.flores176@unal.edu.co",
+          "program": "Derecho",
+          "attended": true,
+          "attendanceCount": 2
+        },
+        {
+          "id": 177,
+          "name": "Rafael Flores",
+          "email": "rafael.flores177@unal.edu.co",
+          "program": "Economia",
+          "attended": false,
+          "attendanceCount": 0
+        },
+        {
+          "id": 178,
+          "name": "Viviana Acosta",
+          "email": "viviana.acosta178@unal.edu.co",
+          "program": "Ing. de Sistemas",
+          "attended": false,
+          "attendanceCount": 0
+        },
+        {
+          "id": 179,
+          "name": "Sebastian Ortiz",
+          "email": "sebastian.ortiz179@unal.edu.co",
+          "program": "Ing. Civil",
+          "attended": false,
+          "attendanceCount": 0
+        },
+        {
+          "id": 180,
+          "name": "Sofia Torres",
+          "email": "sofia.torres180@unal.edu.co",
+          "program": "Ing. Civil",
+          "attended": false,
+          "attendanceCount": 0
+        },
+        {
+          "id": 181,
+          "name": "Ivan Jimenez",
+          "email": "ivan.jimenez181@unal.edu.co",
+          "program": "Economia",
+          "attended": true,
+          "attendanceCount": 2
+        },
+        {
+          "id": 182,
+          "name": "Ivan Lopez",
+          "email": "ivan.lopez182@unal.edu.co",
+          "program": "Economia",
+          "attended": false,
+          "attendanceCount": 0
+        },
+        {
+          "id": 183,
+          "name": "Ricardo Cardenas",
+          "email": "ricardo.cardenas183@unal.edu.co",
+          "program": "Derecho",
+          "attended": true,
+          "attendanceCount": 5
+        },
+        {
+          "id": 184,
+          "name": "Valentina Ramos",
+          "email": "valentina.ramos184@unal.edu.co",
+          "program": "Medicina",
+          "attended": true,
+          "attendanceCount": 5
+        },
+        {
+          "id": 185,
+          "name": "Camila Munoz",
+          "email": "camila.munoz185@unal.edu.co",
+          "program": "Psicologia",
+          "attended": false,
+          "attendanceCount": 0
+        },
+        {
+          "id": 186,
+          "name": "Mariana Vargas",
+          "email": "mariana.vargas186@unal.edu.co",
+          "program": "Economia",
+          "attended": false,
+          "attendanceCount": 0
+        },
+        {
+          "id": 187,
+          "name": "Sebastian Rojas",
+          "email": "sebastian.rojas187@unal.edu.co",
+          "program": "Ing. de Sistemas",
+          "attended": true,
+          "attendanceCount": 3
+        },
+        {
+          "id": 188,
+          "name": "Angela Gutierrez",
+          "email": "angela.gutierrez188@unal.edu.co",
+          "program": "Matematicas",
+          "attended": false,
+          "attendanceCount": 0
+        },
+        {
+          "id": 189,
+          "name": "Juan Suarez",
+          "email": "juan.suarez189@unal.edu.co",
+          "program": "Medicina",
+          "attended": false,
+          "attendanceCount": 0
+        },
+        {
+          "id": 190,
+          "name": "Camila Aguilar",
+          "email": "camila.aguilar190@unal.edu.co",
+          "program": "Psicologia",
+          "attended": true,
+          "attendanceCount": 2
+        },
+        {
+          "id": 191,
+          "name": "Natalia Reyes",
+          "email": "natalia.reyes191@unal.edu.co",
+          "program": "Psicologia",
+          "attended": false,
+          "attendanceCount": 0
+        },
+        {
+          "id": 192,
+          "name": "Laura Moreno",
+          "email": "laura.moreno192@unal.edu.co",
+          "program": "Economia",
+          "attended": true,
+          "attendanceCount": 4
+        },
+        {
+          "id": 193,
+          "name": "Rafael Aguilar",
+          "email": "rafael.aguilar193@unal.edu.co",
+          "program": "Quimica",
+          "attended": false,
+          "attendanceCount": 0
+        },
+        {
+          "id": 194,
+          "name": "Adriana Cruz",
+          "email": "adriana.cruz194@unal.edu.co",
+          "program": "Ing. Civil",
+          "attended": false,
+          "attendanceCount": 0
+        },
+        {
+          "id": 195,
+          "name": "Pablo Castro",
+          "email": "pablo.castro195@unal.edu.co",
+          "program": "Derecho",
+          "attended": true,
+          "attendanceCount": 2
+        },
+        {
+          "id": 196,
+          "name": "Sandra Diaz",
+          "email": "sandra.diaz196@unal.edu.co",
+          "program": "Ing. Industrial",
+          "attended": false,
+          "attendanceCount": 0
+        },
+        {
+          "id": 197,
+          "name": "Jorge Cardona",
+          "email": "jorge.cardona197@unal.edu.co",
+          "program": "Administracion de Empresas",
+          "attended": true,
+          "attendanceCount": 2
+        },
+        {
+          "id": 198,
+          "name": "Laura Cardenas",
+          "email": "laura.cardenas198@unal.edu.co",
+          "program": "Fisica",
+          "attended": true,
+          "attendanceCount": 4
+        },
+        {
+          "id": 199,
+          "name": "Valentina Castro",
+          "email": "valentina.castro199@unal.edu.co",
+          "program": "Economia",
+          "attended": false,
+          "attendanceCount": 0
+        },
+        {
+          "id": 200,
+          "name": "Jhon Ortiz",
+          "email": "jhon.ortiz200@unal.edu.co",
+          "program": "Ing. Civil",
+          "attended": false,
+          "attendanceCount": 0
+        },
+        {
+          "id": 201,
+          "name": "Diana Garcia",
+          "email": "diana.garcia201@unal.edu.co",
+          "program": "Quimica",
+          "attended": true,
+          "attendanceCount": 3
+        },
+        {
+          "id": 202,
+          "name": "Beatriz Jimenez",
+          "email": "beatriz.jimenez202@unal.edu.co",
+          "program": "Quimica",
+          "attended": false,
+          "attendanceCount": 0
+        },
+        {
+          "id": 203,
+          "name": "Nicolas Flores",
+          "email": "nicolas.flores203@unal.edu.co",
+          "program": "Biologia",
+          "attended": true,
+          "attendanceCount": 3
+        },
+        {
+          "id": 204,
+          "name": "Juliana Romero",
+          "email": "juliana.romero204@unal.edu.co",
+          "program": "Derecho",
+          "attended": false,
+          "attendanceCount": 0
+        },
+        {
+          "id": 205,
+          "name": "Daniela Castro",
+          "email": "daniela.castro205@unal.edu.co",
+          "program": "Matematicas",
+          "attended": false,
+          "attendanceCount": 0
+        },
+        {
+          "id": 206,
+          "name": "Paola Perez",
+          "email": "paola.perez206@unal.edu.co",
+          "program": "Quimica",
+          "attended": true,
+          "attendanceCount": 5
+        },
+        {
+          "id": 207,
+          "name": "Camilo Mendoza",
+          "email": "camilo.mendoza207@unal.edu.co",
+          "program": "Biologia",
+          "attended": false,
+          "attendanceCount": 0
+        },
+        {
+          "id": 208,
+          "name": "Camilo Ortiz",
+          "email": "camilo.ortiz208@unal.edu.co",
+          "program": "Ing. Civil",
+          "attended": true,
+          "attendanceCount": 5
+        },
+        {
+          "id": 209,
+          "name": "Sebastian Gonzalez",
+          "email": "sebastian.gonzalez209@unal.edu.co",
+          "program": "Biologia",
+          "attended": false,
+          "attendanceCount": 0
+        },
+        {
+          "id": 210,
+          "name": "Fernando Sanchez",
+          "email": "fernando.sanchez210@unal.edu.co",
+          "program": "Fisica",
+          "attended": false,
+          "attendanceCount": 0
+        },
+        {
+          "id": 211,
+          "name": "Viviana Acosta",
+          "email": "viviana.acosta211@unal.edu.co",
+          "program": "Quimica",
+          "attended": false,
+          "attendanceCount": 0
+        },
+        {
+          "id": 212,
+          "name": "Mauricio Rodriguez",
+          "email": "mauricio.rodriguez212@unal.edu.co",
+          "program": "Economia",
+          "attended": false,
+          "attendanceCount": 0
+        },
+        {
+          "id": 213,
+          "name": "David Rodriguez",
+          "email": "david.rodriguez213@unal.edu.co",
+          "program": "Ing. Industrial",
+          "attended": true,
+          "attendanceCount": 2
+        },
+        {
+          "id": 214,
+          "name": "Mauricio Gutierrez",
+          "email": "mauricio.gutierrez214@unal.edu.co",
+          "program": "Ing. de Sistemas",
+          "attended": false,
+          "attendanceCount": 0
+        },
+        {
+          "id": 215,
+          "name": "Sandra Gonzalez",
+          "email": "sandra.gonzalez215@unal.edu.co",
+          "program": "Derecho",
+          "attended": true,
+          "attendanceCount": 6
+        },
+        {
+          "id": 216,
+          "name": "Catalina Flores",
+          "email": "catalina.flores216@unal.edu.co",
+          "program": "Ing. Civil",
+          "attended": false,
+          "attendanceCount": 0
+        },
+        {
+          "id": 217,
+          "name": "Natalia Vargas",
+          "email": "natalia.vargas217@unal.edu.co",
+          "program": "Administracion de Empresas",
+          "attended": false,
+          "attendanceCount": 0
+        },
+        {
+          "id": 218,
+          "name": "Ivan Morales",
+          "email": "ivan.morales218@unal.edu.co",
+          "program": "Fisica",
+          "attended": true,
+          "attendanceCount": 3
+        },
+        {
+          "id": 219,
+          "name": "Ricardo Martinez",
+          "email": "ricardo.martinez219@unal.edu.co",
+          "program": "Quimica",
+          "attended": true,
+          "attendanceCount": 2
+        },
+        {
+          "id": 220,
+          "name": "Pablo Diaz",
+          "email": "pablo.diaz220@unal.edu.co",
+          "program": "Ing. Industrial",
+          "attended": false,
+          "attendanceCount": 0
+        },
+        {
+          "id": 221,
+          "name": "Angela Romero",
+          "email": "angela.romero221@unal.edu.co",
+          "program": "Quimica",
+          "attended": true,
+          "attendanceCount": 4
+        },
+        {
+          "id": 222,
+          "name": "Laura Romero",
+          "email": "laura.romero222@unal.edu.co",
+          "program": "Administracion de Empresas",
+          "attended": true,
+          "attendanceCount": 4
+        },
+        {
+          "id": 223,
+          "name": "Tomas Torres",
+          "email": "tomas.torres223@unal.edu.co",
+          "program": "Ing. Civil",
+          "attended": true,
+          "attendanceCount": 5
+        },
+        {
+          "id": 224,
+          "name": "Alejandro Ortiz",
+          "email": "alejandro.ortiz224@unal.edu.co",
+          "program": "Fisica",
+          "attended": false,
+          "attendanceCount": 0
+        },
+        {
+          "id": 225,
+          "name": "Angela Rodriguez",
+          "email": "angela.rodriguez225@unal.edu.co",
+          "program": "Matematicas",
+          "attended": false,
+          "attendanceCount": 0
+        },
+        {
+          "id": 226,
+          "name": "Gabriela Rivera",
+          "email": "gabriela.rivera226@unal.edu.co",
+          "program": "Biologia",
+          "attended": true,
+          "attendanceCount": 3
+        },
+        {
+          "id": 227,
+          "name": "Viviana Cruz",
+          "email": "viviana.cruz227@unal.edu.co",
+          "program": "Derecho",
+          "attended": true,
+          "attendanceCount": 2
+        },
+        {
+          "id": 228,
+          "name": "Juliana Herrera",
+          "email": "juliana.herrera228@unal.edu.co",
+          "program": "Ing. Industrial",
+          "attended": false,
+          "attendanceCount": 0
+        },
+        {
+          "id": 229,
+          "name": "Viviana Medina",
+          "email": "viviana.medina229@unal.edu.co",
+          "program": "Fisica",
+          "attended": false,
+          "attendanceCount": 0
+        },
+        {
+          "id": 230,
+          "name": "Natalia Diaz",
+          "email": "natalia.diaz230@unal.edu.co",
+          "program": "Ing. de Sistemas",
+          "attended": true,
+          "attendanceCount": 2
+        },
+        {
+          "id": 231,
+          "name": "Gabriela Ortiz",
+          "email": "gabriela.ortiz231@unal.edu.co",
+          "program": "Matematicas",
+          "attended": true,
+          "attendanceCount": 2
+        },
+        {
+          "id": 232,
+          "name": "Sebastian Cruz",
+          "email": "sebastian.cruz232@unal.edu.co",
+          "program": "Administracion de Empresas",
+          "attended": false,
+          "attendanceCount": 0
+        },
+        {
+          "id": 233,
+          "name": "Viviana Castro",
+          "email": "viviana.castro233@unal.edu.co",
+          "program": "Ing. Industrial",
+          "attended": false,
+          "attendanceCount": 0
+        },
+        {
+          "id": 234,
+          "name": "Lina Martinez",
+          "email": "lina.martinez234@unal.edu.co",
+          "program": "Matematicas",
+          "attended": false,
+          "attendanceCount": 0
+        },
+        {
+          "id": 235,
+          "name": "Ivan Munoz",
+          "email": "ivan.munoz235@unal.edu.co",
+          "program": "Biologia",
+          "attended": false,
+          "attendanceCount": 0
+        },
+        {
+          "id": 236,
+          "name": "Sebastian Diaz",
+          "email": "sebastian.diaz236@unal.edu.co",
+          "program": "Psicologia",
+          "attended": false,
+          "attendanceCount": 0
+        },
+        {
+          "id": 237,
+          "name": "Sergio Lopez",
+          "email": "sergio.lopez237@unal.edu.co",
+          "program": "Ing. Civil",
+          "attended": true,
+          "attendanceCount": 6
+        },
+        {
+          "id": 238,
+          "name": "Mateo Ortiz",
+          "email": "mateo.ortiz238@unal.edu.co",
+          "program": "Medicina",
+          "attended": true,
+          "attendanceCount": 5
+        },
+        {
+          "id": 239,
+          "name": "Karen Martinez",
+          "email": "karen.martinez239@unal.edu.co",
+          "program": "Quimica",
+          "attended": false,
+          "attendanceCount": 0
+        },
+        {
+          "id": 240,
+          "name": "Mateo Silva",
+          "email": "mateo.silva240@unal.edu.co",
+          "program": "Economia",
+          "attended": true,
+          "attendanceCount": 5
+        },
+        {
+          "id": 241,
+          "name": "Angela Silva",
+          "email": "angela.silva241@unal.edu.co",
+          "program": "Medicina",
+          "attended": true,
+          "attendanceCount": 1
+        },
+        {
+          "id": 242,
+          "name": "Mauricio Jimenez",
+          "email": "mauricio.jimenez242@unal.edu.co",
+          "program": "Medicina",
+          "attended": true,
+          "attendanceCount": 4
+        },
+        {
+          "id": 243,
+          "name": "Camila Morales",
+          "email": "camila.morales243@unal.edu.co",
+          "program": "Ing. de Sistemas",
+          "attended": true,
+          "attendanceCount": 4
+        },
+        {
+          "id": 244,
+          "name": "Lina Perez",
+          "email": "lina.perez244@unal.edu.co",
+          "program": "Quimica",
+          "attended": false,
+          "attendanceCount": 0
+        },
+        {
+          "id": 245,
+          "name": "Sofia Rivera",
+          "email": "sofia.rivera245@unal.edu.co",
+          "program": "Medicina",
+          "attended": true,
+          "attendanceCount": 2
+        },
+        {
+          "id": 246,
+          "name": "Esteban Castillo",
+          "email": "esteban.castillo246@unal.edu.co",
+          "program": "Fisica",
+          "attended": true,
+          "attendanceCount": 6
+        },
+        {
+          "id": 247,
+          "name": "Karen Rivera",
+          "email": "karen.rivera247@unal.edu.co",
+          "program": "Quimica",
+          "attended": true,
+          "attendanceCount": 3
+        },
+        {
+          "id": 248,
+          "name": "Mateo Torres",
+          "email": "mateo.torres248@unal.edu.co",
+          "program": "Derecho",
+          "attended": false,
+          "attendanceCount": 0
+        },
+        {
+          "id": 249,
+          "name": "Claudia Morales",
+          "email": "claudia.morales249@unal.edu.co",
+          "program": "Quimica",
+          "attended": false,
+          "attendanceCount": 0
+        },
+        {
+          "id": 250,
+          "name": "Mariana Vargas",
+          "email": "mariana.vargas250@unal.edu.co",
+          "program": "Economia",
+          "attended": true,
+          "attendanceCount": 1
+        },
+        {
+          "id": 251,
+          "name": "David Garcia",
+          "email": "david.garcia251@unal.edu.co",
+          "program": "Fisica",
+          "attended": true,
+          "attendanceCount": 6
+        },
+        {
+          "id": 252,
+          "name": "Patricia Ospina",
+          "email": "patricia.ospina252@unal.edu.co",
+          "program": "Fisica",
+          "attended": false,
+          "attendanceCount": 0
+        },
+        {
+          "id": 253,
+          "name": "Catalina Suarez",
+          "email": "catalina.suarez253@unal.edu.co",
+          "program": "Matematicas",
+          "attended": true,
+          "attendanceCount": 6
+        },
+        {
+          "id": 254,
+          "name": "Angela Rodriguez",
+          "email": "angela.rodriguez254@unal.edu.co",
+          "program": "Psicologia",
+          "attended": true,
+          "attendanceCount": 1
+        },
+        {
+          "id": 255,
+          "name": "Luis Morales",
+          "email": "luis.morales255@unal.edu.co",
+          "program": "Ing. Civil",
+          "attended": false,
+          "attendanceCount": 0
+        },
+        {
+          "id": 256,
+          "name": "Fernando Acosta",
+          "email": "fernando.acosta256@unal.edu.co",
+          "program": "Economia",
+          "attended": true,
+          "attendanceCount": 5
+        },
+        {
+          "id": 257,
+          "name": "Santiago Rodriguez",
+          "email": "santiago.rodriguez257@unal.edu.co",
+          "program": "Matematicas",
+          "attended": false,
+          "attendanceCount": 0
+        },
+        {
+          "id": 258,
+          "name": "Sofia Munoz",
+          "email": "sofia.munoz258@unal.edu.co",
+          "program": "Derecho",
+          "attended": true,
+          "attendanceCount": 6
+        },
+        {
+          "id": 259,
+          "name": "Sergio Rivera",
+          "email": "sergio.rivera259@unal.edu.co",
+          "program": "Derecho",
+          "attended": false,
+          "attendanceCount": 0
+        },
+        {
+          "id": 260,
+          "name": "Oscar Rojas",
+          "email": "oscar.rojas260@unal.edu.co",
+          "program": "Ing. Industrial",
+          "attended": true,
+          "attendanceCount": 1
+        },
+        {
+          "id": 261,
+          "name": "Maria Mendoza",
+          "email": "maria.mendoza261@unal.edu.co",
+          "program": "Ing. Civil",
+          "attended": true,
+          "attendanceCount": 3
+        },
+        {
+          "id": 262,
+          "name": "Valentina Guzman",
+          "email": "valentina.guzman262@unal.edu.co",
+          "program": "Derecho",
+          "attended": true,
+          "attendanceCount": 2
+        },
+        {
+          "id": 263,
+          "name": "Luis Ospina",
+          "email": "luis.ospina263@unal.edu.co",
+          "program": "Psicologia",
+          "attended": true,
+          "attendanceCount": 5
+        },
+        {
+          "id": 264,
+          "name": "Isabella Sanchez",
+          "email": "isabella.sanchez264@unal.edu.co",
+          "program": "Medicina",
+          "attended": false,
+          "attendanceCount": 0
+        },
+        {
+          "id": 265,
+          "name": "Pablo Gonzalez",
+          "email": "pablo.gonzalez265@unal.edu.co",
+          "program": "Fisica",
+          "attended": false,
+          "attendanceCount": 0
+        },
+        {
+          "id": 266,
+          "name": "Pablo Guzman",
+          "email": "pablo.guzman266@unal.edu.co",
+          "program": "Administracion de Empresas",
+          "attended": false,
+          "attendanceCount": 0
+        },
+        {
+          "id": 267,
+          "name": "Andrea Gutierrez",
+          "email": "andrea.gutierrez267@unal.edu.co",
+          "program": "Quimica",
+          "attended": false,
+          "attendanceCount": 0
+        },
+        {
+          "id": 268,
+          "name": "Ricardo Rojas",
+          "email": "ricardo.rojas268@unal.edu.co",
+          "program": "Ing. Civil",
+          "attended": false,
+          "attendanceCount": 0
+        },
+        {
+          "id": 269,
+          "name": "Camilo Rivera",
+          "email": "camilo.rivera269@unal.edu.co",
+          "program": "Ing. Industrial",
+          "attended": false,
+          "attendanceCount": 0
+        },
+        {
+          "id": 270,
+          "name": "Valentina Cruz",
+          "email": "valentina.cruz270@unal.edu.co",
+          "program": "Medicina",
+          "attended": false,
+          "attendanceCount": 0
+        },
+        {
+          "id": 271,
+          "name": "Felipe Herrera",
+          "email": "felipe.herrera271@unal.edu.co",
+          "program": "Medicina",
+          "attended": false,
+          "attendanceCount": 0
+        },
+        {
+          "id": 272,
+          "name": "Oscar Vargas",
+          "email": "oscar.vargas272@unal.edu.co",
+          "program": "Economia",
+          "attended": false,
+          "attendanceCount": 0
+        },
+        {
+          "id": 273,
+          "name": "Carlos Romero",
+          "email": "carlos.romero273@unal.edu.co",
+          "program": "Economia",
+          "attended": false,
+          "attendanceCount": 0
+        },
+        {
+          "id": 274,
+          "name": "Karen Silva",
+          "email": "karen.silva274@unal.edu.co",
+          "program": "Fisica",
+          "attended": true,
+          "attendanceCount": 5
+        },
+        {
+          "id": 275,
+          "name": "Andrea Silva",
+          "email": "andrea.silva275@unal.edu.co",
+          "program": "Biologia",
+          "attended": false,
+          "attendanceCount": 0
+        },
+        {
+          "id": 276,
+          "name": "Ivan Gutierrez",
+          "email": "ivan.gutierrez276@unal.edu.co",
+          "program": "Matematicas",
+          "attended": false,
+          "attendanceCount": 0
+        },
+        {
+          "id": 277,
+          "name": "Pablo Morales",
+          "email": "pablo.morales277@unal.edu.co",
+          "program": "Economia",
+          "attended": true,
+          "attendanceCount": 1
+        },
+        {
+          "id": 278,
+          "name": "Sandra Cardona",
+          "email": "sandra.cardona278@unal.edu.co",
+          "program": "Medicina",
+          "attended": true,
+          "attendanceCount": 4
+        },
+        {
+          "id": 279,
+          "name": "Oscar Pena",
+          "email": "oscar.pena279@unal.edu.co",
+          "program": "Economia",
+          "attended": true,
+          "attendanceCount": 4
+        },
+        {
+          "id": 280,
+          "name": "Jhon Rios",
+          "email": "jhon.rios280@unal.edu.co",
+          "program": "Psicologia",
+          "attended": true,
+          "attendanceCount": 3
+        },
+        {
+          "id": 281,
+          "name": "Sandra Martinez",
+          "email": "sandra.martinez281@unal.edu.co",
+          "program": "Derecho",
+          "attended": true,
+          "attendanceCount": 5
+        },
+        {
+          "id": 282,
+          "name": "Andrea Medina",
+          "email": "andrea.medina282@unal.edu.co",
+          "program": "Medicina",
+          "attended": false,
+          "attendanceCount": 0
+        },
+        {
+          "id": 283,
+          "name": "Jhon Silva",
+          "email": "jhon.silva283@unal.edu.co",
+          "program": "Biologia",
+          "attended": true,
+          "attendanceCount": 6
+        },
+        {
+          "id": 284,
+          "name": "Beatriz Cardona",
+          "email": "beatriz.cardona284@unal.edu.co",
+          "program": "Biologia",
+          "attended": true,
+          "attendanceCount": 3
+        },
+        {
+          "id": 285,
+          "name": "Hector Romero",
+          "email": "hector.romero285@unal.edu.co",
+          "program": "Biologia",
+          "attended": true,
+          "attendanceCount": 4
+        },
+        {
+          "id": 286,
+          "name": "Gabriela Aguilar",
+          "email": "gabriela.aguilar286@unal.edu.co",
+          "program": "Fisica",
+          "attended": false,
+          "attendanceCount": 0
+        },
+        {
+          "id": 287,
+          "name": "Monica Morales",
+          "email": "monica.morales287@unal.edu.co",
+          "program": "Biologia",
+          "attended": false,
+          "attendanceCount": 0
+        },
+        {
+          "id": 288,
+          "name": "Jorge Rodriguez",
+          "email": "jorge.rodriguez288@unal.edu.co",
+          "program": "Ing. Industrial",
+          "attended": true,
+          "attendanceCount": 2
+        },
+        {
+          "id": 289,
+          "name": "Patricia Cardona",
+          "email": "patricia.cardona289@unal.edu.co",
+          "program": "Fisica",
+          "attended": true,
+          "attendanceCount": 2
+        },
+        {
+          "id": 290,
+          "name": "Carolina Suarez",
+          "email": "carolina.suarez290@unal.edu.co",
+          "program": "Medicina",
+          "attended": true,
+          "attendanceCount": 5
+        },
+        {
+          "id": 291,
+          "name": "Camila Sanchez",
+          "email": "camila.sanchez291@unal.edu.co",
+          "program": "Ing. Industrial",
+          "attended": true,
+          "attendanceCount": 1
+        },
+        {
+          "id": 292,
+          "name": "Juliana Vega",
+          "email": "juliana.vega292@unal.edu.co",
+          "program": "Matematicas",
+          "attended": false,
+          "attendanceCount": 0
+        },
+        {
+          "id": 293,
+          "name": "Jhon Sanchez",
+          "email": "jhon.sanchez293@unal.edu.co",
+          "program": "Fisica",
+          "attended": true,
+          "attendanceCount": 3
+        },
+        {
+          "id": 294,
+          "name": "Santiago Sanchez",
+          "email": "santiago.sanchez294@unal.edu.co",
+          "program": "Ing. Industrial",
+          "attended": false,
+          "attendanceCount": 0
+        },
+        {
+          "id": 295,
+          "name": "Oscar Flores",
+          "email": "oscar.flores295@unal.edu.co",
+          "program": "Quimica",
+          "attended": false,
+          "attendanceCount": 0
+        },
+        {
+          "id": 296,
+          "name": "Nicolas Cardenas",
+          "email": "nicolas.cardenas296@unal.edu.co",
+          "program": "Ing. Industrial",
+          "attended": false,
+          "attendanceCount": 0
+        },
+        {
+          "id": 297,
+          "name": "Andres Castro",
+          "email": "andres.castro297@unal.edu.co",
+          "program": "Quimica",
+          "attended": true,
+          "attendanceCount": 2
+        }
+      ],
+      "queue": []
+    },
+    {
+      "name": "Taller de Ciberseguridad y Hacking Etico",
+      "maxCapacity": 30,
+      "students": [
+        {
+          "id": 298,
+          "name": "Isabella Perez",
+          "email": "isabella.perez298@unal.edu.co",
+          "program": "Matematicas",
+          "attended": true,
+          "attendanceCount": 4
+        },
+        {
+          "id": 299,
+          "name": "Juliana Sanchez",
+          "email": "juliana.sanchez299@unal.edu.co",
+          "program": "Biologia",
+          "attended": false,
+          "attendanceCount": 0
+        },
+        {
+          "id": 300,
+          "name": "Carolina Torres",
+          "email": "carolina.torres300@unal.edu.co",
+          "program": "Ing. Industrial",
+          "attended": true,
+          "attendanceCount": 4
+        },
+        {
+          "id": 301,
+          "name": "Carolina Gonzalez",
+          "email": "carolina.gonzalez301@unal.edu.co",
+          "program": "Quimica",
+          "attended": true,
+          "attendanceCount": 4
+        },
+        {
+          "id": 302,
+          "name": "Sergio Jimenez",
+          "email": "sergio.jimenez302@unal.edu.co",
+          "program": "Administracion de Empresas",
+          "attended": true,
+          "attendanceCount": 1
+        },
+        {
+          "id": 303,
+          "name": "Ricardo Gomez",
+          "email": "ricardo.gomez303@unal.edu.co",
+          "program": "Fisica",
+          "attended": true,
+          "attendanceCount": 3
+        },
+        {
+          "id": 304,
+          "name": "Adriana Silva",
+          "email": "adriana.silva304@unal.edu.co",
+          "program": "Biologia",
+          "attended": true,
+          "attendanceCount": 1
+        },
+        {
+          "id": 305,
+          "name": "Jorge Rivera",
+          "email": "jorge.rivera305@unal.edu.co",
+          "program": "Ing. de Sistemas",
+          "attended": false,
+          "attendanceCount": 0
+        },
+        {
+          "id": 306,
+          "name": "Daniel Vega",
+          "email": "daniel.vega306@unal.edu.co",
+          "program": "Ing. Civil",
+          "attended": true,
+          "attendanceCount": 4
+        },
+        {
+          "id": 307,
+          "name": "Tomas Sanchez",
+          "email": "tomas.sanchez307@unal.edu.co",
+          "program": "Administracion de Empresas",
+          "attended": true,
+          "attendanceCount": 1
+        },
+        {
+          "id": 308,
+          "name": "Ricardo Ospina",
+          "email": "ricardo.ospina308@unal.edu.co",
+          "program": "Ing. Industrial",
+          "attended": true,
+          "attendanceCount": 5
+        },
+        {
+          "id": 309,
+          "name": "Miguel Vargas",
+          "email": "miguel.vargas309@unal.edu.co",
+          "program": "Fisica",
+          "attended": false,
+          "attendanceCount": 0
+        },
+        {
+          "id": 310,
+          "name": "Angela Ramos",
+          "email": "angela.ramos310@unal.edu.co",
+          "program": "Medicina",
+          "attended": false,
+          "attendanceCount": 0
+        },
+        {
+          "id": 311,
+          "name": "Daniel Mendoza",
+          "email": "daniel.mendoza311@unal.edu.co",
+          "program": "Economia",
+          "attended": true,
+          "attendanceCount": 3
+        },
+        {
+          "id": 312,
+          "name": "Sebastian Castro",
+          "email": "sebastian.castro312@unal.edu.co",
+          "program": "Derecho",
+          "attended": true,
+          "attendanceCount": 4
+        },
+        {
+          "id": 313,
+          "name": "Felipe Medina",
+          "email": "felipe.medina313@unal.edu.co",
+          "program": "Administracion de Empresas",
+          "attended": false,
+          "attendanceCount": 0
+        },
+        {
+          "id": 314,
+          "name": "Miguel Cruz",
+          "email": "miguel.cruz314@unal.edu.co",
+          "program": "Administracion de Empresas",
+          "attended": false,
+          "attendanceCount": 0
+        },
+        {
+          "id": 315,
+          "name": "Rafael Pena",
+          "email": "rafael.pena315@unal.edu.co",
+          "program": "Quimica",
+          "attended": true,
+          "attendanceCount": 5
+        },
+        {
+          "id": 316,
+          "name": "Andrea Gutierrez",
+          "email": "andrea.gutierrez316@unal.edu.co",
+          "program": "Ing. Civil",
+          "attended": true,
+          "attendanceCount": 5
+        },
+        {
+          "id": 317,
+          "name": "Natalia Garcia",
+          "email": "natalia.garcia317@unal.edu.co",
+          "program": "Medicina",
+          "attended": true,
+          "attendanceCount": 3
+        },
+        {
+          "id": 318,
+          "name": "Ivan Vargas",
+          "email": "ivan.vargas318@unal.edu.co",
+          "program": "Administracion de Empresas",
+          "attended": false,
+          "attendanceCount": 0
+        },
+        {
+          "id": 319,
+          "name": "Jhon Ramirez",
+          "email": "jhon.ramirez319@unal.edu.co",
+          "program": "Psicologia",
+          "attended": true,
+          "attendanceCount": 6
+        },
+        {
+          "id": 320,
+          "name": "Carolina Cardona",
+          "email": "carolina.cardona320@unal.edu.co",
+          "program": "Quimica",
+          "attended": true,
+          "attendanceCount": 6
+        },
+        {
+          "id": 321,
+          "name": "Nicolas Moreno",
+          "email": "nicolas.moreno321@unal.edu.co",
+          "program": "Fisica",
+          "attended": false,
+          "attendanceCount": 0
+        },
+        {
+          "id": 322,
+          "name": "Pablo Pena",
+          "email": "pablo.pena322@unal.edu.co",
+          "program": "Matematicas",
+          "attended": true,
+          "attendanceCount": 3
+        },
+        {
+          "id": 323,
+          "name": "Santiago Jimenez",
+          "email": "santiago.jimenez323@unal.edu.co",
+          "program": "Fisica",
+          "attended": false,
+          "attendanceCount": 0
+        },
+        {
+          "id": 324,
+          "name": "Tomas Gutierrez",
+          "email": "tomas.gutierrez324@unal.edu.co",
+          "program": "Quimica",
+          "attended": true,
+          "attendanceCount": 4
+        },
+        {
+          "id": 325,
+          "name": "Juliana Martinez",
+          "email": "juliana.martinez325@unal.edu.co",
+          "program": "Derecho",
+          "attended": true,
+          "attendanceCount": 6
+        },
+        {
+          "id": 326,
+          "name": "Felipe Silva",
+          "email": "felipe.silva326@unal.edu.co",
+          "program": "Biologia",
+          "attended": false,
+          "attendanceCount": 0
+        },
+        {
+          "id": 327,
+          "name": "Isabella Castillo",
+          "email": "isabella.castillo327@unal.edu.co",
+          "program": "Fisica",
+          "attended": true,
+          "attendanceCount": 3
+        }
+      ],
+      "queue": [
+        {
+          "id": 328,
+          "name": "Adriana Gutierrez",
+          "email": "adriana.gutierrez328@unal.edu.co",
+          "program": "Ing. de Sistemas",
+          "attended": false,
+          "attendanceCount": 0
+        },
+        {
+          "id": 329,
+          "name": "Laura Cruz",
+          "email": "laura.cruz329@unal.edu.co",
+          "program": "Ing. de Sistemas",
+          "attended": false,
+          "attendanceCount": 0
+        },
+        {
+          "id": 330,
+          "name": "Mateo Reyes",
+          "email": "mateo.reyes330@unal.edu.co",
+          "program": "Economia",
+          "attended": false,
+          "attendanceCount": 0
+        },
+        {
+          "id": 331,
+          "name": "Daniela Moreno",
+          "email": "daniela.moreno331@unal.edu.co",
+          "program": "Derecho",
+          "attended": false,
+          "attendanceCount": 0
+        },
+        {
+          "id": 332,
+          "name": "Mauricio Munoz",
+          "email": "mauricio.munoz332@unal.edu.co",
+          "program": "Ing. Industrial",
+          "attended": false,
+          "attendanceCount": 0
+        },
+        {
+          "id": 333,
+          "name": "Paola Cardona",
+          "email": "paola.cardona333@unal.edu.co",
+          "program": "Biologia",
+          "attended": false,
+          "attendanceCount": 0
+        },
+        {
+          "id": 334,
+          "name": "Gabriela Ospina",
+          "email": "gabriela.ospina334@unal.edu.co",
+          "program": "Derecho",
+          "attended": false,
+          "attendanceCount": 0
+        },
+        {
+          "id": 335,
+          "name": "Daniela Chavez",
+          "email": "daniela.chavez335@unal.edu.co",
+          "program": "Economia",
+          "attended": false,
+          "attendanceCount": 0
+        },
+        {
+          "id": 336,
+          "name": "Nicolas Medina",
+          "email": "nicolas.medina336@unal.edu.co",
+          "program": "Medicina",
+          "attended": false,
+          "attendanceCount": 0
+        },
+        {
+          "id": 337,
+          "name": "Isabella Gonzalez",
+          "email": "isabella.gonzalez337@unal.edu.co",
+          "program": "Ing. Industrial",
+          "attended": false,
+          "attendanceCount": 0
+        },
+        {
+          "id": 338,
+          "name": "Tomas Gonzalez",
+          "email": "tomas.gonzalez338@unal.edu.co",
+          "program": "Derecho",
+          "attended": false,
+          "attendanceCount": 0
+        },
+        {
+          "id": 339,
+          "name": "Sandra Romero",
+          "email": "sandra.romero339@unal.edu.co",
+          "program": "Ing. de Sistemas",
+          "attended": false,
+          "attendanceCount": 0
+        }
+      ]
+    },
+    {
+      "name": "Feria de Proyectos de Grado - Ing. Sistemas",
+      "maxCapacity": 80,
+      "students": [
+        {
+          "id": 340,
+          "name": "David Guzman",
+          "email": "david.guzman340@unal.edu.co",
+          "program": "Biologia",
+          "attended": false,
+          "attendanceCount": 0
+        },
+        {
+          "id": 341,
+          "name": "Hector Chavez",
+          "email": "hector.chavez341@unal.edu.co",
+          "program": "Fisica",
+          "attended": false,
+          "attendanceCount": 0
+        },
+        {
+          "id": 342,
+          "name": "Lina Guzman",
+          "email": "lina.guzman342@unal.edu.co",
+          "program": "Medicina",
+          "attended": false,
+          "attendanceCount": 0
+        },
+        {
+          "id": 343,
+          "name": "Ricardo Ramos",
+          "email": "ricardo.ramos343@unal.edu.co",
+          "program": "Economia",
+          "attended": true,
+          "attendanceCount": 5
+        },
+        {
+          "id": 344,
+          "name": "Juan Vega",
+          "email": "juan.vega344@unal.edu.co",
+          "program": "Fisica",
+          "attended": false,
+          "attendanceCount": 0
+        },
+        {
+          "id": 345,
+          "name": "Mateo Munoz",
+          "email": "mateo.munoz345@unal.edu.co",
+          "program": "Derecho",
+          "attended": true,
+          "attendanceCount": 4
+        },
+        {
+          "id": 346,
+          "name": "Pablo Ospina",
+          "email": "pablo.ospina346@unal.edu.co",
+          "program": "Psicologia",
+          "attended": true,
+          "attendanceCount": 1
+        },
+        {
+          "id": 347,
+          "name": "Felipe Sanchez",
+          "email": "felipe.sanchez347@unal.edu.co",
+          "program": "Economia",
+          "attended": true,
+          "attendanceCount": 3
+        },
+        {
+          "id": 348,
+          "name": "Sandra Munoz",
+          "email": "sandra.munoz348@unal.edu.co",
+          "program": "Biologia",
+          "attended": true,
+          "attendanceCount": 2
+        },
+        {
+          "id": 349,
+          "name": "Alejandro Rivera",
+          "email": "alejandro.rivera349@unal.edu.co",
+          "program": "Administracion de Empresas",
+          "attended": true,
+          "attendanceCount": 1
+        },
+        {
+          "id": 350,
+          "name": "Andres Munoz",
+          "email": "andres.munoz350@unal.edu.co",
+          "program": "Fisica",
+          "attended": true,
+          "attendanceCount": 4
+        },
+        {
+          "id": 351,
+          "name": "Mateo Garcia",
+          "email": "mateo.garcia351@unal.edu.co",
+          "program": "Matematicas",
+          "attended": true,
+          "attendanceCount": 1
+        },
+        {
+          "id": 352,
+          "name": "Paula Castro",
+          "email": "paula.castro352@unal.edu.co",
+          "program": "Medicina",
+          "attended": true,
+          "attendanceCount": 3
+        },
+        {
+          "id": 353,
+          "name": "Camila Ramos",
+          "email": "camila.ramos353@unal.edu.co",
+          "program": "Biologia",
+          "attended": true,
+          "attendanceCount": 5
+        },
+        {
+          "id": 354,
+          "name": "Mateo Reyes",
+          "email": "mateo.reyes354@unal.edu.co",
+          "program": "Quimica",
+          "attended": true,
+          "attendanceCount": 2
+        },
+        {
+          "id": 355,
+          "name": "Juan Flores",
+          "email": "juan.flores355@unal.edu.co",
+          "program": "Medicina",
+          "attended": true,
+          "attendanceCount": 6
+        },
+        {
+          "id": 356,
+          "name": "Isabella Romero",
+          "email": "isabella.romero356@unal.edu.co",
+          "program": "Ing. Civil",
+          "attended": true,
+          "attendanceCount": 4
+        },
+        {
+          "id": 357,
+          "name": "Monica Diaz",
+          "email": "monica.diaz357@unal.edu.co",
+          "program": "Medicina",
+          "attended": false,
+          "attendanceCount": 0
+        },
+        {
+          "id": 358,
+          "name": "Monica Rojas",
+          "email": "monica.rojas358@unal.edu.co",
+          "program": "Ing. Industrial",
+          "attended": false,
+          "attendanceCount": 0
+        },
+        {
+          "id": 359,
+          "name": "Daniel Torres",
+          "email": "daniel.torres359@unal.edu.co",
+          "program": "Derecho",
+          "attended": false,
+          "attendanceCount": 0
+        },
+        {
+          "id": 360,
+          "name": "Viviana Silva",
+          "email": "viviana.silva360@unal.edu.co",
+          "program": "Ing. de Sistemas",
+          "attended": false,
+          "attendanceCount": 0
+        },
+        {
+          "id": 361,
+          "name": "Jorge Reyes",
+          "email": "jorge.reyes361@unal.edu.co",
+          "program": "Administracion de Empresas",
+          "attended": true,
+          "attendanceCount": 6
+        },
+        {
+          "id": 362,
+          "name": "Sebastian Ramos",
+          "email": "sebastian.ramos362@unal.edu.co",
+          "program": "Economia",
+          "attended": true,
+          "attendanceCount": 4
+        },
+        {
+          "id": 363,
+          "name": "Tomas Sanchez",
+          "email": "tomas.sanchez363@unal.edu.co",
+          "program": "Medicina",
+          "attended": true,
+          "attendanceCount": 3
+        },
+        {
+          "id": 364,
+          "name": "Paola Medina",
+          "email": "paola.medina364@unal.edu.co",
+          "program": "Ing. Industrial",
+          "attended": true,
+          "attendanceCount": 3
+        },
+        {
+          "id": 365,
+          "name": "Andrea Torres",
+          "email": "andrea.torres365@unal.edu.co",
+          "program": "Administracion de Empresas",
+          "attended": false,
+          "attendanceCount": 0
+        },
+        {
+          "id": 366,
+          "name": "Daniela Gonzalez",
+          "email": "daniela.gonzalez366@unal.edu.co",
+          "program": "Ing. Civil",
+          "attended": false,
+          "attendanceCount": 0
+        },
+        {
+          "id": 367,
+          "name": "Camila Diaz",
+          "email": "camila.diaz367@unal.edu.co",
+          "program": "Psicologia",
+          "attended": true,
+          "attendanceCount": 5
+        },
+        {
+          "id": 368,
+          "name": "Santiago Rodriguez",
+          "email": "santiago.rodriguez368@unal.edu.co",
+          "program": "Matematicas",
+          "attended": true,
+          "attendanceCount": 6
+        },
+        {
+          "id": 369,
+          "name": "Beatriz Vargas",
+          "email": "beatriz.vargas369@unal.edu.co",
+          "program": "Ing. Industrial",
+          "attended": true,
+          "attendanceCount": 5
+        },
+        {
+          "id": 370,
+          "name": "Beatriz Medina",
+          "email": "beatriz.medina370@unal.edu.co",
+          "program": "Psicologia",
+          "attended": true,
+          "attendanceCount": 6
+        },
+        {
+          "id": 371,
+          "name": "Maria Reyes",
+          "email": "maria.reyes371@unal.edu.co",
+          "program": "Ing. de Sistemas",
+          "attended": true,
+          "attendanceCount": 6
+        },
+        {
+          "id": 372,
+          "name": "Fernando Rios",
+          "email": "fernando.rios372@unal.edu.co",
+          "program": "Psicologia",
+          "attended": true,
+          "attendanceCount": 4
+        },
+        {
+          "id": 373,
+          "name": "Daniela Ospina",
+          "email": "daniela.ospina373@unal.edu.co",
+          "program": "Psicologia",
+          "attended": true,
+          "attendanceCount": 3
+        },
+        {
+          "id": 374,
+          "name": "Andres Silva",
+          "email": "andres.silva374@unal.edu.co",
+          "program": "Ing. Civil",
+          "attended": true,
+          "attendanceCount": 5
+        },
+        {
+          "id": 375,
+          "name": "Jorge Herrera",
+          "email": "jorge.herrera375@unal.edu.co",
+          "program": "Biologia",
+          "attended": false,
+          "attendanceCount": 0
+        },
+        {
+          "id": 376,
+          "name": "Camila Ospina",
+          "email": "camila.ospina376@unal.edu.co",
+          "program": "Psicologia",
+          "attended": false,
+          "attendanceCount": 0
+        },
+        {
+          "id": 377,
+          "name": "Tomas Rodriguez",
+          "email": "tomas.rodriguez377@unal.edu.co",
+          "program": "Fisica",
+          "attended": true,
+          "attendanceCount": 6
+        },
+        {
+          "id": 378,
+          "name": "Daniela Cardenas",
+          "email": "daniela.cardenas378@unal.edu.co",
+          "program": "Derecho",
+          "attended": true,
+          "attendanceCount": 2
+        },
+        {
+          "id": 379,
+          "name": "Oscar Rojas",
+          "email": "oscar.rojas379@unal.edu.co",
+          "program": "Fisica",
+          "attended": true,
+          "attendanceCount": 6
+        },
+        {
+          "id": 380,
+          "name": "Jorge Ramirez",
+          "email": "jorge.ramirez380@unal.edu.co",
+          "program": "Ing. Civil",
+          "attended": true,
+          "attendanceCount": 4
+        },
+        {
+          "id": 381,
+          "name": "Carlos Cardenas",
+          "email": "carlos.cardenas381@unal.edu.co",
+          "program": "Medicina",
+          "attended": true,
+          "attendanceCount": 2
+        },
+        {
+          "id": 382,
+          "name": "Juliana Garcia",
+          "email": "juliana.garcia382@unal.edu.co",
+          "program": "Ing. Industrial",
+          "attended": true,
+          "attendanceCount": 5
+        },
+        {
+          "id": 383,
+          "name": "Sergio Jimenez",
+          "email": "sergio.jimenez383@unal.edu.co",
+          "program": "Economia",
+          "attended": true,
+          "attendanceCount": 6
+        },
+        {
+          "id": 384,
+          "name": "David Diaz",
+          "email": "david.diaz384@unal.edu.co",
+          "program": "Administracion de Empresas",
+          "attended": true,
+          "attendanceCount": 2
+        },
+        {
+          "id": 385,
+          "name": "Andrea Aguilar",
+          "email": "andrea.aguilar385@unal.edu.co",
+          "program": "Ing. Civil",
+          "attended": true,
+          "attendanceCount": 4
+        },
+        {
+          "id": 386,
+          "name": "Lina Aguilar",
+          "email": "lina.aguilar386@unal.edu.co",
+          "program": "Medicina",
+          "attended": true,
+          "attendanceCount": 4
+        },
+        {
+          "id": 387,
+          "name": "Monica Cruz",
+          "email": "monica.cruz387@unal.edu.co",
+          "program": "Derecho",
+          "attended": true,
+          "attendanceCount": 5
+        },
+        {
+          "id": 388,
+          "name": "Fernando Rios",
+          "email": "fernando.rios388@unal.edu.co",
+          "program": "Ing. Civil",
+          "attended": false,
+          "attendanceCount": 0
+        },
+        {
+          "id": 389,
+          "name": "Adriana Morales",
+          "email": "adriana.morales389@unal.edu.co",
+          "program": "Administracion de Empresas",
+          "attended": false,
+          "attendanceCount": 0
+        },
+        {
+          "id": 390,
+          "name": "Sandra Castillo",
+          "email": "sandra.castillo390@unal.edu.co",
+          "program": "Biologia",
+          "attended": true,
+          "attendanceCount": 2
+        },
+        {
+          "id": 391,
+          "name": "Sandra Ortiz",
+          "email": "sandra.ortiz391@unal.edu.co",
+          "program": "Economia",
+          "attended": true,
+          "attendanceCount": 2
+        },
+        {
+          "id": 392,
+          "name": "Carlos Reyes",
+          "email": "carlos.reyes392@unal.edu.co",
+          "program": "Ing. Civil",
+          "attended": true,
+          "attendanceCount": 4
+        },
+        {
+          "id": 393,
+          "name": "Beatriz Munoz",
+          "email": "beatriz.munoz393@unal.edu.co",
+          "program": "Ing. de Sistemas",
+          "attended": false,
+          "attendanceCount": 0
+        },
+        {
+          "id": 394,
+          "name": "Rafael Chavez",
+          "email": "rafael.chavez394@unal.edu.co",
+          "program": "Administracion de Empresas",
+          "attended": true,
+          "attendanceCount": 1
+        },
+        {
+          "id": 395,
+          "name": "Paula Munoz",
+          "email": "paula.munoz395@unal.edu.co",
+          "program": "Matematicas",
+          "attended": true,
+          "attendanceCount": 1
+        },
+        {
+          "id": 396,
+          "name": "Hector Romero",
+          "email": "hector.romero396@unal.edu.co",
+          "program": "Biologia",
+          "attended": true,
+          "attendanceCount": 6
+        },
+        {
+          "id": 397,
+          "name": "Alejandro Medina",
+          "email": "alejandro.medina397@unal.edu.co",
+          "program": "Ing. Industrial",
+          "attended": true,
+          "attendanceCount": 6
+        },
+        {
+          "id": 398,
+          "name": "Paula Ramirez",
+          "email": "paula.ramirez398@unal.edu.co",
+          "program": "Administracion de Empresas",
+          "attended": true,
+          "attendanceCount": 2
+        },
+        {
+          "id": 399,
+          "name": "Natalia Vargas",
+          "email": "natalia.vargas399@unal.edu.co",
+          "program": "Derecho",
+          "attended": false,
+          "attendanceCount": 0
+        },
+        {
+          "id": 400,
+          "name": "Carlos Gutierrez",
+          "email": "carlos.gutierrez400@unal.edu.co",
+          "program": "Derecho",
+          "attended": true,
+          "attendanceCount": 1
+        },
+        {
+          "id": 401,
+          "name": "Paola Chavez",
+          "email": "paola.chavez401@unal.edu.co",
+          "program": "Economia",
+          "attended": true,
+          "attendanceCount": 3
+        },
+        {
+          "id": 402,
+          "name": "Claudia Rojas",
+          "email": "claudia.rojas402@unal.edu.co",
+          "program": "Ing. Civil",
+          "attended": true,
+          "attendanceCount": 5
+        },
+        {
+          "id": 403,
+          "name": "Hector Gonzalez",
+          "email": "hector.gonzalez403@unal.edu.co",
+          "program": "Biologia",
+          "attended": true,
+          "attendanceCount": 3
+        }
+      ],
+      "queue": [
+        {
+          "id": 404,
+          "name": "Diana Garcia",
+          "email": "diana.garcia404@unal.edu.co",
+          "program": "Economia",
+          "attended": false,
+          "attendanceCount": 0
+        },
+        {
+          "id": 405,
+          "name": "Diana Perez",
+          "email": "diana.perez405@unal.edu.co",
+          "program": "Derecho",
+          "attended": false,
+          "attendanceCount": 0
+        },
+        {
+          "id": 406,
+          "name": "Monica Herrera",
+          "email": "monica.herrera406@unal.edu.co",
+          "program": "Biologia",
+          "attended": false,
+          "attendanceCount": 0
+        },
+        {
+          "id": 407,
+          "name": "Ivan Garcia",
+          "email": "ivan.garcia407@unal.edu.co",
+          "program": "Administracion de Empresas",
+          "attended": false,
+          "attendanceCount": 0
+        }
+      ]
+    }
+  ]
 }

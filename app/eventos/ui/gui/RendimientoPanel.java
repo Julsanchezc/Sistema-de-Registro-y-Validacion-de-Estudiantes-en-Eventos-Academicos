@@ -1,6 +1,6 @@
 package eventos.ui.gui;
 
-import eventos.service.PerformanceService;
+import eventos.service.BenchmarkRunner;
 
 import javax.swing.*;
 import javax.swing.border.*;
@@ -248,7 +248,6 @@ public class RendimientoPanel extends JPanel {
         top.add(lTitle, BorderLayout.WEST);
         top.add(lBadge, BorderLayout.EAST);
 
-        Color textColor = Theme.TEXT_SUB;
         JLabel lDesc = new JLabel("<html><body style='color:#94A3B8;font-size:11px'>"
                 + desc.replace("\n", "<br>") + "</body></html>");
         lDesc.setFont(Theme.FONT_SMALL);
@@ -309,7 +308,7 @@ public class RendimientoPanel extends JPanel {
             };
             System.setOut(ps);
             try {
-                PerformanceService.runBenchmarks(new int[]{10_000, 100_000, 1_000_000});
+                BenchmarkRunner.runBenchmarks(new int[]{10_000, 100_000, 1_000_000});
             } catch (Exception ex) {
                 System.out.println("\nError: " + ex.getMessage());
             } finally {

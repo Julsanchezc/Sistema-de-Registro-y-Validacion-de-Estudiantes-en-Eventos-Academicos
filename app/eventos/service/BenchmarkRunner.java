@@ -4,8 +4,6 @@ import core.AppLogger;
 import core.AppPaths;
 import eventos.model.Student;
 import eventos.structures.BstTree;
-import eventos.ui.console.Colors;
-import eventos.ui.console.Terminal;
 import org.slf4j.Logger;
 
 import java.io.File;
@@ -14,52 +12,52 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Random;
 
-/** @deprecated Use BenchmarkTest (JUnit 5) for proper isolated structure benchmarks. */
-@Deprecated
-public class PerformanceService {
+/**
+ * Runtime-callable benchmark: AVL vs BST for insert / find / delete.
+ * No I/O inside timing blocks; destructive ops use independent pre-populated structures.
+ */
+public class BenchmarkRunner {
 
-    private static final Logger log = AppLogger.get(PerformanceService.class);
+    private static final Logger log = AppLogger.get(BenchmarkRunner.class);
+
+    private static final String SEP    = "-".repeat(66);
+    private static final String DOUBLE = "=".repeat(66);
 
     public static void runBenchmarks(int[] sizes) {
-        log.info("Starting performance benchmarks: {} sizes", sizes.length);
+        log.info("Starting benchmarks: {} sizes", sizes.length);
 
-        System.out.println(Colors.title(
-                "\n╔═══════════════════════════════════════════════════════════════════════════════╗"));
-        System.out.println(Colors.title(
-                "║          COMPARATIVE PERFORMANCE ANALYSIS – AVL vs BST                      ║"));
-        System.out.println(Colors.title(
-                "╠════════════╦═══════════════════════════╦═══════════════════════════╦═══════════╣"));
-        System.out.println(Colors.title(
-                "║          n ║   AVL (ins / find / del)  ║   BST (ins / find / del) ║ H AVL/BST ║"));
-        System.out.println(Colors.title(
-                "╠════════════╬═══════════════════════════╬═══════════════════════════╬═══════════╣"));
+        System.out.println("\n" + DOUBLE);
+        System.out.println("  ANALISIS COMPARATIVO DE RENDIMIENTO — AVL vs BST");
+        System.out.printf ("  Datos    : orden aleatorio (Fisher-Yates, semilla 42)%n");
+        System.out.printf ("  Tamaños  : %,d  /  %,d  /  %,d%n", sizes[0], sizes[1], sizes[2]);
+        System.out.println("  Eliminar : árbol FRESCO independiente por cada n.");
+        System.out.println(DOUBLE);
+
+        System.out.println();
+        System.out.printf("  %-12s  %28s  %28s  %9s%n",
+                "n", "AVL (ins / búsq / elim ms)", "BST (ins / búsq / elim ms)", "H AVL/BST");
+        System.out.println("  " + SEP);
 
         long[][] table = new long[sizes.length][8];
         for (int i = 0; i < sizes.length; i++) {
-            System.out.printf("  Measuring n = %,d ...%n", sizes[i]);
             table[i] = measure(sizes[i]);
-            System.out.printf(
-                    Colors.CYAN
-                    + "║ %,9d ║ "  + Colors.GREEN_B  + "%5d / %4d / %4d ms"
-                    + Colors.CYAN + " ║ " + Colors.YELLOW_B + "%5d / %4d / %4d ms"
-                    + Colors.CYAN + " ║ " + Colors.CYAN_B + "%5d / %-4d"
-                    + Colors.CYAN + " ║" + Colors.RESET + "%n",
+            System.out.printf("  %,12d  %8d / %6d / %6d ms  %8d / %6d / %6d ms  %5d / %-4d%n",
                     sizes[i],
                     table[i][0], table[i][1], table[i][2],
                     table[i][4], table[i][5], table[i][6],
                     table[i][3], table[i][7]);
         }
 
-        System.out.println(Colors.title(
-                "╚═══════════╩═══════════════════════════╩═══════════════════════════╩═══════════╝"));
+        System.out.println("  " + SEP);
         System.out.println();
-        System.out.println(Colors.bold("  Theoretical height O(log2 n):"));
+        System.out.println("  Altura teórica O(log2 n):");
         for (int n : sizes)
             System.out.printf("    n = %,10d  ->  log2(n) = %.2f%n", n, Math.log(n) / Math.log(2));
+
         System.out.println();
-        System.out.println(Colors.info("  Data: random order (Fisher-Yates, seed 42)."));
-        System.out.println(Colors.info("  AVL guarantees h <= 1.44*log2(n) for ANY insertion order."));
-        System.out.println(Colors.info("  BST guarantees O(log n) expected only with random data."));
+        System.out.println("  Datos en orden aleatorio (Fisher-Yates, semilla 42).");
+        System.out.println("  AVL garantiza h <= 1.44*log2(n) en CUALQUIER orden de inserción.");
+        System.out.println("  BST garantiza O(log n) esperado solo con datos aleatorios.");
 
         showDegenerateCase();
 
@@ -69,44 +67,48 @@ public class PerformanceService {
         if (csvPath != null) callPython(csvPath, dir);
     }
 
+    /** Each operation is timed on its own FRESH structure — no cascading state. */
     private static long[] measure(int n) {
         Student[] data = generateRandomData(n);
 
+        // AVL: three independent services (ins, find, del)
         EventService avl1 = new EventService("avl_ins",  n + 1);
         EventService avl2 = new EventService("avl_find", n + 1);
         EventService avl3 = new EventService("avl_del",  n + 1);
 
         long t0 = System.nanoTime();
         for (Student s : data) avl1.registerQuiet(s);
-        long avlIns = (System.nanoTime() - t0) / 1_000_000;
+        long avlIns = ms(t0);
 
         for (Student s : data) { avl2.registerQuiet(s); avl3.registerQuiet(s); }
 
         long t1 = System.nanoTime();
         for (Student s : data) avl2.hasStudent(s.getId());
-        long avlFind = (System.nanoTime() - t1) / 1_000_000;
+        long avlFind = ms(t1);
 
+        // del: tree pre-populated OUTSIDE timed block → always starts full
         long t2 = System.nanoTime();
         for (Student s : data) avl3.removeQuiet(s.getId());
-        long avlDel = (System.nanoTime() - t2) / 1_000_000;
+        long avlDel = ms(t2);
 
         int avlHeight = avl2.getTreeHeight();
 
+        // BST: same pattern
         BstTree bst1 = new BstTree(); BstTree bst2 = new BstTree(); BstTree bst3 = new BstTree();
 
         long t3 = System.nanoTime();
         for (Student s : data) bst1.insert(s);
-        long bstIns = (System.nanoTime() - t3) / 1_000_000;
+        long bstIns = ms(t3);
 
         for (Student s : data) { bst2.insert(s); bst3.insert(s); }
 
         long t4 = System.nanoTime();
         for (Student s : data) bst2.contains(s.getId());
-        long bstFind = (System.nanoTime() - t4) / 1_000_000;
+        long bstFind = ms(t4);
 
         long t5 = System.nanoTime();
         for (Student s : data) bst3.remove(s.getId());
-        long bstDel = (System.nanoTime() - t5) / 1_000_000;
+        long bstDel = ms(t5);
 
         int bstHeight = bst2.getHeight();
 
@@ -115,7 +117,7 @@ public class PerformanceService {
 
     private static void showDegenerateCase() {
         int n = 2_000;
-        System.out.println(Colors.warn("\n─── DEGENERATE CASE: sequential insert 1,2,...," + n + " ───────────"));
+        System.out.println("\n--- CASO DEGENERADO: inserción secuencial 1, 2, ..., " + n + " ---");
 
         EventService avlSeq = new EventService("avl_seq", n + 1);
         BstTree      bstSeq = new BstTree();
@@ -127,18 +129,13 @@ public class PerformanceService {
         }
 
         double log2n = Math.log(n) / Math.log(2);
-        System.out.printf(Colors.GREEN_B
-                + "  AVL height: %-5d  (log2(%d)=%.1f  limit 1.44*log2=%.1f)%n" + Colors.RESET,
+        System.out.printf("  AVL altura: %-5d  (log2(%d)=%.1f  límite 1.44*log2=%.1f)%n",
                 avlSeq.getTreeHeight(), n, log2n, 1.44 * log2n);
-        System.out.printf(Colors.RED_B
-                + "  BST height: %-5d  (degenerate – equivalent to linked list)%n" + Colors.RESET,
+        System.out.printf("  BST altura: %-5d  (degenerado — equivalente a lista enlazada)%n",
                 bstSeq.getHeight());
-        System.out.println(Colors.info("  Sequential BST degenerates to O(n)."));
-        System.out.println(Colors.info("  AVL maintains O(log n) guaranteed regardless of insertion order."));
-        System.out.println(Colors.warn("────────────────────────────────────────────────────────────"));
-        System.out.println();
-        Terminal.printOccupancyBar("AVL h=" + avlSeq.getTreeHeight(), avlSeq.getTreeHeight(), n, 25);
-        Terminal.printOccupancyBar("BST h=" + bstSeq.getHeight(),     bstSeq.getHeight(),     n, 25);
+        System.out.println("  Inserción secuencial en BST degenera a O(n).");
+        System.out.println("  AVL mantiene O(log n) garantizado sin importar el orden.");
+        System.out.println("-------------------------------------------------------------------");
         System.out.println();
     }
 
@@ -155,28 +152,28 @@ public class PerformanceService {
                         table[i][4], table[i][5], table[i][6], table[i][7],
                         log2n);
             }
-            log.info("Results CSV exported: {}", csv.getAbsolutePath());
-            System.out.println(Colors.ok("  CSV saved: " + csv.getAbsolutePath()));
+            log.info("CSV exportado: {}", csv.getAbsolutePath());
+            System.out.println("  CSV guardado: " + csv.getAbsolutePath());
             return csv.getAbsolutePath();
         } catch (IOException e) {
-            log.error("Error saving CSV: {}", e.getMessage());
-            System.out.println(Colors.error("  Error saving CSV: " + e.getMessage()));
+            log.error("Error guardando CSV: {}", e.getMessage());
+            System.out.println("  Error guardando CSV: " + e.getMessage());
             return null;
         }
     }
 
     private static void callPython(String csvPath, File resultsDir) {
-        System.out.println("\n  Generating charts with Python...");
+        System.out.println("\n  Generando gráficas con Python...");
         File script = findScript(resultsDir);
         if (script == null) {
-            System.out.println(Colors.warn("  WARNING: graficar_rendimiento.py not found"));
+            System.out.println("  AVISO: graficar_rendimiento.py no encontrado");
             return;
         }
         String python = findPython();
         if (python == null) {
-            System.out.println(Colors.warn("  WARNING: Python not found."));
-            System.out.println("  Run manually: python \"" + script.getAbsolutePath() + "\""
-                    + " \"" + csvPath + "\" \"" + resultsDir.getAbsolutePath() + "\"");
+            System.out.println("  AVISO: Python no encontrado.");
+            System.out.println("  Ejecuta manualmente: python \"" + script.getAbsolutePath()
+                    + "\" \"" + csvPath + "\" \"" + resultsDir.getAbsolutePath() + "\"");
             return;
         }
         try {
@@ -189,11 +186,28 @@ public class PerformanceService {
             int exit = new ProcessBuilder(python, script.getAbsolutePath(),
                     csvPath, resultsDir.getAbsolutePath())
                     .inheritIO().start().waitFor();
-            if (exit == 0) System.out.println(Colors.ok("\n  Charts saved to: " + resultsDir.getAbsolutePath()));
-            else           System.out.println(Colors.error("  Python exited with error (code " + exit + ")."));
+            if (exit == 0) System.out.println("  Gráficas guardadas en: " + resultsDir.getAbsolutePath());
+            else           System.out.println("  Python terminó con error (código " + exit + ").");
         } catch (IOException | InterruptedException e) {
-            System.out.println(Colors.error("  Error running Python: " + e.getMessage()));
+            System.out.println("  Error ejecutando Python: " + e.getMessage());
         }
+    }
+
+    /** Fisher-Yates shuffle with fixed seed=42. IDs are 1..n. */
+    private static Student[] generateRandomData(int n) {
+        Student[] data = new Student[n];
+        for (int i = 0; i < n; i++)
+            data[i] = new Student(i + 1, "Stu" + i, "s" + i + "@test.co", "Prog");
+        Random rnd = new Random(42);
+        for (int i = n - 1; i > 0; i--) {
+            int j = rnd.nextInt(i + 1);
+            Student tmp = data[i]; data[i] = data[j]; data[j] = tmp;
+        }
+        return data;
+    }
+
+    private static long ms(long startNano) {
+        return (System.nanoTime() - startNano) / 1_000_000;
     }
 
     private static String findPython() {
@@ -255,17 +269,5 @@ public class PerformanceService {
             }
         }
         return null;
-    }
-
-    private static Student[] generateRandomData(int n) {
-        Student[] data = new Student[n];
-        for (int i = 0; i < n; i++)
-            data[i] = new Student(i + 1, "Stu" + i, "s" + i + "@test.co", "Prog");
-        Random rnd = new Random(42);
-        for (int i = n - 1; i > 0; i--) {
-            int j = rnd.nextInt(i + 1);
-            Student tmp = data[i]; data[i] = data[j]; data[j] = tmp;
-        }
-        return data;
     }
 }

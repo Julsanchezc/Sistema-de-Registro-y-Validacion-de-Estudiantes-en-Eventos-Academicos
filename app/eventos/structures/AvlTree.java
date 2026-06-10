@@ -1,7 +1,6 @@
 package eventos.structures;
 
 import eventos.model.Student;
-import eventos.ui.console.Colors;
 
 public class AvlTree {
 
@@ -141,33 +140,24 @@ public class AvlTree {
     }
 
     public void visualize() {
-        System.out.println(Colors.title(
-                "\n╔══════ AVL TREE STRUCTURE ══════════════════════════════╗"));
-        System.out.printf(
-                Colors.CYAN    + "║  Nodes: "   + Colors.CYAN_B    + "%d"
-                + Colors.CYAN  + "  │  Height: " + Colors.CYAN_B   + "%d"
-                + Colors.CYAN  + "  │  bf "
-                + Colors.GREEN_B  + " 0"  + Colors.CYAN + ":balanced  "
-                + Colors.YELLOW_B + "±1" + Colors.CYAN + ":OK"
-                + Colors.RESET + "%n", nodeCount, getHeight());
-        System.out.println(Colors.title(
-                "╚════════════════════════════════════════════════════════╝"));
-        if (isEmpty()) System.out.println(Colors.warn("  (Empty tree)"));
+        System.out.println("\n╔══════ AVL TREE STRUCTURE ══════════════════════════════╗");
+        System.out.printf("║  Nodes: %d  │  Height: %d  │  bf  0:balanced  ±1:OK%n",
+                nodeCount, getHeight());
+        System.out.println("╚════════════════════════════════════════════════════════╝");
+        if (isEmpty()) System.out.println("  (Empty tree)");
         else           visualizeRec(root, "", true);
         System.out.println();
     }
 
     private void visualizeRec(AvlNode node, String prefix, boolean isLast) {
         if (node == null) return;
-        int    bf      = node.getBalanceFactor();
-        String bfColor = (bf == 0) ? Colors.GREEN_B : (Math.abs(bf) == 1) ? Colors.YELLOW_B : Colors.RED_B;
+        int bf = node.getBalanceFactor();
         System.out.print(prefix);
-        System.out.print(Colors.CYAN + (isLast ? "└── " : "├── ") + Colors.RESET);
-        System.out.println(
-                Colors.CYAN  + "ID:" + Colors.CYAN_B + node.getStudentId() + Colors.RESET
-                + "  " + Colors.CYAN + "h=" + Colors.RESET + node.getHeight()
-                + "  bf=" + bfColor + String.format("%+d", bf) + Colors.RESET
-                + "  " + Colors.YELLOW + node.getStudent().getName() + Colors.RESET);
+        System.out.print(isLast ? "└── " : "├── ");
+        System.out.println("ID:" + node.getStudentId()
+                + "  h=" + node.getHeight()
+                + "  bf=" + String.format("%+d", bf)
+                + "  " + node.getStudent().getName());
         String newPrefix = prefix + (isLast ? "    " : "│   ");
         if (node.getLeft() != null || node.getRight() != null) {
             visualizeRec(node.getLeft(),  newPrefix, node.getRight() == null);
