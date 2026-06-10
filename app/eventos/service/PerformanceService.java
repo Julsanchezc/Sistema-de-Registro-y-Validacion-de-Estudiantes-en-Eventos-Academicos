@@ -14,6 +14,8 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Random;
 
+/** @deprecated Use BenchmarkTest (JUnit 5) for proper isolated structure benchmarks. */
+@Deprecated
 public class PerformanceService {
 
     private static final Logger log = AppLogger.get(PerformanceService.class);
