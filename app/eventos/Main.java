@@ -3,9 +3,14 @@ package eventos;
 import core.AppPaths;
 import core.AppSettings;
 import eventos.ui.gui.MainWindow;
+import eventos.ui.gui.Theme;
 
 import javax.swing.*;
 
+/**
+ * Main.java — actualizado para aplicar el tema Office dark antes de abrir la ventana.
+ * Reemplaza el bloque de UIManager del original.
+ */
 public class Main {
 
     public static void main(String[] args) {
@@ -13,14 +18,8 @@ public class Main {
         if (!AppSettings.isLoaded())
             System.err.println("[Main] Warning: config.properties not loaded.");
 
-        try {
-            for (UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (Exception ignore) {}
+        // Aplica el tema antes de crear cualquier componente Swing
+        Theme.apply();
 
         SwingUtilities.invokeLater(() -> new MainWindow().setVisible(true));
     }

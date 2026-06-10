@@ -7,11 +7,17 @@ import eventos.service.EventManager;
 import eventos.service.EventService;
 
 import javax.swing.*;
-import javax.swing.border.TitledBorder;
+import javax.swing.border.*;
+import javax.swing.table.*;
 import java.awt.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.event.*;
+import java.io.File;
+import java.nio.file.Path;
 
+/**
+ * EventListPanel.java — Modo oscuro carbon-slate.
+ * Agenda (MinHeap) con tabla visual en lugar de área de texto.
+ */
 public class EventListPanel extends JPanel {
 
     private final EventManager    manager;
@@ -19,7 +25,10 @@ public class EventListPanel extends JPanel {
     private final MainWindow      mainWindow;
     private final EventTableModel tableModel;
     private final JTable          table;
-    private final JTextArea       agendaArea;
+
+    // Agenda MinHeap como tabla visual
+    private final DefaultTableModel agendaModel;
+    private final JTable            agendaTable;
 
     public EventListPanel(EventManager manager, EventRepository repo, MainWindow win) {
         this.manager    = manager;
@@ -27,19 +36,62 @@ public class EventListPanel extends JPanel {
         this.mainWindow = win;
         this.tableModel = new EventTableModel(manager);
         this.table      = buildTable();
-        this.agendaArea = new JTextArea();
+
+        this.agendaModel = new DefaultTableModel(
+                new String[]{"#", "Evento", "Inscritos", "Capacidad", "Disponibles", "Estado"}, 0) {
+            @Override public boolean isCellEditable(int r, int c) { return false; }
+        };
+        this.agendaTable = buildAgendaTable();
         buildUI();
     }
 
+    // ── tabla principal ───────────────────────────────────────────────────
     private JTable buildTable() {
         JTable t = new JTable(tableModel);
         t.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         t.getTableHeader().setReorderingAllowed(false);
-        t.setRowHeight(24);
+        t.setRowHeight(30);
         t.setFillsViewportHeight(true);
-        int[] widths = {36, 260, 72, 72, 72, 56, 76};
-        for (int i = 0; i < widths.length; i++)
+        t.setShowVerticalLines(false);
+        t.setBackground(Theme.SURFACE);
+        t.setForeground(Theme.TEXT);
+        t.setFont(Theme.FONT_UI);
+        t.setGridColor(Theme.BORDER);
+        t.setSelectionBackground(Theme.SEL_BG);
+        t.setSelectionForeground(Theme.SEL_FG);
+
+        JTableHeader h = t.getTableHeader();
+        h.setBackground(Theme.SURFACE_HIGH);
+        h.setForeground(Theme.TEXT_SUB);
+        h.setFont(Theme.FONT_UI_B);
+        h.setBorder(new MatteBorder(0, 0, 1, 0, Theme.BORDER));
+
+        // Renderer columna Ocupación
+        t.getColumnModel().getColumn(4).setCellRenderer(new DefaultTableCellRenderer() {
+            @Override
+            public Component getTableCellRendererComponent(JTable tbl, Object val,
+                    boolean sel, boolean foc, int row, int col) {
+                JLabel l = (JLabel) super.getTableCellRendererComponent(tbl, val, sel, foc, row, col);
+                l.setHorizontalAlignment(SwingConstants.CENTER);
+                if (!sel) {
+                    String s = val != null ? val.toString().replace("%", "") : "0";
+                    try {
+                        double pct = Double.parseDouble(s);
+                        l.setForeground(pct >= 95 ? Theme.RED
+                                      : pct >= 70 ? Theme.YELLOW
+                                                  : Theme.GREEN);
+                    } catch (NumberFormatException ignored) { l.setForeground(Theme.TEXT); }
+                }
+                l.setBackground(sel ? Theme.SEL_BG : Theme.SURFACE);
+                l.setOpaque(true);
+                return l;
+            }
+        });
+
+        int[] widths = {36, 260, 80, 80, 80, 64, 80};
+        for (int i = 0; i < widths.length && i < t.getColumnCount(); i++)
             t.getColumnModel().getColumn(i).setPreferredWidth(widths[i]);
+
         t.addMouseListener(new MouseAdapter() {
             @Override public void mouseClicked(MouseEvent e) {
                 if (e.getClickCount() == 2) openSelected();
@@ -48,55 +100,148 @@ public class EventListPanel extends JPanel {
         return t;
     }
 
+    // ── tabla de agenda (MinHeap) ─────────────────────────────────────────
+    private JTable buildAgendaTable() {
+        JTable t = new JTable(agendaModel);
+        t.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        t.getTableHeader().setReorderingAllowed(false);
+        t.setRowHeight(26);
+        t.setFillsViewportHeight(true);
+        t.setShowVerticalLines(false);
+        t.setBackground(new Color(0x0D1018));
+        t.setForeground(Theme.TEXT);
+        t.setFont(Theme.FONT_UI);
+        t.setGridColor(new Color(0x1E2336));
+        t.setSelectionBackground(Theme.SEL_BG);
+        t.setSelectionForeground(Theme.SEL_FG);
+
+        JTableHeader h = t.getTableHeader();
+        h.setBackground(new Color(0x141824));
+        h.setForeground(Theme.TEXT_DIM);
+        h.setFont(Theme.FONT_SMALL.deriveFont(Font.BOLD));
+        h.setBorder(new MatteBorder(0, 0, 1, 0, Theme.BORDER));
+
+        // Columna Estado con color
+        t.getColumnModel().getColumn(5).setCellRenderer(new DefaultTableCellRenderer() {
+            @Override
+            public Component getTableCellRendererComponent(JTable tbl, Object val,
+                    boolean sel, boolean foc, int row, int col) {
+                JLabel l = (JLabel) super.getTableCellRendererComponent(tbl, val, sel, foc, row, col);
+                l.setHorizontalAlignment(SwingConstants.CENTER);
+                String s = val != null ? val.toString() : "";
+                if (!sel) {
+                    if (s.contains("Lleno"))       l.setForeground(Theme.RED);
+                    else if (s.contains("Casi"))   l.setForeground(Theme.YELLOW);
+                    else                           l.setForeground(Theme.GREEN);
+                }
+                l.setBackground(sel ? Theme.SEL_BG : new Color(0x0D1018));
+                l.setOpaque(true);
+                return l;
+            }
+        });
+
+        // Columna Disponibles con color
+        t.getColumnModel().getColumn(4).setCellRenderer(new DefaultTableCellRenderer() {
+            @Override
+            public Component getTableCellRendererComponent(JTable tbl, Object val,
+                    boolean sel, boolean foc, int row, int col) {
+                JLabel l = (JLabel) super.getTableCellRendererComponent(tbl, val, sel, foc, row, col);
+                l.setHorizontalAlignment(SwingConstants.CENTER);
+                if (!sel) {
+                    try {
+                        int v = Integer.parseInt(val.toString());
+                        l.setForeground(v == 0 ? Theme.RED : v < 10 ? Theme.YELLOW : Theme.GREEN);
+                    } catch (Exception e) { l.setForeground(Theme.TEXT); }
+                }
+                l.setBackground(sel ? Theme.SEL_BG : new Color(0x0D1018));
+                l.setOpaque(true);
+                return l;
+            }
+        });
+
+        int[] widths2 = {30, 220, 80, 80, 90, 80};
+        for (int i = 0; i < widths2.length; i++)
+            t.getColumnModel().getColumn(i).setPreferredWidth(widths2[i]);
+
+        return t;
+    }
+
+    // ── UI ────────────────────────────────────────────────────────────────
     private void buildUI() {
-        setLayout(new BorderLayout(4, 6));
-        setBorder(BorderFactory.createEmptyBorder(8, 8, 8, 8));
+        setLayout(new BorderLayout(0, 0));
+        setBackground(Theme.BG);
+
         add(buildToolbar(),       BorderLayout.NORTH);
-        add(new JScrollPane(table), BorderLayout.CENTER);
+        add(Theme.scrollPane(table), BorderLayout.CENTER);
         add(buildAgendaPanel(),   BorderLayout.SOUTH);
     }
 
     private JPanel buildToolbar() {
-        JPanel p = new JPanel(new FlowLayout(FlowLayout.LEFT, 6, 4));
-        JLabel title = new JLabel("Event Manager");
-        title.setFont(title.getFont().deriveFont(Font.BOLD, 14f));
-        p.add(title);
-        p.add(new JSeparator(SwingConstants.VERTICAL) {{ setPreferredSize(new Dimension(1, 20)); }});
+        JPanel p = Theme.toolbar();
 
-        p.add(btn("New",     this::createEvent));
-        p.add(btn("Open",    this::openSelected));
-        p.add(btn("Delete",  this::deleteSelected));
-        p.add(new JSeparator(SwingConstants.VERTICAL) {{ setPreferredSize(new Dimension(1, 20)); }});
-        p.add(btn("Save",    this::saveData));
-        p.add(btn("Load",    this::loadData));
-        p.add(Box.createHorizontalStrut(8));
-        p.add(btn("Refresh Agenda", this::refreshAgenda));
+        p.add(Theme.sectionLabel("Gestión de Eventos"));
+        p.add(Theme.vSep());
+
+        JButton btnNew  = Theme.primaryButton("+ Nuevo");
+        JButton btnOpen = Theme.secondaryButton("Abrir");
+        JButton btnDel  = Theme.dangerButton("Eliminar");
+        p.add(btnNew);
+        p.add(btnOpen);
+        p.add(btnDel);
+        p.add(Theme.vSep());
+
+        JButton btnSave   = Theme.secondaryButton("Guardar");
+        JButton btnLoad   = Theme.secondaryButton("Cargar");
+        p.add(btnSave);
+        p.add(btnLoad);
+        p.add(Theme.vSep());
+
+        JButton btnAgenda = Theme.secondaryButton("Actualizar Prioridades");
+        p.add(btnAgenda);
+
+        btnNew   .addActionListener(e -> createEvent());
+        btnOpen  .addActionListener(e -> openSelected());
+        btnDel   .addActionListener(e -> deleteSelected());
+        btnSave  .addActionListener(e -> saveData());
+        btnLoad  .addActionListener(e -> loadData());
+        btnAgenda.addActionListener(e -> refreshAgenda());
+
         return p;
     }
 
     private JPanel buildAgendaPanel() {
         JPanel p = new JPanel(new BorderLayout());
-        p.setBorder(BorderFactory.createTitledBorder(
-            BorderFactory.createEtchedBorder(),
-            "Availability Agenda  (MinHeap — least available capacity first)",
-            TitledBorder.LEFT, TitledBorder.TOP));
-        agendaArea.setEditable(false);
-        agendaArea.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 12));
-        agendaArea.setText("  Press 'Refresh Agenda' to compute the heap-ordered event list.");
-        JScrollPane sp = new JScrollPane(agendaArea);
-        sp.setPreferredSize(new Dimension(0, 110));
+        p.setBackground(new Color(0x0D1018));
+        p.setBorder(new MatteBorder(1, 0, 0, 0, Theme.BORDER));
+        p.setPreferredSize(new Dimension(0, 130));
+
+        // Header de la agenda
+        JPanel header = new JPanel(new FlowLayout(FlowLayout.LEFT, 12, 6));
+        header.setBackground(new Color(0x141824));
+        header.setBorder(new MatteBorder(0, 0, 1, 0, Theme.BORDER));
+
+        JLabel icon = new JLabel("*");
+        icon.setFont(Theme.FONT_SMALL);
+        icon.setForeground(Theme.ACCENT);
+
+        JLabel lbl = Theme.colorLabel("Prioridad de Disponibilidad — MinHeap (menor disponibilidad primero)",
+                Theme.TEXT_SUB, Theme.FONT_SMALL);
+        JLabel hint = Theme.colorLabel("· Presiona 'Actualizar Prioridades' para recalcular",
+                Theme.TEXT_DIM, Theme.FONT_SMALL);
+        header.add(icon);
+        header.add(lbl);
+        header.add(hint);
+        p.add(header, BorderLayout.NORTH);
+
+        JScrollPane sp = new JScrollPane(agendaTable);
+        sp.setBorder(null);
+        sp.setBackground(new Color(0x0D1018));
+        sp.getViewport().setBackground(new Color(0x0D1018));
         p.add(sp, BorderLayout.CENTER);
         return p;
     }
 
-    private JButton btn(String text, Runnable action) {
-        JButton b = new JButton(text);
-        b.addActionListener(e -> action.run());
-        return b;
-    }
-
-    // --- actions ---
-
+    // ── acciones ──────────────────────────────────────────────────────────
     private void createEvent() {
         EventFormDialog dlg = new EventFormDialog(mainWindow);
         dlg.setVisible(true);
@@ -108,18 +253,18 @@ public class EventListPanel extends JPanel {
 
     private void openSelected() {
         int row = table.getSelectedRow();
-        if (row < 0) { info("Select an event first."); return; }
+        if (row < 0) { info("Selecciona un evento primero (o haz doble clic)."); return; }
         EventService ev = tableModel.getEventAt(row);
         if (ev != null) mainWindow.openEvent(ev);
     }
 
     private void deleteSelected() {
         int row = table.getSelectedRow();
-        if (row < 0) { info("Select an event first."); return; }
+        if (row < 0) { info("Selecciona un evento primero."); return; }
         EventService ev = tableModel.getEventAt(row);
         int ok = JOptionPane.showConfirmDialog(this,
-            "Delete event \"" + ev.getName() + "\"?  This cannot be undone.",
-            "Confirm Delete", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+            "Eliminar evento \"" + ev.getName() + "\"?  Esta acción no se puede deshacer.",
+            "Confirmar eliminación", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
         if (ok == JOptionPane.YES_OPTION) {
             manager.removeEvent(row + 1);
             refresh();
@@ -127,51 +272,67 @@ public class EventListPanel extends JPanel {
     }
 
     private void saveData() {
+        JFileChooser fc = new JFileChooser();
+        fc.setDialogTitle("Guardar datos de eventos");
+        fc.setSelectedFile(new File(AppPaths.Files.EVENTS_JSON.toAbsolutePath().toString()));
+        fc.setFileFilter(new javax.swing.filechooser.FileNameExtensionFilter("Archivos JSON (*.json)", "json"));
+        if (fc.showSaveDialog(this) != JFileChooser.APPROVE_OPTION) return;
+        Path path = fc.getSelectedFile().toPath();
+        if (!path.toString().toLowerCase().endsWith(".json"))
+            path = path.resolveSibling(path.getFileName() + ".json");
         try {
-            repository.save(manager, AppPaths.Files.EVENTS_JSON);
+            repository.save(manager, path);
             JOptionPane.showMessageDialog(this,
-                "Saved " + manager.getEventCount() + " event(s) to\n"
-                    + AppPaths.Files.EVENTS_JSON.toAbsolutePath(),
-                "Saved", JOptionPane.INFORMATION_MESSAGE);
+                "Guardado: " + manager.getEventCount() + " evento(s)\n" + path,
+                "Guardado", JOptionPane.INFORMATION_MESSAGE);
         } catch (PersistenceException ex) {
-            JOptionPane.showMessageDialog(this, "Error saving:\n" + ex.getMessage(),
+            JOptionPane.showMessageDialog(this, "Error al guardar:\n" + ex.getMessage(),
                 "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
     private void loadData() {
         int ok = JOptionPane.showConfirmDialog(this,
-            "Loading will replace all current data. Continue?",
-            "Confirm Load", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+            "Cargar reemplazará todos los datos actuales. ¿Continuar?",
+            "Confirmar carga", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
         if (ok != JOptionPane.YES_OPTION) return;
+        JFileChooser fc = new JFileChooser();
+        fc.setDialogTitle("Cargar datos de eventos");
+        fc.setCurrentDirectory(AppPaths.Files.EVENTS_JSON.getParent().toFile());
+        fc.setFileFilter(new javax.swing.filechooser.FileNameExtensionFilter("Archivos JSON (*.json)", "json"));
+        if (fc.showOpenDialog(this) != JFileChooser.APPROVE_OPTION) return;
+        Path path = fc.getSelectedFile().toPath();
         try {
-            repository.load(manager, AppPaths.Files.EVENTS_JSON);
+            repository.load(manager, path);
             refresh();
             JOptionPane.showMessageDialog(this,
-                "Loaded " + manager.getEventCount() + " event(s).",
-                "Loaded", JOptionPane.INFORMATION_MESSAGE);
+                "Cargado: " + manager.getEventCount() + " evento(s).",
+                "Cargado", JOptionPane.INFORMATION_MESSAGE);
         } catch (PersistenceException ex) {
-            JOptionPane.showMessageDialog(this, "Error loading:\n" + ex.getMessage(),
+            JOptionPane.showMessageDialog(this, "Error al cargar:\n" + ex.getMessage(),
                 "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
     private void refreshAgenda() {
         EventService[] sorted = manager.getEventsByAvailability();
-        if (sorted.length == 0) { agendaArea.setText("  No events."); return; }
-        StringBuilder sb = new StringBuilder();
+        agendaModel.setRowCount(0);
+        if (sorted.length == 0) return;
         for (int i = 0; i < sorted.length; i++) {
             EventService ev  = sorted[i];
-            int          avl = ev.getCapacity() - ev.getStudentCount();
-            sb.append(String.format("  %2d.  %-38s  %4d / %4d enrolled   %4d spots free%n",
-                i + 1, ev.getName(), ev.getStudentCount(), ev.getCapacity(), avl));
+            int cap  = ev.getCapacity();
+            int reg  = ev.getStudentCount();
+            int avl  = cap - reg;
+            double pct = cap > 0 ? (double) reg / cap * 100 : 0;
+            String estado = pct >= 100 ? "Lleno"
+                          : pct >= 80  ? "Casi lleno"
+                                       : "Disponible";
+            agendaModel.addRow(new Object[]{i + 1, ev.getName(), reg, cap, avl, estado});
         }
-        agendaArea.setText(sb.toString());
-        agendaArea.setCaretPosition(0);
     }
 
     private void info(String msg) {
-        JOptionPane.showMessageDialog(this, msg, "Info", JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(this, msg, "Información", JOptionPane.INFORMATION_MESSAGE);
     }
 
     public void refresh() { tableModel.refresh(); }
