@@ -1,0 +1,165 @@
+{
+  "events" : [ {
+    "name" : "Conferencia IA y Machine Learning",
+    "maxCapacity" : 10,
+    "students" : [ {
+      "id" : 1,
+      "name" : "Ana Garcia",
+      "email" : "ana.garcia@unal.edu.co",
+      "program" : "Ing. Sistemas",
+      "attended" : true,
+      "attendanceCount" : 3
+    }, {
+      "id" : 2,
+      "name" : "Carlos Lopez",
+      "email" : "carlos.lopez@unal.edu.co",
+      "program" : "Matematicas",
+      "attended" : true,
+      "attendanceCount" : 2
+    }, {
+      "id" : 3,
+      "name" : "Diana Perez",
+      "email" : "diana.perez@unal.edu.co",
+      "program" : "Ing. Industrial",
+      "attended" : true,
+      "attendanceCount" : 1
+    }, {
+      "id" : 4,
+      "name" : "Eduardo Gomez",
+      "email" : "eduardo.gomez@unal.edu.co",
+      "program" : "Fisica",
+      "attended" : false,
+      "attendanceCount" : 0
+    }, {
+      "id" : 5,
+      "name" : "Francisca Ruiz",
+      "email" : "francisca.ruiz@unal.edu.co",
+      "program" : "Estadistica",
+      "attended" : true,
+      "attendanceCount" : 2
+    }, {
+      "id" : 6,
+      "name" : "Gabriel Torres",
+      "email" : "gabriel.torres@unal.edu.co",
+      "program" : "Economia",
+      "attended" : false,
+      "attendanceCount" : 0
+    }, {
+      "id" : 7,
+      "name" : "Helena Morales",
+      "email" : "helena.morales@unal.edu.co",
+      "program" : "Ing. Sistemas",
+      "attended" : true,
+      "attendanceCount" : 1
+    }, {
+      "id" : 8,
+      "name" : "Ivan Castro",
+      "email" : "ivan.castro@unal.edu.co",
+      "program" : "Matematicas",
+      "attended" : false,
+      "attendanceCount" : 0
+    } ],
+    "queue" : [ {
+      "id" : 11,
+      "name" : "Laura Mendoza",
+      "email" : "laura.mendoza@unal.edu.co",
+      "program" : "Derecho",
+      "attended" : false,
+      "attendanceCount" : 0
+    }, {
+      "id" : 12,
+      "name" : "Miguel Herrera",
+      "email" : "miguel.herrera@unal.edu.co",
+      "program" : "Administracion",
+      "attended" : false,
+      "attendanceCount" : 0
+    } ]
+  }, {
+    "name" : "Taller de Estructuras de Datos",
+    "maxCapacity" : 8,
+    "students" : [ {
+      "id" : 1,
+      "name" : "Ana Garcia",
+      "email" : "ana.garcia@unal.edu.co",
+      "program" : "Ing. Sistemas",
+      "attended" : true,
+      "attendanceCount" : 2
+    }, {
+      "id" : 2,
+      "name" : "Carlos Lopez",
+      "email" : "carlos.lopez@unal.edu.co",
+      "program" : "Matematicas",
+      "attended" : false,
+      "attendanceCount" : 0
+    }, {
+      "id" : 3,
+      "name" : "Diana Perez",
+      "email" : "diana.perez@unal.edu.co",
+      "program" : "Ing. Industrial",
+      "attended" : true,
+      "attendanceCount" : 1
+    }, {
+      "id" : 9,
+      "name" : "Julia Vargas",
+      "email" : "julia.vargas@unal.edu.co",
+      "program" : "Ing. Sistemas",
+      "attended" : true,
+      "attendanceCount" : 3
+    }, {
+      "id" : 10,
+      "name" : "Kevin Reyes",
+      "email" : "kevin.reyes@unal.edu.co",
+      "program" : "Quimica",
+      "attended" : true,
+      "attendanceCount" : 2
+    } ],
+    "queue" : [ ]
+  }, {
+    "name" : "Semana de Ingenieria UNAL 2026",
+    "maxCapacity" : 15,
+    "students" : [ {
+      "id" : 1,
+      "name" : "Ana Garcia",
+      "email" : "ana.garcia@unal.edu.co",
+      "program" : "Ing. Sistemas",
+      "attended" : true,
+      "attendanceCount" : 1
+    }, {
+      "id" : 5,
+      "name" : "Francisca Ruiz",
+      "email" : "francisca.ruiz@unal.edu.co",
+      "program" : "Estadistica",
+      "attended" : true,
+      "attendanceCount" : 1
+    }, {
+      "id" : 9,
+      "name" : "Julia Vargas",
+      "email" : "julia.vargas@unal.edu.co",
+      "program" : "Ing. Sistemas",
+      "attended" : true,
+      "attendanceCount" : 1
+    }, {
+      "id" : 13,
+      "name" : "Natalia Flores",
+      "email" : "natalia.flores@unal.edu.co",
+      "program" : "Biologia",
+      "attended" : false,
+      "attendanceCount" : 0
+    }, {
+      "id" : 14,
+      "name" : "Oscar Romero",
+      "email" : "oscar.romero@unal.edu.co",
+      "program" : "Arquitectura",
+      "attended" : false,
+      "attendanceCount" : 0
+    } ],
+    "queue" : [ {
+      "id" : 15,
+      "name" : "Paula Diaz",
+      "email" : "paula.diaz@unal.edu.co",
+      "program" : "Psicologia",
+      "attended" : false,
+      "attendanceCount" : 0
+    } ]
+  } ]
+}
