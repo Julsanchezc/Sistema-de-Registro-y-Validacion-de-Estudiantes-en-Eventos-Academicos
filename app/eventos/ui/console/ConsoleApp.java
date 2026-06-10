@@ -12,6 +12,7 @@ import eventos.service.UndoResult;
 
 import java.util.Scanner;
 
+@Deprecated
 public class ConsoleApp {
 
     private final EventManager    manager    = new EventManager();
