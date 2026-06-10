@@ -2,8 +2,21 @@ package eventos.structures;
 
 import eventos.model.Student;
 
+/*
+ * Árbol Binario de Búsqueda (BST) sin balanceo automático.
+ *
+ * Uso en el sistema: exclusivamente en benchmarks (BenchmarkRunner).
+ * Se contrasta con el AvlTree para demostrar que el AVL mantiene O(log n)
+ * en el peor caso, mientras el BST puede degradarse a O(n) cuando las
+ * inserciones llegan en orden (el árbol degenera en lista enlazada).
+ *
+ * Complejidades (caso promedio / peor caso con entrada ordenada):
+ *   insert / find / remove  -> O(log n) / O(n)
+ *   getHeight (iterativo)   -> O(n)
+ */
 public class BstTree {
 
+    // Nodo interno: almacena un estudiante y apunta a sus dos subárboles.
     private class Node {
         Node    left;
         Student student;
@@ -14,6 +27,7 @@ public class BstTree {
     private Node root;
     private int  count;
 
+    // Inserta ordenando por ID; descarta duplicados silenciosamente.
     public boolean insert(Student s) {
         if (contains(s.getId())) return false;
         root = insertRec(s, root);
@@ -22,8 +36,8 @@ public class BstTree {
     }
 
     private Node insertRec(Student s, Node p) {
-        if (p == null)                       return new Node(s);
-        if (s.getId() < p.student.getId())   p.left  = insertRec(s, p.left);
+        if (p == null)                          return new Node(s);
+        if (s.getId() < p.student.getId())      p.left  = insertRec(s, p.left);
         else if (s.getId() > p.student.getId()) p.right = insertRec(s, p.right);
         return p;
     }
@@ -49,15 +63,23 @@ public class BstTree {
         return true;
     }
 
+    /*
+     * Eliminación recursiva con tres casos:
+     *   hoja            -> retorna null (el padre queda sin ese hijo)
+     *   un hijo         -> retorna ese hijo (lo sube al lugar del nodo eliminado)
+     *   dos hijos       -> copia datos del sucesor in-order (mínimo del subárbol derecho)
+     *                      y luego elimina recursivamente ese sucesor
+     */
     private Node removeRec(int id, Node p) {
         if (p == null) return null;
         if      (id < p.student.getId()) p.left  = removeRec(id, p.left);
         else if (id > p.student.getId()) p.right = removeRec(id, p.right);
         else {
-            if      (p.left == null && p.right == null) return null;
-            else if (p.left == null)                    return p.right;
-            else if (p.right == null)                   return p.left;
+            if      (p.left == null && p.right == null) return null;    // hoja
+            else if (p.left == null)                    return p.right; // solo hijo derecho
+            else if (p.right == null)                   return p.left;  // solo hijo izquierdo
             else {
+                // Dos hijos: promover el sucesor in-order
                 Node t   = minNode(p.right);
                 p.student = t.student;
                 p.right   = removeRec(t.student.getId(), p.right);
@@ -71,7 +93,12 @@ public class BstTree {
         return p;
     }
 
-    // Iterative height to avoid StackOverflow on degenerate (sequential) input.
+    /*
+     * Calcula la altura de forma iterativa con una pila explícita (arreglos paralelos).
+     * Se evita la recursión porque con entrada ordenada el árbol degenera en lista lineal
+     * (n niveles) y una implementación recursiva lanzaría StackOverflowError.
+     * La pila manual guarda pares (nodo, profundidad) y lleva el máximo encontrado.
+     */
     public int getHeight() {
         if (root == null) return 0;
         int    maxH   = 0;
