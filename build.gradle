@@ -25,6 +25,10 @@ application {
     mainClass = 'eventos.Main'
 }
 
+run {
+    standardInput = System.in
+}
+
 repositories {
     mavenCentral()
 }

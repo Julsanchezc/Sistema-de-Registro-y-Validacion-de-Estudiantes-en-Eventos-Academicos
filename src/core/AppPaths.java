@@ -17,7 +17,7 @@ public final class AppPaths {
     }
 
     public static final class Files {
-        public static final Path EVENTS_JSON = Dirs.DATA.resolve("events.json");
+        public static final Path EVENTS_JSON = Dirs.DATA.resolve("information.json");
         public static final Path APP_LOG     = Dirs.LOGS.resolve("app.log");
 
         private Files() {}
