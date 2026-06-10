@@ -37,6 +37,7 @@ public class EventRepository {
         public String  email;
         public String  program;
         public boolean attended;
+        public int     attendanceCount;
     }
 
     public void save(EventManager manager, Path path) {
@@ -50,22 +51,24 @@ public class EventRepository {
             for (Object obj : ev.getStudentsSorted()) {
                 Student s     = (Student) obj;
                 StudentDTO sd = new StudentDTO();
-                sd.id       = s.getId();
-                sd.name     = s.getName();
-                sd.email    = s.getEmail();
-                sd.program  = s.getProgram();
-                sd.attended = s.isAttended();
+                sd.id              = s.getId();
+                sd.name            = s.getName();
+                sd.email           = s.getEmail();
+                sd.program         = s.getProgram();
+                sd.attended        = s.isAttended();
+                sd.attendanceCount = s.getAttendanceCount();
                 edto.students.add(sd);
             }
 
             for (Object obj : ev.getQueueContents()) {
                 Student s     = (Student) obj;
                 StudentDTO sd = new StudentDTO();
-                sd.id       = s.getId();
-                sd.name     = s.getName();
-                sd.email    = s.getEmail();
-                sd.program  = s.getProgram();
-                sd.attended = false;
+                sd.id              = s.getId();
+                sd.name            = s.getName();
+                sd.email           = s.getEmail();
+                sd.program         = s.getProgram();
+                sd.attended        = false;
+                sd.attendanceCount = 0;
                 edto.queue.add(sd);
             }
 
@@ -93,7 +96,8 @@ public class EventRepository {
             for (EventDTO edto : dto.events) {
                 EventService ev = manager.createEvent(edto.name, edto.maxCapacity);
                 for (StudentDTO sd : edto.students)
-                    ev.loadStudent(sd.id, sd.name, sd.email, sd.program, sd.attended);
+                    ev.loadStudent(sd.id, sd.name, sd.email, sd.program,
+                                   sd.attended, sd.attendanceCount);
                 for (StudentDTO sd : edto.queue)
                     ev.loadToQueue(sd.id, sd.name, sd.email, sd.program);
             }
