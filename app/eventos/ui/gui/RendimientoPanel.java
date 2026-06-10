@@ -342,69 +342,48 @@ public class RendimientoPanel extends JPanel {
     }
 
     /**
-     * Parsea líneas del benchmark de PerformanceService.
-     * Formato de línea de datos:
-     *   ║  10,000 ║  12 /   5 /   8 ms ║  15 /   6 /   9 ms ║  10 /  14 ║
+     * Parsea líneas del benchmark de BenchmarkRunner.
+     * Formato real de línea de datos:
+     *   10,000        11 /      1 /      5 ms         5 /      2 /      5 ms     16 / 30
      * Se crean dos filas: una para AVL y otra para BST.
-     * La sección degenerada genera una fila extra de BST-Degen.
+     * La sección degenerada genera una fila extra.
      */
     private void parseResultLine(String line) {
         if (line == null) return;
         // Quitar códigos ANSI
         String clean = line.replaceAll("\u001B\\[[0-9;]*[mA-Za-z]", "").trim();
 
-        // Línea de datos principal: contiene ║ y dígitos con /
-        // Ejemplo: ║ 10,000 ║  12 /   5 /   8 ms ║  15 /   6 /   9 ms ║  10 /  14 ║
-        if (clean.startsWith("║") && clean.contains("/")) {
-            // Separar por ║
-            String[] cols = clean.split("║");
-            // cols[0] = ""  cols[1] = n  cols[2] = AVL times  cols[3] = BST times  cols[4] = heights
-            if (cols.length >= 4) {
-                try {
-                    String nStr     = cols[1].trim().replace(",", "").replace(".", "");
-                    String avlPart  = cols[2].trim();
-                    String bstPart  = cols[3].trim();
+        // Línea de datos: empieza con el número n seguido de los tiempos AVL y BST
+        // Ejemplo: "10,000        11 /      1 /      5 ms         5 /      2 /      5 ms     16 / 30"
+        java.util.regex.Matcher m = java.util.regex.Pattern.compile(
+            "^([\\d,\\.]+)\\s+(\\d+)\\s*/\\s*(\\d+)\\s*/\\s*(\\d+)\\s*ms\\s+(\\d+)\\s*/\\s*(\\d+)\\s*/\\s*(\\d+)\\s*ms"
+        ).matcher(clean);
 
-                    // Extraer tres números de cada bloque "X / Y / Z ms"
-                    java.util.regex.Pattern numPat = java.util.regex.Pattern.compile("(\\d+)");
-                    java.util.regex.Matcher avlM = numPat.matcher(avlPart);
-                    java.util.regex.Matcher bstM = numPat.matcher(bstPart);
-
-                    String[] avlNums = new String[3];
-                    String[] bstNums = new String[3];
-                    for (int i = 0; i < 3 && avlM.find(); i++) avlNums[i] = avlM.group();
-                    for (int i = 0; i < 3 && bstM.find(); i++) bstNums[i] = bstM.group();
-
-                    if (avlNums[0] != null && bstNums[0] != null) {
-                        final String nVal = nStr;
-                        final String[] av = avlNums;
-                        final String[] bv = bstNums;
-                        SwingUtilities.invokeLater(() -> {
-                            resultModel.addRow(new Object[]{"AVL",         nVal, av[0], av[1], av[2]});
-                            resultModel.addRow(new Object[]{"BST Estándar", nVal, bv[0], bv[1], bv[2]});
-                        });
-                    }
-                } catch (Exception ignored) {}
-            }
+        if (m.find()) {
+            String nVal   = m.group(1).replace(",", "").replace(".", "");
+            String avlIns = m.group(2), avlBus = m.group(3), avlElim = m.group(4);
+            String bstIns = m.group(5), bstBus = m.group(6), bstElim = m.group(7);
+            SwingUtilities.invokeLater(() -> {
+                resultModel.addRow(new Object[]{"AVL",          nVal, avlIns, avlBus, avlElim});
+                resultModel.addRow(new Object[]{"BST Estándar", nVal, bstIns, bstBus, bstElim});
+            });
+            return;
         }
 
-        // Sección degenerada: buscar líneas que contengan "AVL height:" o "BST height:"
-        // Formato: "  AVL height: 14  (log2(2000)=10.9  limit 1.44*log2=15.7)"
-        if (clean.contains("AVL height:")) {
-            java.util.regex.Matcher m = java.util.regex.Pattern.compile("AVL height:\\s*(\\d+)").matcher(clean);
-            if (m.find()) {
-                final String h = m.group(1);
-                SwingUtilities.invokeLater(() ->
-                    resultModel.addRow(new Object[]{"BST Degen (AVL)", "2000", h, "-", "-"}));
-            }
+        // Caso degenerado — formato: "AVL altura: 11     (log2...)"
+        java.util.regex.Matcher avlH = java.util.regex.Pattern
+            .compile("AVL altura:\\s*(\\d+)").matcher(clean);
+        if (avlH.find()) {
+            final String h = avlH.group(1);
+            SwingUtilities.invokeLater(() ->
+                resultModel.addRow(new Object[]{"AVL Degen", "2000", h, "-", "-"}));
         }
-        if (clean.contains("BST height:")) {
-            java.util.regex.Matcher m = java.util.regex.Pattern.compile("BST height:\\s*(\\d+)").matcher(clean);
-            if (m.find()) {
-                final String h = m.group(1);
-                SwingUtilities.invokeLater(() ->
-                    resultModel.addRow(new Object[]{"BST Degenerado", "2000", h, "-", "-"}));
-            }
+        java.util.regex.Matcher bstH = java.util.regex.Pattern
+            .compile("BST altura:\\s*(\\d+)").matcher(clean);
+        if (bstH.find()) {
+            final String h = bstH.group(1);
+            SwingUtilities.invokeLater(() ->
+                resultModel.addRow(new Object[]{"BST Degenerado", "2000", h, "-", "-"}));
         }
     }
 }

@@ -47,24 +47,22 @@ has_bst = "bst_ins_ms" in headers
 
 n_vals = [int(r["n"]) for r in rows]
 
-# Columnas AVL
-if "avl_ins_ms" in headers:
-    avl_ins  = [float(r["avl_ins_ms"])  for r in rows]
-    avl_bus  = [float(r["avl_bus_ms"])  for r in rows]
-    avl_elim = [float(r["avl_elim_ms"]) for r in rows]
-    avl_h    = [float(r["avl_altura"])  for r in rows]
-else:
-    avl_ins  = [float(r["insercion_ms"])   for r in rows]
-    avl_bus  = [float(r["busqueda_ms"])    for r in rows]
-    avl_elim = [float(r["eliminacion_ms"]) for r in rows]
-    avl_h    = [float(r["altura_real"])    for r in rows]
+def col(row, *nombres):
+    for n in nombres:
+        if n in row:
+            return float(row[n])
+    raise KeyError(f"Ninguna de las columnas encontradas: {nombres}. Columnas disponibles: {list(row.keys())}")
 
-# Columnas BST (opcionales)
+avl_ins  = [col(r, "avl_ins_ms",  "insercion_ms")                  for r in rows]
+avl_bus  = [col(r, "avl_find_ms", "avl_bus_ms",  "busqueda_ms")    for r in rows]
+avl_elim = [col(r, "avl_del_ms",  "avl_elim_ms", "eliminacion_ms") for r in rows]
+avl_h    = [col(r, "avl_height",  "avl_altura",  "altura_real")    for r in rows]
+
 if has_bst:
-    bst_ins  = [float(r["bst_ins_ms"])  for r in rows]
-    bst_bus  = [float(r["bst_bus_ms"])  for r in rows]
-    bst_elim = [float(r["bst_elim_ms"]) for r in rows]
-    bst_h    = [float(r["bst_altura"])  for r in rows]
+    bst_ins  = [col(r, "bst_ins_ms")                for r in rows]
+    bst_bus  = [col(r, "bst_find_ms", "bst_bus_ms") for r in rows]
+    bst_elim = [col(r, "bst_del_ms",  "bst_elim_ms") for r in rows]
+    bst_h    = [col(r, "bst_height",  "bst_altura")  for r in rows]
 
 h_log2 = [math.log2(n) for n in n_vals]
 
