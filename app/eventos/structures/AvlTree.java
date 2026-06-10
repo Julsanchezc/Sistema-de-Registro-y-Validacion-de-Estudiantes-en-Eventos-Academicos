@@ -183,7 +183,8 @@ public class AvlTree {
         if (n == null) return;
         writeInOrderRec(n.getLeft(), pw);
         Student s = n.getStudent();
-        pw.printf("%d,%s,%s,%s,%s%n", s.getId(), s.getName(), s.getEmail(), s.getProgram(), s.isAttended());
+        pw.printf("%d,%s,%s,%s,%s,%d%n", s.getId(), s.getName(), s.getEmail(),
+                s.getProgram(), s.isAttended(), s.getAttendanceCount());
         writeInOrderRec(n.getRight(), pw);
     }
 
